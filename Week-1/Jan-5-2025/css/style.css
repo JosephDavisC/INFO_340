@@ -1,0 +1,34 @@
+h1 {
+    font-family: 'Helvetica';
+    color: white;
+    background-color: rebeccapurple;
+}
+
+img {
+    max-width: 300px;
+    height: auto;
+}
+
+button {
+    background-color: rebeccapurple;
+    color: white;
+    border-radius: 12px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-color: aliceblue;
+}
+
+ul {
+    display: inline-block;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+}
