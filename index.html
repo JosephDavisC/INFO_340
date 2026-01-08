@@ -3,41 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFO 340 Files</title>
-    <meta name="description" content="My work bank for INFO 340 - Client Side Development at UW. Problem sets and in-class practice.">
+    <title>INFO 340 - Client Side Development</title>
+    <meta name="description" content="My work bank for INFO 340 - Client Side Development at UW. Problem sets and in-class practice for HTML, CSS, JavaScript, and React.">
     <meta name="author" content="Joseph Davis Chamdani">
 
     <!-- Open Graph / Social Preview -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="INFO 340 Files">
+    <meta property="og:title" content="INFO 340 - Client Side Development">
     <meta property="og:description" content="My work bank for INFO 340 - Client Side Development at UW.">
     <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
     <meta property="og:url" content="https://info340.joechamdani.com/">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="INFO 340 Files">
+    <meta name="twitter:title" content="INFO 340 - Client Side Development">
     <meta name="twitter:description" content="My work bank for INFO 340 - Client Side Development at UW.">
     <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="img/favicon.ico">
 </head>
-<body>
+<body class="landing">
     <main>
-        <h1>INFO 340 Files</h1>
-        <p>Winter Quarter 2026</p>
+        <header class="hero">
+            <h1>INFO 340</h1>
+            <p class="subtitle">Client-Side Development</p>
+            <p class="quarter">Winter Quarter 2026 &bull; University of Washington</p>
+        </header>
 
-        <ul class="week-list">
-            <li><a href="Week-1/">Week 1</a></li>
-        </ul>
+        <section class="intro">
+            <p>This is my work bank for <strong>INFO 340</strong> with <a href="https://ischool.uw.edu/people/faculty/profile/joelross" target="_blank">Professor Joel Ross</a>. Throughout this course, I'm learning to build accessible, interactive web applications using modern front-end technologies.</p>
+        </section>
+
+        <section class="skills">
+            <h2>Technologies</h2>
+            <div class="skill-tags">
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS3</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">Jest</span>
+            </div>
+        </section>
+
+        <section class="weeks">
+            <h2>Course Work</h2>
+            <ul class="week-list">
+                <li>
+                    <a href="Week-1/">
+                        <strong>Week 1</strong>
+                        <span>HTML & CSS Basics, Git & GitHub, Problem Set 01</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section class="author">
+            <h2>About Me</h2>
+            <p><strong>Joseph Davis Chamdani</strong></p>
+            <p>Information School &bull; University of Washington</p>
+            <div class="social-links">
+                <a href="mailto:jchamd@uw.edu" class="social-link">Email</a>
+                <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank" class="social-link">LinkedIn</a>
+                <a href="https://github.com/JosephDavisC" target="_blank" class="social-link">GitHub</a>
+                <a href="https://uw.joechamdani.com" target="_blank" class="social-link">Portfolio</a>
+            </div>
+        </section>
     </main>
 
     <footer>
-        <a href="mailto:jchamd@uw.edu">Email</a>
-        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
-        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
-        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+        <p>&copy; 2026 Joseph Davis Chamdani</p>
     </footer>
 </body>
 </html>
