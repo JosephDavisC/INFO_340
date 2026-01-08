@@ -14,7 +14,7 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 |------|-------|------|------|
 | Jan 5, 2026 | HTML & CSS Basics | In-Class | [View](https://info340.joechamdani.com/Week-1/Jan-5-2026/) |
 | Jan 7, 2026 | Git & GitHub | In-Class | [View](https://info340.joechamdani.com/Week-1/Jan-7-2026/) |
-| Jan 9, 2026 | HTML, CSS, Git, Jest | Problem Set 01 | [View](https://info340.joechamdani.com/Week-1/Problem-Set/) |
+| Jan 9, 2026 | HTML, CSS, Git, Jest | Problem Set 01 | [View](https://info340.joechamdani.com/Week-1/Problem-Set-01/) |
 
 ---
 
