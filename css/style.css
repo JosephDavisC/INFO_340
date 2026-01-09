@@ -223,3 +223,97 @@ footer a:hover {
     font-size: 0.85rem;
     margin: 0;
 }
+
+/* Week page styles */
+.week-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.week-summary,
+.concepts,
+.syntax,
+.activities,
+.resources {
+    margin: 2rem 0;
+}
+
+.concepts h2,
+.syntax h2,
+.activities h2,
+.resources h2,
+.week-summary h2 {
+    color: #4b2e83;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #b7a57a;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.concepts h3,
+.syntax h3 {
+    color: #333;
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.concepts ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.concepts li {
+    margin: 0.4rem 0;
+    line-height: 1.5;
+}
+
+.concepts code,
+.syntax code {
+    background: #e8e8e8;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'SF Mono', Consolas, monospace;
+    font-size: 0.9em;
+}
+
+/* Code blocks */
+.syntax pre {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 0.5rem 0 1.5rem;
+}
+
+.syntax pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+/* Resources list */
+.resources ul {
+    list-style: none;
+    padding: 0;
+}
+
+.resources li {
+    margin: 0.75rem 0;
+}
+
+.resources a {
+    color: #4b2e83;
+    text-decoration: none;
+    padding: 0.5rem 0;
+    display: inline-block;
+}
+
+.resources a:hover {
+    text-decoration: underline;
+}
