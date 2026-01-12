@@ -18,6 +18,16 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 
 ---
 
+## Week 2
+
+| Date | Topic | Type | Link |
+|------|-------|------|------|
+| Jan 12, 2026 | Git Collaboration | In-Class | [View](https://info340.joechamdani.com/Week-2/Jan-12-2026/) |
+| Jan 14, 2026 | CSS Layouts | In-Class | Coming Soon |
+| Jan 16, 2026 | TBD | Problem Set 02 | Coming Soon |
+
+---
+
 ## Tech Stack
 - HTML5
 - CSS3
