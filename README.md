@@ -23,8 +23,9 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 | Date | Topic | Type | Link |
 |------|-------|------|------|
 | Jan 12, 2026 | Git Collaboration | In-Class | [View](https://info340.joechamdani.com/Week-2/Jan-12-2026/) |
-| Jan 14, 2026 | CSS Layouts | In-Class | Coming Soon |
-| Jan 16, 2026 | TBD | Problem Set 02 | Coming Soon |
+| Jan 14, 2026 | CSS Selectors | In-Class | [View](https://info340.joechamdani.com/Week-2/Jan-14-2026/) |
+| Jan 14, 2026 | Quiz 1 | Study Guide | [View](https://info340.joechamdani.com/Week-2/Quiz-1/) |
+| Jan 14, 2026 | Accessible HTML, CSS Tables | Problem Set 02 | [View](https://info340.joechamdani.com/Week-2/Problem-Set-02/) |
 
 ---
 

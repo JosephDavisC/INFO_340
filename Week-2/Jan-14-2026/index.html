@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jan 14, 2026 - INFO 340</title>
+    <meta name="description" content="INFO 340 class notes for January 14, 2026 - CSS Selectors, specificity, the cascade, and layout techniques.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Jan 14, 2026 - INFO 340">
+    <meta property="og:description" content="CSS Selectors - specificity, cascade, and layout techniques.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-2/Jan-14-2026/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jan 14, 2026 - INFO 340">
+    <meta name="twitter:description" content="CSS Selectors - specificity, cascade, and layout techniques.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="../../img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 2</a></p>
+    <h1>January 14, 2026</h1>
+
+    <section class="summary">
+        <h2>Class Summary</h2>
+        <p>Today's class covered <strong>CSS Selectors</strong> and styling techniques. No in-class coding activity - just lecture and Quiz 1.</p>
+        <p><strong>Slides:</strong> <a href="https://slides.com/joelross/info340wi26-css-selectors" target="_blank">CSS Selectors Presentation</a></p>
+    </section>
+
+    <section class="concepts">
+        <h2>CSS Selector Types</h2>
+        <ul>
+            <li><strong>Type Selector:</strong> <code>p { }</code> - targets all elements of that type</li>
+            <li><strong>Class Selector:</strong> <code>.alert { }</code> - targets elements with that class</li>
+            <li><strong>ID Selector:</strong> <code>#navbar { }</code> - avoid using (too specific)</li>
+            <li><strong>Grouping:</strong> <code>h2, .alert, #navbar { }</code> - same styles to multiple selectors</li>
+            <li><strong>Compound:</strong> <code>p.alert { }</code> or <code>.alert.success { }</code> - must match both</li>
+            <li><strong>Descendant:</strong> <code>header p { }</code> - any <code>p</code> inside <code>header</code></li>
+            <li><strong>Child:</strong> <code>header > p { }</code> - direct children only</li>
+            <li><strong>Pseudo-class:</strong> <code>li:hover { }</code>, <code>li:focus { }</code> - interactive states</li>
+        </ul>
+    </section>
+
+    <section class="concepts">
+        <h2>CSS Specificity & Cascade</h2>
+        <p><strong>Rule:</strong> If two rules apply, the more specific rule wins.</p>
+        <p><strong>Best Practice:</strong> Be as general as you can, but as specific as you need to be.</p>
+        <ul>
+            <li>Inline styles > ID selectors > Class selectors > Type selectors</li>
+            <li>More specific selectors override less specific ones</li>
+            <li>Later rules override earlier rules (if same specificity)</li>
+        </ul>
+    </section>
+
+    <section class="concepts">
+        <h2>Font Sizing Units</h2>
+        <ul>
+            <li><strong>px:</strong> Absolute (avoid for fonts)</li>
+            <li><strong>em:</strong> Relative to parent element - <code>2em</code> = 2x parent size</li>
+            <li><strong>rem:</strong> Relative to root element - <code>2rem</code> = 2x root size (usually 32px)</li>
+            <li><strong>%:</strong> Percentage of parent - <code>50%</code> = half of parent</li>
+        </ul>
+        <p><strong>Best Practice:</strong> Use <code>rem</code> or <code>em</code> instead of <code>px</code> for accessibility.</p>
+    </section>
+
+    <section class="concepts">
+        <h2>Box Model & Display</h2>
+        <ul>
+            <li>All HTML elements take up space based on their <strong>box size</strong></li>
+            <li><code>display: inline</code> - flows with text, can't set width/height</li>
+            <li><code>display: block</code> - takes full width, starts new line</li>
+            <li><code>display: inline-block</code> - inline flow but can set dimensions</li>
+        </ul>
+    </section>
+
+    <section class="concepts">
+        <h2>Flexbox Layout</h2>
+        <p>Ideal for centering elements and creating column layouts.</p>
+        <pre><code>.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.child {
+    flex-grow: 1;
+}</code></pre>
+        <p><strong>Note:</strong> Don't use Flexbox for simple stacking or spacing that browsers handle by default.</p>
+    </section>
+
+    <section class="concepts">
+        <h2>CSS Class Naming</h2>
+        <h3>Semantic Naming</h3>
+        <p>Name classes by their purpose:</p>
+        <ul>
+            <li><code>.forum-post</code>, <code>.side-nav</code>, <code>.avatar-icon</code>, <code>.breaking-news</code></li>
+        </ul>
+
+        <h3>Modular Naming</h3>
+        <p>Name classes by function, combine multiple:</p>
+        <ul>
+            <li><code>.font-large</code>, <code>.bg-secondary</code>, <code>.small</code>, <code>.rounded</code></li>
+        </ul>
+
+        <h3>BEM Schema</h3>
+        <p>Pattern: <code>block__element--modifier</code></p>
+        <pre><code>&lt;form class="form form--theme-xmas form--simple"&gt;
+    &lt;input class="form__input" type="text"&gt;
+    &lt;input class="form__submit form__submit--disabled" type="submit"&gt;
+&lt;/form&gt;</code></pre>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>
