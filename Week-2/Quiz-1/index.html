@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 1 Study Guide - INFO 340</title>
+    <meta name="description" content="INFO 340 Quiz 1 Study Guide - Git, HTML, accessibility, and command line concepts.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Quiz 1 Study Guide - INFO 340">
+    <meta property="og:description" content="Study guide covering Git, HTML, accessibility, and command line concepts.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-2/Quiz-1/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quiz 1 Study Guide - INFO 340">
+    <meta name="twitter:description" content="Study guide covering Git, HTML, accessibility, and command line concepts.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="../../img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 2</a></p>
+    <h1>Quiz 1 Study Guide</h1>
+
+    <section class="quiz-intro">
+        <p>This study guide covers possible questions for Quiz 1. I answered each question based on my understanding to help me prepare.</p>
+        <p class="quiz-sources"><strong>Sources:</strong></p>
+        <ul class="quiz-sources-list">
+            <li><strong>INFO 340:</strong> <a href="https://info340.github.io/client-side-development.html" target="_blank">Ch 2: Client-Side Development</a>, <a href="https://info340.github.io/html-fundamentals.html" target="_blank">Ch 3: HTML Fundamentals</a>, <a href="https://info340.github.io/semantic-html.html" target="_blank">Ch 5: Semantic HTML</a></li>
+            <li><strong>INFO 201:</strong> <a href="https://info201.github.io/git-basics.html" target="_blank">Ch 4: Git and GitHub</a>, <a href="https://info201.github.io/git-branches.html" target="_blank">Ch 14: Git Branches</a>, <a href="https://info201.github.io/git-collaboration.html" target="_blank">Ch 15: Git Collaboration</a></li>
+        </ul>
+    </section>
+
+    <section class="quiz-section">
+        <div class="qa">
+            <p class="question">Q1. What is the correct order of Git actions after editing files?</p>
+            <p class="answer"><code>git add .</code> → <code>git commit -m "message"</code> → <code>git push origin main</code></p>
+        </div>
+        <div class="qa">
+            <p class="question">Q2. What does <code>cd ..</code> do?</p>
+            <p class="answer">Moves you up one directory to the parent folder.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q3. What is a Git commit?</p>
+            <p class="answer">A saved snapshot of the project at a specific point in time, with a message describing what changed.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q4. What does HTML stand for?</p>
+            <p class="answer">HyperText Markup Language.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q5. What does the domain part of a URL represent?</p>
+            <p class="answer">The domain identifies the server where a website is hosted and points users to where the files are stored.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q6. What is a Git repository?</p>
+            <p class="answer">A folder that stores a project's files along with their version history, managed using Git. It can exist locally or be hosted online like on GitHub.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q7. What is a merge conflict?</p>
+            <p class="answer">When Git cannot automatically combine changes because the same part of a file was edited in different ways.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q8. How do you resolve a merge conflict?</p>
+            <p class="answer">Open the conflicted file, manually choose or combine changes, remove conflict markers, then <code>git add</code> and <code>git commit</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q9. What is Universal Design?</p>
+            <p class="answer">Designing websites so they can be used by as many people as possible, including people with disabilities, without needing special adaptations.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q10. What is the correct Git sequence to merge a branch into main?</p>
+            <p class="answer"><code>git checkout main</code> → <code>git merge branch-name</code>. Only commit if conflicts occur.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q11. What is the difference between an absolute path and a relative path?</p>
+            <p class="answer"><strong>Absolute:</strong> Full location from root (e.g., <code>/Users/joe/index.html</code>)<br><strong>Relative:</strong> Location based on current directory (e.g., <code>../index.html</code>)</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q12. What is the main benefit of semantic HTML?</p>
+            <p class="answer">Describes meaning and structure so browsers, screen readers, and search engines understand it better—improves accessibility.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q13. What is the primary purpose of HTML?</p>
+            <p class="answer">To structure and describe the content of a web page.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q14. What is the purpose of a <code>.gitignore</code> file?</p>
+            <p class="answer">Tells Git which files should not be tracked or pushed, such as environment files or API keys.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q15. What is the purpose of <code>&lt;!DOCTYPE html&gt;</code>?</p>
+            <p class="answer">Tells the browser to use standards-compliant HTML rendering instead of guessing.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q16. What is the purpose of the <code>&lt;label&gt;</code> element in a form?</p>
+            <p class="answer">Associates text with an input field, improving usability and accessibility.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q17. What is the purpose of the <code>aria-label</code> attribute?</p>
+            <p class="answer">Provides an accessible name for elements so screen readers can describe them properly.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q18. What is the relationship between headings and sectioning elements?</p>
+            <p class="answer">Sectioning elements group related content; headings describe what each section is about. Together they define the page structure.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q19. What is the role of the <code>&lt;head&gt;</code> section?</p>
+            <p class="answer">Contains metadata: page title, character set, and links to stylesheets (used by browsers and search engines).</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q20. What should you do if someone else pushed to the remote before you?</p>
+            <p class="answer">Pull the remote changes first, resolve any conflicts if needed, then push your changes.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q21. Which command prints the full path of the current directory?</p>
+            <p class="answer"><code>pwd</code></p>
+        </div>
+        <div class="qa">
+            <p class="question">Q22. Which HTML element is used to create a hyperlink?</p>
+            <p class="answer">The <code>&lt;a&gt;</code> element.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q23. What is a Git branch?</p>
+            <p class="answer">An independent line of development that lets you work on changes without affecting the main codebase.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q24. Which of the following is an absolute path?</p>
+            <p class="answer"><code>/Users/joe/Desktop/info340/index.html</code></p>
+        </div>
+        <div class="qa">
+            <p class="question">Q25. Which statement is NOT true about HTML?</p>
+            <p class="answer">HTML does not control page styling—styling is handled by CSS.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q26. What is the difference between HTML, CSS, and JavaScript?</p>
+            <p class="answer"><strong>HTML:</strong> Structure/content | <strong>CSS:</strong> Styling/layout | <strong>JS:</strong> Behavior/interactivity</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q27. What is the purpose of the <code>alt</code> attribute on an image?</p>
+            <p class="answer">Provides text for screen readers and displays a description if the image cannot load. Main purpose is accessibility.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q28. Why is accessibility important in web development?</p>
+            <p class="answer">Ensures websites can be used by people with disabilities and users with different needs or assistive technologies.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q29. What does <code>git status</code> tell you?</p>
+            <p class="answer">It shows the current state of the repository: staged files, unstaged changes, and untracked files.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q30. Why is committing often considered a good practice?</p>
+            <p class="answer">Creates checkpoints, making it easier to track changes, collaborate, and recover from mistakes.</p>
+        </div>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

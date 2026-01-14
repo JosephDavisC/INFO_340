@@ -74,6 +74,16 @@ h1 {
     text-decoration: underline;
 }
 
+/* Summary section links */
+.summary a {
+    color: #4b2e83;
+    text-decoration: none;
+}
+
+.summary a:hover {
+    text-decoration: underline;
+}
+
 footer {
     margin-top: auto;
     padding: 1.5rem 0;
@@ -315,5 +325,107 @@ footer a:hover {
 }
 
 .resources a:hover {
+    text-decoration: underline;
+}
+
+.resources-note {
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 0.75rem;
+}
+
+/* Quiz study guide styles */
+.quiz-section {
+    margin: 2rem 0;
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.quiz-section h2 {
+    color: #4b2e83;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #b7a57a;
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.qa {
+    margin: 1rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.qa:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.question {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.answer {
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 3px solid #b7a57a;
+}
+
+.answer code {
+    background: #e8e8e8;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'SF Mono', Consolas, monospace;
+    font-size: 0.9em;
+}
+
+.quiz-intro {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+    border-left: 4px solid #4b2e83;
+}
+
+.quiz-intro p {
+    margin: 0 0 0.75rem 0;
+    line-height: 1.6;
+    color: #444;
+}
+
+.quiz-intro p:last-of-type {
+    margin-bottom: 0.5rem;
+}
+
+.quiz-intro a {
+    color: #4b2e83;
+}
+
+.quiz-sources-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    line-height: 1.8;
+}
+
+.quiz-sources-list li {
+    margin: 0.25rem 0;
+    color: #444;
+}
+
+.quiz-sources-list a {
+    color: #4b2e83;
+    text-decoration: none;
+}
+
+.quiz-sources-list a:hover {
     text-decoration: underline;
 }
