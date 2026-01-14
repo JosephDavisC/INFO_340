@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem Set 02 - INFO 340</title>
+    <meta name="description" content="INFO 340 Problem Set 02 - Accessible HTML Forms and CSS Tables.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Problem Set 02 - INFO 340">
+    <meta property="og:description" content="Accessible HTML Forms and CSS Tables assignment.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-2/Problem-Set-02/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Problem Set 02 - INFO 340">
+    <meta name="twitter:description" content="Accessible HTML Forms and CSS Tables assignment.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="../../img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 2</a></p>
+    <h1>Problem Set 02</h1>
+
+    <section class="summary">
+        <h2>Summary</h2>
+        <p>This problem set focused on <strong>accessible HTML</strong> and <strong>CSS tables</strong>. While the visual appearance may look similar before and after, the underlying code changes make a significant difference for screen readers and search engines.</p>
+
+        <h3>Problem A: Code Changes</h3>
+        <ul>
+            <li>Wrapped page sections in semantic elements: <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;footer&gt;</code></li>
+            <li>Fixed heading hierarchy (no skipping levels like h1 → h3)</li>
+            <li>Added <code>&lt;label&gt;</code> elements with <code>for</code> attributes linking to form inputs</li>
+            <li>Added <code>type</code> and <code>name</code> attributes to <code>&lt;input&gt;</code> elements</li>
+            <li>Used <code>aria-label</code> on the submit button for screen reader accessibility</li>
+            <li>Replaced <code>&lt;i&gt;</code> with <code>&lt;em&gt;</code> and <code>&lt;cite&gt;</code> for semantic meaning</li>
+            <li>Added <code>&lt;time&gt;</code> element with <code>datetime</code> attribute for machine-readable dates</li>
+            <li>Used <code>&lt;address&gt;</code> for contact info and proper <code>mailto:</code> / <code>tel:</code> links</li>
+        </ul>
+
+        <h3>Problem B: Code Changes</h3>
+        <ul>
+            <li>Built table structure with <code>&lt;thead&gt;</code> and <code>&lt;tbody&gt;</code> separation</li>
+            <li>Used <code>&lt;th&gt;</code> for header cells and <code>&lt;td&gt;</code> for data cells</li>
+            <li>Applied <code>:nth-child(even)</code> for alternating row colors</li>
+            <li>Added hover effects with <code>tbody tr:hover</code> selector</li>
+            <li>Used <code>border-collapse: collapse</code> for clean table borders</li>
+        </ul>
+    </section>
+
+    <section class="activity">
+        <h2>Problems</h2>
+        <ul class="week-list">
+            <li>
+                <a href="problem-a/" target="_blank">
+                    <strong>Problem A</strong>
+                    <span>Accessible HTML Forms - Semantic elements, labels, ARIA</span>
+                </a>
+            </li>
+            <li>
+                <a href="problem-b/" target="_blank">
+                    <strong>Problem B</strong>
+                    <span>CSS Tables - Top 5 Songs table with styling</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>Semantic HTML:</strong> <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;footer&gt;</code></li>
+            <li><strong>Forms:</strong> <code>&lt;label&gt;</code>, <code>&lt;input&gt;</code>, <code>type</code>, <code>name</code>, <code>for</code> attributes</li>
+            <li><strong>Accessibility:</strong> <code>alt</code>, <code>aria-label</code>, <code>&lt;time&gt;</code>, <code>&lt;address&gt;</code></li>
+            <li><strong>Tables:</strong> <code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;th&gt;</code>, <code>&lt;td&gt;</code></li>
+            <li><strong>CSS:</strong> <code>:nth-child</code>, <code>border-collapse</code>, hover effects</li>
+        </ul>
+    </section>
+
+    <section class="screenshots">
+        <h2>Screenshots</h2>
+        <h3>Problem A: Accessible HTML Forms</h3>
+        <figure>
+            <img src="img/problem-a-before.png" alt="Problem A before accessibility fixes">
+            <figcaption>Before: Page without semantic HTML structure</figcaption>
+        </figure>
+        <figure>
+            <img src="img/problem-a-after.png" alt="Problem A after accessibility fixes">
+            <figcaption>After: Page with proper semantic elements and form accessibility</figcaption>
+        </figure>
+        <h3>Problem B: CSS Tables</h3>
+        <figure>
+            <img src="img/problem-b-sample.png" alt="Sample solution for Problem B">
+            <figcaption>Sample: Expected table layout</figcaption>
+        </figure>
+        <figure>
+            <img src="img/problem-b-joseph.png" alt="My solution for Problem B">
+            <figcaption>My Solution: Top 5 Songs table with CSS styling</figcaption>
+        </figure>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>
