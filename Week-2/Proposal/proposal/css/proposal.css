@@ -1,0 +1,29 @@
+section {
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+#team-members {
+  background-color: #e1e7ef;
+}
+
+#problem-description {
+  background-color: #f1e9e9;
+}
+
+#app-description {
+  background-color: #e1e7ef;
+}
+
+header {
+    text-align: center;
+    margin: 40px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 40px;
+}
