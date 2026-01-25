@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jan 21 - CSS II & Bootstrap - INFO 340</title>
+    <meta name="description" content="INFO 340 Jan 21, 2026 - CSS II: Responsive Design, Media Queries, and Bootstrap framework.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Jan 21 - CSS II & Bootstrap - INFO 340">
+    <meta property="og:description" content="CSS II: Responsive Design, Media Queries, and Bootstrap framework.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-3/Jan-21-2026/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jan 21 - CSS II & Bootstrap - INFO 340">
+    <meta name="twitter:description" content="CSS II: Responsive Design, Media Queries, and Bootstrap framework.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="../../img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 3</a></p>
+    <h1>Jan 21, 2026</h1>
+    <p class="week-subtitle">CSS II: Responsive Design & Bootstrap</p>
+
+    <section class="summary">
+        <h2>Lecture Notes</h2>
+        <p><strong>Slides:</strong> <a href="https://slides.com/joelross/info340wi26-css-ii" target="_blank">CSS II</a></p>
+
+        <h3>Flexbox Review</h3>
+        <ul>
+            <li>Elements occupy space based on "box size" which can be manipulated</li>
+            <li><code>display: flex</code> allows flexible layout customization of child elements</li>
+            <li>Key properties: <code>flex-wrap</code>, <code>justify-content</code></li>
+            <li>Child properties: <code>flex-grow</code> for space allocation</li>
+            <li>Flexbox containers control children layout only, not grandchildren</li>
+        </ul>
+
+        <h3>When to Use Flexbox</h3>
+        <ul>
+            <li><strong>Good for:</strong> Centering elements, creating page columns, filling larger spaces</li>
+            <li><strong>Not ideal for:</strong> Stacking blocks (use default behavior) or specific spacing (use margins/padding)</li>
+        </ul>
+
+        <h3>Responsive Design</h3>
+        <ul>
+            <li>Must include viewport meta tag: <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code></li>
+            <li>Media queries apply conditional styling based on screen size</li>
+            <li>Syntax: <code>@media (min-width: 768px) { ... }</code></li>
+            <li>Mobile-first design: Start with mobile styles, add complexity for larger screens</li>
+        </ul>
+
+        <h3>Bootstrap Framework</h3>
+        <ul>
+            <li>Collection of pre-written CSS rules for rapid development</li>
+            <li>Link via CDN before custom stylesheets</li>
+            <li>Provides utility classes for styling without custom CSS</li>
+            <li>Responsive versions use infixes indicating breakpoints (sm, md, lg, xl)</li>
+        </ul>
+
+        <h3>Bootstrap Grid System</h3>
+        <ul>
+            <li>12-column layout system</li>
+            <li>Adaptable by screen size using responsive classes</li>
+            <li>Example: <code>col-md-6</code> = 6 columns on medium+ screens</li>
+        </ul>
+
+        <h3>Bootstrap Widgets</h3>
+        <ul>
+            <li>Interactive components (collapsibles, navbars, modals)</li>
+            <li>Use data attributes for functionality</li>
+            <li>Requires Bootstrap JavaScript inclusion</li>
+        </ul>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>Viewport Meta Tag:</strong> Essential for responsive design</li>
+            <li><strong>Media Queries:</strong> <code>@media (min-width: value)</code> for breakpoint-based styling</li>
+            <li><strong>Mobile-First:</strong> Default styles for mobile, enhanced for larger screens</li>
+            <li><strong>CSS Frameworks:</strong> Pre-built CSS for faster development</li>
+            <li><strong>Bootstrap Grid:</strong> 12-column responsive layout system</li>
+            <li><strong>Utility Classes:</strong> Single-purpose classes for common styling needs</li>
+        </ul>
+    </section>
+
+    <section class="resources">
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://info340.github.io/responsive-css.html" target="_blank">Ch 8: Responsive CSS</a></li>
+            <li><a href="https://info340.github.io/css-frameworks.html" target="_blank">Ch 9: CSS Frameworks</a></li>
+            <li><a href="https://getbootstrap.com/docs/" target="_blank">Bootstrap Documentation</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>
