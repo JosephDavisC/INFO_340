@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://info340.joechamdani.com/sitemap.xml

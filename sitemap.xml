@@ -2,7 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://info340.joechamdani.com/</loc>
-        <lastmod>2026-01-12</lastmod>
+        <lastmod>2026-01-24</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
@@ -57,7 +58,8 @@
     </url>
     <url>
         <loc>https://info340.joechamdani.com/Week-3/</loc>
-        <lastmod>2026-01-19</lastmod>
+        <lastmod>2026-01-24</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
