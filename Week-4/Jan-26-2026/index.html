@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jan 26 - JavaScript Fundamentals - INFO 340</title>
+    <meta name="description" content="INFO 340 Jan 26, 2026 - JavaScript: Variables, Arrays, Objects, and Functions.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Jan 26 - JavaScript Fundamentals - INFO 340">
+    <meta property="og:description" content="JavaScript: Variables, Arrays, Objects, and Functions.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-4/Jan-26-2026/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jan 26 - JavaScript Fundamentals - INFO 340">
+    <meta name="twitter:description" content="JavaScript: Variables, Arrays, Objects, and Functions.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 4</a></p>
+    <h1>Jan 26, 2026</h1>
+    <p class="week-subtitle">JavaScript: Variables, Arrays & Objects</p>
+
+    <section class="summary">
+        <h2>Lecture Notes</h2>
+        <p><strong>Slides:</strong> <a href="https://slides.com/joelross/info340wi26-javascript" target="_blank">JavaScript</a></p>
+
+        <h3>Variables & Types</h3>
+        <ul>
+            <li>JavaScript uses dynamic typing - variables adopt the type of their current value</li>
+            <li><code>let</code> declares reassignable variables, <code>const</code> declares immutable references</li>
+            <li>Basic types: Numbers, Strings, Booleans, Arrays, Objects</li>
+            <li>Type coercion automatically converts types during operations (e.g., <code>'40' - 2</code> = 38)</li>
+            <li>Use <code>===</code> for strict equality (no type coercion), <code>==</code> allows coercion</li>
+        </ul>
+
+        <h3>Truthy & Falsy Values</h3>
+        <ul>
+            <li>Falsy values: <code>false</code>, <code>0</code>, <code>''</code> (empty string), <code>null</code>, <code>undefined</code>, <code>NaN</code></li>
+            <li>Everything else is truthy (including empty arrays and objects)</li>
+            <li><code>undefined</code> in conditionals evaluates to false</li>
+        </ul>
+
+        <h3>Arrays</h3>
+        <ul>
+            <li>Declared using literal syntax: <code>const arr = ['a', 'b', 'c']</code></li>
+            <li>Zero-indexed access: <code>arr[0]</code> returns first element</li>
+            <li>Out-of-bounds access returns <code>undefined</code></li>
+            <li>Can mix types: <code>['dogs', 2.5, true, [3,4,0]]</code></li>
+            <li><code>.length</code> property returns array size</li>
+            <li><code>.push(value)</code> adds element to end</li>
+            <li>Nested arrays for multi-dimensional data: <code>arr[2][0]</code></li>
+        </ul>
+
+        <h3>Objects</h3>
+        <ul>
+            <li>Unordered key-value pairs (like dictionaries/maps)</li>
+            <li>Declared as: <code>const obj = {key: 'value', name: 'Alice'}</code></li>
+            <li>Access via bracket notation: <code>obj['key']</code> or dot notation: <code>obj.key</code></li>
+            <li>Bracket notation required for variables: <code>obj[variableName]</code></li>
+            <li>Objects can be nested: <code>person.favorites.food</code></li>
+        </ul>
+
+        <h3>Data Tables</h3>
+        <ul>
+            <li>Arrays of objects represent tabular data (like spreadsheets)</li>
+            <li>Each object is a row, each key is a column</li>
+            <li>Example: <code>[{name: 'Ada', age: 30}, {name: 'Bob', age: 25}]</code></li>
+        </ul>
+
+        <h3>Control Flow</h3>
+        <ul>
+            <li>If/else syntax similar to Java</li>
+            <li><code>for</code> loops: traditional index-based or <code>for...of</code> for arrays</li>
+            <li><code>for...in</code> iterates through object keys</li>
+        </ul>
+
+        <h3>Functions</h3>
+        <ul>
+            <li>Declared with: <code>function name(params) { return value; }</code></li>
+            <li>No access modifiers or explicit return types</li>
+            <li>Parameters don't specify types</li>
+        </ul>
+    </section>
+
+    <section class="activities">
+        <h2>In-Class Activity</h2>
+        <ul class="week-list">
+            <li><a href="javascript/" target="_blank"><strong>JavaScript Demo</strong> <span>Variables, arrays, objects practice</span></a></li>
+        </ul>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>Dynamic Typing:</strong> Variables can hold any type, type determined at runtime</li>
+            <li><strong>let vs const:</strong> <code>let</code> for reassignable, <code>const</code> for immutable references</li>
+            <li><strong>Type Coercion:</strong> JavaScript converts types automatically in operations</li>
+            <li><strong>Strict Equality:</strong> Use <code>===</code> to avoid unexpected type coercion</li>
+            <li><strong>Array Methods:</strong> <code>.push()</code>, <code>.length</code>, bracket access</li>
+            <li><strong>Object Access:</strong> Dot notation for known keys, bracket notation for variables</li>
+        </ul>
+    </section>
+
+    <section class="resources">
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://info340.github.io/javascript.html" target="_blank">Ch 10: JavaScript</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide" target="_blank">MDN JavaScript Guide</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

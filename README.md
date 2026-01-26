@@ -42,6 +42,14 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 
 ---
 
+## Week 4
+
+| Date | Topic | Type | Link |
+|------|-------|------|------|
+| Jan 26, 2026 | JavaScript: Variables, Arrays, Objects | In-Class | [View](https://info340.joechamdani.com/Week-4/Jan-26-2026/) |
+
+---
+
 ## Tech Stack
 - HTML5
 - CSS3
