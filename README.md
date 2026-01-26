@@ -24,9 +24,21 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 |------|-------|------|------|
 | Jan 12, 2026 | Git Collaboration | In-Class | [View](https://info340.joechamdani.com/Week-2/Jan-12-2026/) |
 | Jan 14, 2026 | CSS Selectors | In-Class | [View](https://info340.joechamdani.com/Week-2/Jan-14-2026/) |
-| Jan 14, 2026 | Quiz 1 | Study Guide | [View](https://info340.joechamdani.com/Week-2/Quiz-1/) |
+| Jan 14, 2026 | Quiz 1 | Study Guide + Practice Quiz | [View](https://info340.joechamdani.com/Week-2/Quiz-1/) |
 | Jan 14, 2026 | Accessible HTML, CSS Tables | Problem Set 02 | [View](https://info340.joechamdani.com/Week-2/Problem-Set-02/) |
 | Jan 16, 2026 | Hackathon Organizer | Project Proposal | [View](https://info340.joechamdani.com/Week-2/Proposal/) |
+
+---
+
+## Week 3
+
+| Date | Topic | Type | Link |
+|------|-------|------|------|
+| Jan 21, 2026 | CSS II: Responsive Design & Bootstrap | In-Class | [View](https://info340.joechamdani.com/Week-3/Jan-21-2026/) |
+| Jan 21, 2026 | Wireframes & Team Progress | Project Check-In | [View](https://info340.joechamdani.com/Week-3/Project-Check-In/) |
+| Jan 21, 2026 | CSS Selectors, Styling, Flexbox | Problem Set 03 | [View](https://info340.joechamdani.com/Week-3/Problem-Set-03/) |
+| Jan 24, 2026 | Responsive Design, Media Queries, Bootstrap | Problem Set 04 | [View](https://info340.joechamdani.com/Week-3/Problem-Set-04/) |
+| Jan 25, 2026 | Quiz 2 | Study Guide + Practice Quiz | [View](https://info340.joechamdani.com/Week-3/Quiz-2/) |
 
 ---
 

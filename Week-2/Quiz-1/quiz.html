@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 1 Practice - INFO 340</title>
+    <meta name="description" content="Practice quiz for INFO 340 Quiz 1 - Git, HTML, accessibility, and command line.">
+    <meta name="author" content="Joseph Davis Chamdani">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/quiz.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="./" class="back-link">&larr; Back to Study Guide</a></p>
+    <h1>Quiz 1 Practice</h1>
+
+    <div class="quiz-container">
+        <div id="quiz-start" class="quiz-header">
+            <p>Test your knowledge with questions from the Quiz 1 study guide.</p>
+            <p>Topics: Git, Command Line, HTML, Semantic HTML, Accessibility</p>
+            <div class="quiz-mode-select">
+                <button class="quiz-btn" onclick="startQuiz(15)">15 Random Questions</button>
+                <button class="quiz-btn" onclick="startQuiz(30)">All 30 Questions</button>
+            </div>
+        </div>
+
+        <div id="quiz-content" class="hidden">
+            <div class="quiz-progress">
+                <div class="quiz-progress-bar" id="progress-bar" style="width: 0%"></div>
+            </div>
+            <div class="quiz-stats">
+                <span class="question-counter" id="question-counter">Question 1 of 15</span>
+                <span class="quiz-current-score" id="current-score">Score: 0/0</span>
+            </div>
+            <div class="quiz-question" id="question-container">
+                <h3 id="question-text"></h3>
+                <button class="quiz-hint-btn" id="hint-btn" onclick="showHint()">Show Hint</button>
+                <div class="quiz-hint hidden" id="hint-text"></div>
+                <ul class="quiz-options" id="options-container"></ul>
+                <div class="quiz-source hidden" id="source-text"></div>
+            </div>
+            <div class="quiz-actions">
+                <button class="quiz-btn" id="prev-btn" onclick="prevQuestion()" disabled>Previous Question</button>
+                <button class="quiz-btn" id="next-btn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <div id="quiz-results" class="quiz-results hidden">
+            <h2>Quiz Complete!</h2>
+            <div class="quiz-score" id="score-display"></div>
+            <p class="quiz-message" id="score-message"></p>
+            <button class="quiz-btn" onclick="startQuiz(totalQuestions)">Try Again</button>
+            <button class="quiz-btn" onclick="window.location.href='./'">Back to Study Guide</button>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            {
+                question: "What is the correct order of Git actions after editing files?",
+                correct: "git add, git commit, git push",
+                wrong: ["git commit, git add, git push", "git push, git add, git commit", "git commit, git push, git add"],
+                hint: "You need to stage changes before committing, and commit before pushing.",
+                source: "INFO 201 Ch 4: Git and GitHub",
+                sourceUrl: "https://info201.github.io/git-basics.html"
+            },
+            {
+                question: "What does cd .. do?",
+                correct: "Moves you up one directory to the parent folder",
+                wrong: ["Moves you to the root directory", "Creates a new directory", "Lists the contents of the current directory"],
+                hint: "The two dots (..) represent the parent directory.",
+                source: "INFO 340 Ch 2: Client-Side Development",
+                sourceUrl: "https://info340.github.io/client-side-development.html"
+            },
+            {
+                question: "What is a Git commit?",
+                correct: "A saved snapshot of the project at a specific point in time",
+                wrong: ["A way to upload files to GitHub", "A command to download code", "A branch in the repository"],
+                hint: "Think of it as a checkpoint or save point in your project's history.",
+                source: "INFO 201 Ch 4: Git and GitHub",
+                sourceUrl: "https://info201.github.io/git-basics.html"
+            },
+            {
+                question: "What does HTML stand for?",
+                correct: "HyperText Markup Language",
+                wrong: ["High-Level Text Making Language", "HyperTransfer Markup Language", "Home Tool Markup Language"],
+                hint: "It's a markup language for creating hypertext documents.",
+                source: "INFO 340 Ch 3: HTML Fundamentals",
+                sourceUrl: "https://info340.github.io/html-fundamentals.html"
+            },
+            {
+                question: "What does the domain part of a URL represent?",
+                correct: "The server where a website is hosted",
+                wrong: ["The specific page on the website", "The file extension of the page", "The protocol used for communication"],
+                hint: "It's like an address that tells the browser where to find the website.",
+                source: "INFO 340 Ch 2: Client-Side Development",
+                sourceUrl: "https://info340.github.io/client-side-development.html"
+            },
+            {
+                question: "What is a Git repository?",
+                correct: "A folder that stores a project's files along with their version history",
+                wrong: ["A website for sharing code", "A type of programming language", "A tool for editing code"],
+                hint: "It contains all your project files plus the history of changes.",
+                source: "INFO 201 Ch 4: Git and GitHub",
+                sourceUrl: "https://info201.github.io/git-basics.html"
+            },
+            {
+                question: "What is a merge conflict?",
+                correct: "When Git cannot automatically combine changes because the same part was edited differently",
+                wrong: ["When you try to push to a non-existent branch", "When your internet connection fails during a push", "When you forget to add files before committing"],
+                hint: "It happens when two people edit the same lines of code.",
+                source: "INFO 201 Ch 15: Git Collaboration",
+                sourceUrl: "https://info201.github.io/git-collaboration.html"
+            },
+            {
+                question: "How do you resolve a merge conflict?",
+                correct: "Manually edit the file to choose changes, remove conflict markers, then add and commit",
+                wrong: ["Delete the repository and start over", "Run git conflict --resolve", "Push with the --force flag"],
+                hint: "You need to manually decide which changes to keep.",
+                source: "INFO 201 Ch 15: Git Collaboration",
+                sourceUrl: "https://info201.github.io/git-collaboration.html"
+            },
+            {
+                question: "What is Universal Design?",
+                correct: "Designing so products can be used by as many people as possible without special adaptations",
+                wrong: ["Designing websites that work only on desktop computers", "A specific CSS framework for responsive design", "A programming paradigm for JavaScript"],
+                hint: "It's about making things accessible to everyone, including people with disabilities.",
+                source: "INFO 340 Ch 5: Semantic HTML",
+                sourceUrl: "https://info340.github.io/semantic-html.html"
+            },
+            {
+                question: "What is the correct Git sequence to merge a branch into main?",
+                correct: "git checkout main, then git merge branch-name",
+                wrong: ["git merge main branch-name", "git branch merge main", "git push --merge branch-name"],
+                hint: "You need to be on the branch you want to merge INTO first.",
+                source: "INFO 201 Ch 14: Git Branches",
+                sourceUrl: "https://info201.github.io/git-branches.html"
+            },
+            {
+                question: "What is the difference between an absolute path and a relative path?",
+                correct: "Absolute starts from root (/), relative starts from current directory",
+                wrong: ["Absolute is shorter, relative is longer", "Absolute uses forward slashes, relative uses backslashes", "There is no difference"],
+                hint: "Absolute paths give the full location, relative paths are based on where you are.",
+                source: "INFO 340 Ch 2: Client-Side Development",
+                sourceUrl: "https://info340.github.io/client-side-development.html"
+            },
+            {
+                question: "What is the main benefit of semantic HTML?",
+                correct: "Describes meaning and structure for browsers, screen readers, and search engines",
+                wrong: ["Makes the page load faster", "Adds visual styling to elements", "Reduces the file size of HTML"],
+                hint: "Semantic HTML tells WHAT content is, not just how it looks.",
+                source: "INFO 340 Ch 5: Semantic HTML",
+                sourceUrl: "https://info340.github.io/semantic-html.html"
+            },
+            {
+                question: "What is the primary purpose of HTML?",
+                correct: "To structure and describe the content of a web page",
+                wrong: ["To style the visual appearance of a page", "To add interactivity to a page", "To store data on a server"],
+                hint: "HTML is about content and structure, not appearance.",
+                source: "INFO 340 Ch 3: HTML Fundamentals",
+                sourceUrl: "https://info340.github.io/html-fundamentals.html"
+            },
+            {
+                question: "What is the purpose of a .gitignore file?",
+                correct: "Tells Git which files should not be tracked or pushed",
+                wrong: ["Lists all the files in the repository", "Stores Git configuration settings", "Contains the commit history"],
+                hint: "You use it to exclude files like API keys or node_modules.",
+                source: "INFO 201 Ch 4: Git and GitHub",
+                sourceUrl: "https://info201.github.io/git-basics.html"
+            },
+            {
+                question: "What is the purpose of &lt;!DOCTYPE html&gt;?",
+                correct: "Tells the browser to use standards-compliant HTML rendering",
+                wrong: ["Defines the page title", "Links to an external stylesheet", "Creates a comment in the code"],
+                hint: "Without it, browsers might render pages in 'quirks mode'.",
+                source: "INFO 340 Ch 3: HTML Fundamentals",
+                sourceUrl: "https://info340.github.io/html-fundamentals.html"
+            },
+            {
+                question: "What is the purpose of the &lt;label&gt; element in a form?",
+                correct: "Associates text with an input field for usability and accessibility",
+                wrong: ["Creates a submit button", "Defines the form action", "Adds placeholder text to an input"],
+                hint: "Clicking the label should focus the associated input.",
+                source: "INFO 340 Ch 5: Semantic HTML",
+                sourceUrl: "https://info340.github.io/semantic-html.html"
+            },
+            {
+                question: "What is the purpose of the aria-label attribute?",
+                correct: "Provides an accessible name for elements for screen readers",
+                wrong: ["Adds a tooltip on hover", "Sets the element's ID", "Defines the element's CSS class"],
+                hint: "ARIA stands for Accessible Rich Internet Applications.",
+                source: "INFO 340 Ch 5: Semantic HTML",
+                sourceUrl: "https://info340.github.io/semantic-html.html"
+            },
+            {
+                question: "What is the relationship between headings and sectioning elements?",
+                correct: "Sectioning elements group content; headings describe what each section is about",
+                wrong: ["They are the same thing", "Headings replace sectioning elements", "Sectioning elements cannot contain headings"],
+                hint: "Together they define the document outline and structure.",
+                source: "INFO 340 Ch 5: Semantic HTML",
+                sourceUrl: "https://info340.github.io/semantic-html.html"
+            },
+            {
+                question: "What is the role of the &lt;head&gt; section?",
+                correct: "Contains metadata like page title, character set, and stylesheet links",
+                wrong: ["Contains the main visible content", "Defines the page header with navigation", "Stores JavaScript code only"],
+                hint: "The head contains info ABOUT the page, not the page content itself.",
+                source: "INFO 340 Ch 3: HTML Fundamentals",
+                sourceUrl: "https://info340.github.io/html-fundamentals.html"
+            },
+            {
+                question: "What should you do if someone else pushed to the remote before you?",
+                correct: "Pull the remote changes first, resolve conflicts if needed, then push",
+                wrong: ["Force push to overwrite their changes", "Delete your local repository", "Create a new branch and abandon your work"],
+                hint: "You need to integrate their changes with yours before pushing.",
+                source: "INFO 201 Ch 15: Git Collaboration",
+                sourceUrl: "https://info201.github.io/git-collaboration.html"
+            },
+            {
+                question: "Which command prints the full path of the current directory?",
+                correct: "pwd",
+                wrong: ["cd", "ls", "mkdir"],
+                hint: "pwd stands for 'print working directory'.",
+                source: "INFO 340 Ch 2: Client-Side Development",
+                sourceUrl: "https://info340.github.io/client-side-development.html"
+            },
+            {
+                question: "Which HTML element is used to create a hyperlink?",
+                correct: "&lt;a&gt;",
+                wrong: ["&lt;link&gt;", "&lt;href&gt;", "&lt;url&gt;"],
+                hint: "The 'a' stands for anchor.",
+                source: "INFO 340 Ch 3: HTML Fundamentals",
+                sourceUrl: "https://info340.github.io/html-fundamentals.html"
+            },
+            {
+                question: "What is a Git branch?",
+                correct: "An independent line of development without affecting the main codebase",
+                wrong: ["A copy of the repository on GitHub", "A way to delete old commits", "A command to merge code"],
+                hint: "Branches let you work on features separately.",
+                source: "INFO 201 Ch 14: Git Branches",
+                sourceUrl: "https://info201.github.io/git-branches.html"
+            },
+            {
+                question: "Which of the following is an absolute path?",
+                correct: "/Users/joe/Desktop/info340/index.html",
+                wrong: ["../index.html", "./styles/main.css", "images/logo.png"],
+                hint: "Absolute paths start from the root of the file system.",
+                source: "INFO 340 Ch 2: Client-Side Development",
+                sourceUrl: "https://info340.github.io/client-side-development.html"
+            },
+            {
+                question: "Which statement is NOT true about HTML?",
+                correct: "HTML controls page styling and visual appearance",
+                wrong: ["HTML structures content on a web page", "HTML uses tags to define elements", "HTML is a markup language"],
+                hint: "Styling is handled by CSS, not HTML.",
+                source: "INFO 340 Ch 3: HTML Fundamentals",
+                sourceUrl: "https://info340.github.io/html-fundamentals.html"
+            },
+            {
+                question: "What is the difference between HTML, CSS, and JavaScript?",
+                correct: "HTML: structure, CSS: styling, JavaScript: behavior/interactivity",
+                wrong: ["They all do the same thing", "HTML: styling, CSS: structure, JavaScript: content", "HTML: interactivity, CSS: content, JavaScript: styling"],
+                hint: "Think: content, appearance, and actions.",
+                source: "INFO 340 Ch 2: Client-Side Development",
+                sourceUrl: "https://info340.github.io/client-side-development.html"
+            },
+            {
+                question: "What is the purpose of the alt attribute on an image?",
+                correct: "Provides text for screen readers and displays if the image cannot load",
+                wrong: ["Sets the image width", "Adds a border around the image", "Links the image to another page"],
+                hint: "Alt text is essential for accessibility.",
+                source: "INFO 340 Ch 5: Semantic HTML",
+                sourceUrl: "https://info340.github.io/semantic-html.html"
+            },
+            {
+                question: "Why is accessibility important in web development?",
+                correct: "Ensures websites can be used by people with disabilities and different needs",
+                wrong: ["Makes websites load faster", "Reduces server costs", "Improves code readability"],
+                hint: "Accessibility is about making the web usable for everyone.",
+                source: "INFO 340 Ch 5: Semantic HTML",
+                sourceUrl: "https://info340.github.io/semantic-html.html"
+            },
+            {
+                question: "What does git status tell you?",
+                correct: "The current state: staged files, unstaged changes, and untracked files",
+                wrong: ["The commit history of the repository", "The URL of the remote repository", "The list of all branches"],
+                hint: "It shows what's ready to commit and what's not.",
+                source: "INFO 201 Ch 4: Git and GitHub",
+                sourceUrl: "https://info201.github.io/git-basics.html"
+            },
+            {
+                question: "Why is committing often considered a good practice?",
+                correct: "Creates checkpoints for tracking changes, collaboration, and recovery",
+                wrong: ["Makes the repository smaller", "Speeds up the push process", "Automatically deploys the code"],
+                hint: "Frequent commits give you more restore points.",
+                source: "INFO 201 Ch 4: Git and GitHub",
+                sourceUrl: "https://info201.github.io/git-basics.html"
+            }
+        ];
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+        let totalQuestions = 15;
+        let userAnswers = [];
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function startQuiz(count) {
+            totalQuestions = count;
+            currentQuestions = shuffleArray(allQuestions).slice(0, count);
+            currentQuestionIndex = 0;
+            score = 0;
+            answered = false;
+            userAnswers = new Array(count).fill(null);
+
+            document.getElementById('quiz-start').classList.add('hidden');
+            document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('quiz-content').classList.remove('hidden');
+
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            const previousAnswer = userAnswers[currentQuestionIndex];
+            answered = previousAnswer !== null;
+
+            document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
+            document.getElementById('progress-bar').style.width = `${((currentQuestionIndex) / totalQuestions) * 100}%`;
+            document.getElementById('question-text').innerHTML = question.question;
+
+            // Update score display
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('current-score').textContent = `Score: ${score}/${answeredCount}`;
+
+            // Reset hint
+            document.getElementById('hint-btn').classList.remove('hidden');
+            document.getElementById('hint-text').classList.add('hidden');
+            document.getElementById('hint-text').textContent = question.hint;
+
+            // Source
+            document.getElementById('source-text').innerHTML = `<strong>Source:</strong> <a href="${question.sourceUrl}" target="_blank">${question.source}</a>`;
+
+            const options = shuffleArray([question.correct, ...question.wrong]);
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            options.forEach((option) => {
+                const li = document.createElement('li');
+                li.className = 'quiz-option';
+                li.innerHTML = option;
+
+                if (previousAnswer !== null) {
+                    li.classList.add('disabled');
+                    if (option === question.correct) {
+                        li.classList.add('correct');
+                    }
+                    if (option === previousAnswer && previousAnswer !== question.correct) {
+                        li.classList.add('incorrect');
+                    }
+                } else {
+                    li.onclick = () => selectOption(li, option === question.correct, option);
+                }
+                optionsContainer.appendChild(li);
+            });
+
+            // Show/hide source based on answered state
+            if (previousAnswer !== null) {
+                document.getElementById('source-text').classList.remove('hidden');
+                document.getElementById('hint-btn').classList.add('hidden');
+            } else {
+                document.getElementById('source-text').classList.add('hidden');
+            }
+
+            // Update button states
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            document.getElementById('next-btn').disabled = previousAnswer === null;
+            document.getElementById('next-btn').textContent = currentQuestionIndex === totalQuestions - 1 ? 'See Results' : 'Next Question';
+        }
+
+        function showHint() {
+            document.getElementById('hint-text').classList.remove('hidden');
+            document.getElementById('hint-btn').classList.add('hidden');
+        }
+
+        function selectOption(element, isCorrect, selectedOption) {
+            if (answered) return;
+            answered = true;
+
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                if (opt.innerHTML === currentQuestions[currentQuestionIndex].correct) {
+                    opt.classList.add('correct');
+                }
+            });
+
+            if (isCorrect) {
+                score++;
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+            }
+
+            // Update score display
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('current-score').textContent = `Score: ${score}/${answeredCount}`;
+
+            // Show source
+            document.getElementById('source-text').classList.remove('hidden');
+
+            // Hide hint button if still showing
+            document.getElementById('hint-btn').classList.add('hidden');
+
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex >= totalQuestions) {
+                showResults();
+            } else {
+                showQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-content').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('score-display').textContent = `${score}/${totalQuestions}`;
+
+            let message = '';
+            if (percentage >= 90) message = 'Excellent! You\'re ready for the quiz!';
+            else if (percentage >= 80) message = 'Great job! Just a bit more review.';
+            else if (percentage >= 70) message = 'Good effort! Review the study guide.';
+            else if (percentage >= 60) message = 'Keep studying! You\'re getting there.';
+            else message = 'Review the study guide and try again!';
+
+            document.getElementById('score-message').textContent = `${percentage}% - ${message}`;
+        }
+    </script>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

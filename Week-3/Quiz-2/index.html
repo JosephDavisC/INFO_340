@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 2 Study Guide - INFO 340</title>
+    <meta name="description" content="INFO 340 Quiz 2 Study Guide - CSS selectors, Flexbox, responsive design, and Bootstrap concepts.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Quiz 2 Study Guide - INFO 340">
+    <meta property="og:description" content="Study guide covering CSS selectors, Flexbox, responsive design, and Bootstrap concepts.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-3/Quiz-2/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quiz 2 Study Guide - INFO 340">
+    <meta name="twitter:description" content="Study guide covering CSS selectors, Flexbox, responsive design, and Bootstrap concepts.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/quiz.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 3</a></p>
+    <h1>Quiz 2 Study Guide</h1>
+
+    <section class="quiz-intro">
+        <p>This study guide covers possible questions for Quiz 2. I answered each question based on my understanding to help me prepare.</p>
+        <p class="quiz-sources"><strong>Sources:</strong></p>
+        <ul class="quiz-sources-list">
+            <li><strong>INFO 340:</strong> <a href="https://info340.github.io/css-fundamentals.html" target="_blank">Ch 4: CSS Fundamentals</a>, <a href="https://info340.github.io/css-selectors.html" target="_blank">Ch 6: CSS Selectors</a>, <a href="https://info340.github.io/css-properties.html" target="_blank">Ch 7: CSS Properties</a>, <a href="https://info340.github.io/responsive-css.html" target="_blank">Ch 8: Responsive CSS</a>, <a href="https://info340.github.io/css-frameworks.html" target="_blank">Ch 9: CSS Frameworks</a></li>
+        </ul>
+        <a href="quiz.html" class="take-quiz-btn">Take Practice Quiz</a>
+    </section>
+
+    <section class="quiz-section">
+        <div class="qa">
+            <p class="question">Q1. How does <code>:nth-of-type()</code> differ from <code>:nth-child()</code>?</p>
+            <p class="answer"><code>:nth-child(n)</code> counts every child element in that parent, regardless of tag name, then checks if the element you selected is in position n. <code>:nth-of-type(n)</code> counts only siblings of the same tag name, then checks if the element is the nth one of that tag.<br><br><strong>Example:</strong> If a parent has h2, p, p, p, then <code>p:nth-child(2)</code> matches the first p because the first p is literally the 2nd child. But <code>p:nth-of-type(2)</code> matches the second p because it is the 2nd p tag.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q2. How does Bootstrap define its responsive breakpoints (e.g., sm, md, lg)?</p>
+            <p class="answer">Bootstrap breakpoints are minimum width thresholds, meaning "this size or larger." The grid classes apply starting at that breakpoint and continue upward unless overridden by a larger breakpoint class.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q3. In a CSS rule, what comes immediately before the curly braces <code>{ }</code>?</p>
+            <p class="answer">The selector, meaning what elements you are targeting, comes right before the braces.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q4. In CSS, what is the difference between padding and margin?</p>
+            <p class="answer"><strong>Padding:</strong> Space inside the element, between the content and the border.<br><strong>Margin:</strong> Space outside the element, between the border and other elements.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q5. In which scenario would it be most appropriate to use an absolute unit like <code>px</code> in CSS?</p>
+            <p class="answer">Use <code>px</code> when you need a fixed, precise size that should not scale with text size or container size, like thin borders, hairline rules, icon alignment tweaks, or small shadows. For text sizing and layout spacing, relative units are usually better for responsiveness.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q6. What does the following media query do? <code>@media (min-width: 768px)</code></p>
+            <p class="answer">It applies the CSS inside the media query only when the viewport width is at least 768px. At widths below 768px, those rules do not apply.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q7. What does the term "cascade" in CSS refer to?</p>
+            <p class="answer">It is how the browser decides which CSS rule wins when multiple rules match the same element, using priority based on specificity and source order.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q8. What happens if two CSS rules have the same specificity?</p>
+            <p class="answer">The one that appears later in the stylesheet wins, because later source order overrides earlier when specificity is tied.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q9. What happens if you forget the semicolon at the end of a CSS property declaration?</p>
+            <p class="answer">The browser will usually stop parsing correctly at that point in the rule. Often the next declaration breaks too, so you lose multiple properties, not just one.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q10. What happens if you use a shorthand property AFTER setting its individual component property earlier in the same rule?</p>
+            <p class="answer">The shorthand will override the earlier component properties for any components it sets, because it is applied later in the same rule. Example: setting <code>margin-left</code> then later setting <code>margin</code> will override <code>margin-left</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q11. What happens when multiple media queries apply at the same time (e.g., min-width: 768px and min-width: 992px)?</p>
+            <p class="answer">All matching media queries apply, and conflicts are resolved like normal CSS, usually by specificity, then by later source order. If you have multiple min-width queries, larger screens can satisfy several at once.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q12. What is a CSS framework?</p>
+            <p class="answer">A pre-built set of CSS classes, patterns, and sometimes components that gives you a consistent design system and layout tools so you do not start from zero. Bootstrap is a common example.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q13. What is required for interactive Bootstrap components (such as dropdowns or modals) to function properly?</p>
+            <p class="answer">Bootstrap's JavaScript bundle is required for interactive components like dropdowns and modals, because CSS alone cannot handle that behavior.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q14. What is the effect of setting an element's <code>box-sizing: border-box</code> property?</p>
+            <p class="answer">Width and height include padding and border, which makes sizing more predictable because the element does not grow beyond the specified width when you add padding or borders.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q15. What is the main objective in making a web page responsive?</p>
+            <p class="answer">To make the layout and content usable across different screen sizes, especially small screens first, without forcing horizontal scrolling or tiny unreadable text.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q16. What is the primary reason for writing CSS rules in a different file than the HTML?</p>
+            <p class="answer">Separation of concerns, easier maintenance, and reuse. It also keeps HTML cleaner and allows caching of the CSS file.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q17. What is the purpose of specifying the viewport meta element in a page?</p>
+            <p class="answer">It tells mobile browsers how to set the page's viewport width and scaling so responsive CSS behaves as intended instead of rendering the page like a zoomed out desktop site.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q18. What is the purpose of the <code>:first-child</code> pseudo-class?</p>
+            <p class="answer">It targets an element only if it is the first child of its parent.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q19. What is the recommended way to organize media queries in a CSS stylesheet?</p>
+            <p class="answer">Use a mobile-first approach: write base styles first, then add min-width media queries in increasing order so larger screen overrides come later and are easier to reason about.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q20. When including a CSS framework and your own stylesheet, which file should be linked last in the <code>&lt;head&gt;</code>?</p>
+            <p class="answer">Your own stylesheet should be linked last so you can override the framework defaults.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q21. When using a Flexbox, what does the <code>flex-grow</code> property control?</p>
+            <p class="answer">How much an item expands to fill available extra space in the flex container, relative to other items' grow values.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q22. When using Bootstrap, what is the effect does giving an element the class <code>col-md-6</code>?</p>
+            <p class="answer">At medium screens and larger, the element takes 6 of 12 columns, meaning about half width. Below the medium breakpoint, it falls back to the default stacking behavior unless you also specify smaller breakpoint classes.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q23. When using Bootstrap, what is the purpose of including the <code>btn</code> class on an element?</p>
+            <p class="answer">It applies Bootstrap's base button styling so links, buttons, or inputs look and behave like buttons in the design system, then you add variants like <code>btn-primary</code> or <code>btn-secondary</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q24. When would it be appropriate to use the <code>float</code> property?</p>
+            <p class="answer">Mostly for wrapping text around an image or small element, like a figure aligned left or right inside a paragraph. For page layout, flexbox or grid is usually the correct modern choice.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q25. Which CSS property removes an element from both the visible page flow and screen reader's perceived content?</p>
+            <p class="answer"><code>display: none</code> removes it from layout and accessibility tree, so it is not read by screen readers.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q26. Which CSS unit is relative to the parent element's font size?</p>
+            <p class="answer"><code>em</code> is relative to the parent's font size.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q27. Which of the following is most appropriate as a mobile-first design strategy?</p>
+            <p class="answer">Write the default CSS for the smallest screens first, then add min-width media queries to enhance the layout for larger screens.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q28. Which of the following is the correct order of selectors to style a hyperlink so that properties are not overwritten?</p>
+            <p class="answer">Use the LVHA order: <code>:link</code>, <code>:visited</code>, <code>:hover</code>, <code>:active</code>. That prevents later states from being overridden unexpectedly.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q29. Which of the following media query expressions would apply only when the screen is narrower than 600px?</p>
+            <p class="answer">Use a max-width query: <code>@media (max-width: 600px)</code> which applies up to 600px.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q30. Which of the following properties is NOT inherited by default?</p>
+            <p class="answer">Many layout properties are not inherited. Common examples include <code>margin</code>, <code>padding</code>, and <code>border</code>. Inherited ones are usually text-related like <code>color</code> and <code>font-family</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q31. Which of the following scenarios is the most appropriate scenario to use a Flexbox?</p>
+            <p class="answer">When you want to lay items out in a row or column and control alignment, spacing, and distribution, like a navbar, a card row, or centering content both horizontally and vertically.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q32. Which of the following selectors has the highest specificity?</p>
+            <p class="answer">In general: inline styles beat everything, then ID selectors, then class/attribute/pseudo-class selectors, then element selectors. That is the ranking you use to answer the multiple choice version.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q33. Which of the following statements about CSS inheritance is correct?</p>
+            <p class="answer">Text and font-related properties often inherit, layout properties usually do not. Children inherit from parents unless you override or set an explicit value.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q34. Which of the following statements is true about an element with the <code>display: flex</code> property?</p>
+            <p class="answer">It becomes a flex container, and its direct children become flex items that can be aligned and distributed using flexbox properties.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q35. Which property controls the space between an element's content and its border?</p>
+            <p class="answer"><code>padding</code></p>
+        </div>
+        <div class="qa">
+            <p class="question">Q36. Which selector correctly targets every even-numbered <code>&lt;li&gt;</code> element in an ordered list (with counting starting at 1)?</p>
+            <p class="answer"><code>li:nth-child(even)</code> because counting starts at 1.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q37. Which selector targets all <code>&lt;p&gt;</code> elements inside a <code>&lt;header&gt;</code>?</p>
+            <p class="answer"><code>header p</code> which is a descendant selector.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q38. Which symbol is used to denote a grouping selector in CSS?</p>
+            <p class="answer">A comma. Example: <code>h1, h2, h3 { ... }</code> applies the same rules to all listed selectors.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q39. Why is it discouraged to use id selectors for styling?</p>
+            <p class="answer">They are too specific, making overrides harder, and IDs should be unique, so the style is not reusable like a class.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q40. Why should you use a minified version of a CSS framework file (e.g., <code>bootstrap.min.css</code>) when including it in a webpage?</p>
+            <p class="answer">It is smaller to download, so it loads faster in the browser.</p>
+        </div>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 2 Practice - INFO 340</title>
+    <meta name="description" content="Practice quiz for INFO 340 Quiz 2 - CSS selectors, Flexbox, responsive design, and Bootstrap.">
+    <meta name="author" content="Joseph Davis Chamdani">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/quiz.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="./" class="back-link">&larr; Back to Study Guide</a></p>
+    <h1>Quiz 2 Practice</h1>
+
+    <div class="quiz-container">
+        <div id="quiz-start" class="quiz-header">
+            <p>Test your knowledge with questions from the Quiz 2 study guide.</p>
+            <p>Topics: CSS Selectors, Box Model, Flexbox, Responsive Design, Bootstrap</p>
+            <div class="quiz-mode-select">
+                <button class="quiz-btn" onclick="startQuiz(20)">20 Random Questions</button>
+                <button class="quiz-btn" onclick="startQuiz(40)">All 40 Questions</button>
+            </div>
+        </div>
+
+        <div id="quiz-content" class="hidden">
+            <div class="quiz-progress">
+                <div class="quiz-progress-bar" id="progress-bar" style="width: 0%"></div>
+            </div>
+            <div class="quiz-stats">
+                <span class="question-counter" id="question-counter">Question 1 of 20</span>
+                <span class="quiz-current-score" id="current-score">Score: 0/0</span>
+            </div>
+            <div class="quiz-question" id="question-container">
+                <h3 id="question-text"></h3>
+                <button class="quiz-hint-btn" id="hint-btn" onclick="showHint()">Show Hint</button>
+                <div class="quiz-hint hidden" id="hint-text"></div>
+                <ul class="quiz-options" id="options-container"></ul>
+                <div class="quiz-source hidden" id="source-text"></div>
+            </div>
+            <div class="quiz-actions">
+                <button class="quiz-btn" id="prev-btn" onclick="prevQuestion()" disabled>Previous Question</button>
+                <button class="quiz-btn" id="next-btn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <div id="quiz-results" class="quiz-results hidden">
+            <h2>Quiz Complete!</h2>
+            <div class="quiz-score" id="score-display"></div>
+            <p class="quiz-message" id="score-message"></p>
+            <button class="quiz-btn" onclick="startQuiz()">Try Again</button>
+            <button class="quiz-btn" onclick="window.location.href='./'">Back to Study Guide</button>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            {
+                question: "How does :nth-of-type() differ from :nth-child()?",
+                correct: ":nth-child() counts all children regardless of type, :nth-of-type() counts only siblings of the same tag",
+                wrong: [":nth-of-type() counts all children, :nth-child() counts only the same tag", "They are the same, just different syntax", ":nth-child() only works on lists, :nth-of-type() works on any element"],
+                hint: "Think about whether you're counting ALL elements or just elements of a specific type.",
+                source: "Ch 6: CSS Selectors",
+                sourceUrl: "https://info340.github.io/css-selectors.html"
+            },
+            {
+                question: "How does Bootstrap define its responsive breakpoints (e.g., sm, md, lg)?",
+                correct: "Minimum width thresholds that apply from that size and larger",
+                wrong: ["Maximum width thresholds that apply up to that size", "Exact pixel values that must match precisely", "Percentage-based widths relative to the parent"],
+                hint: "Bootstrap uses mobile-first design, so breakpoints define when styles START applying.",
+                source: "Ch 9: CSS Frameworks",
+                sourceUrl: "https://info340.github.io/css-frameworks.html"
+            },
+            {
+                question: "In a CSS rule, what comes immediately before the curly braces { }?",
+                correct: "The selector",
+                wrong: ["The property", "The value", "The declaration"],
+                hint: "The structure is: [something] { property: value; }",
+                source: "Ch 4: CSS Fundamentals",
+                sourceUrl: "https://info340.github.io/css-fundamentals.html"
+            },
+            {
+                question: "In CSS, what is the difference between padding and margin?",
+                correct: "Padding is space inside the element, margin is space outside",
+                wrong: ["Padding is space outside the element, margin is space inside", "Padding affects text, margin affects borders", "There is no difference, they are interchangeable"],
+                hint: "Think of the box model: content → padding → border → margin",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "In which scenario would it be most appropriate to use an absolute unit like px in CSS?",
+                correct: "For fixed sizes like thin borders, shadows, or precise alignment",
+                wrong: ["For all font sizes to ensure consistency", "For responsive layouts that need to scale", "For spacing that should grow with text size"],
+                hint: "Absolute units don't scale—use them when you need exact, fixed measurements.",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "What does the following media query do? @media (min-width: 768px)",
+                correct: "Applies styles only when viewport is 768px or wider",
+                wrong: ["Applies styles only when viewport is less than 768px", "Applies styles at exactly 768px width", "Sets the maximum width of the page to 768px"],
+                hint: "min-width means 'at least this wide'—it's a minimum threshold.",
+                source: "Ch 8: Responsive CSS",
+                sourceUrl: "https://info340.github.io/responsive-css.html"
+            },
+            {
+                question: "What does the term \"cascade\" in CSS refer to?",
+                correct: "How the browser determines which rule wins based on specificity and source order",
+                wrong: ["How styles flow from parent to child elements", "The waterfall-like visual effect in animations", "How CSS files are loaded in sequence"],
+                hint: "When multiple rules target the same element, the cascade determines the winner.",
+                source: "Ch 4: CSS Fundamentals",
+                sourceUrl: "https://info340.github.io/css-fundamentals.html"
+            },
+            {
+                question: "What happens if two CSS rules have the same specificity?",
+                correct: "The one that appears later in the stylesheet wins",
+                wrong: ["The one that appears first in the stylesheet wins", "Both rules are applied simultaneously", "Neither rule is applied"],
+                hint: "When specificity is tied, position in the stylesheet breaks the tie.",
+                source: "Ch 6: CSS Selectors",
+                sourceUrl: "https://info340.github.io/css-selectors.html"
+            },
+            {
+                question: "What happens if you forget the semicolon at the end of a CSS property declaration?",
+                correct: "The browser stops parsing correctly and may break multiple properties",
+                wrong: ["Only that one property is ignored", "The browser automatically adds it", "The entire stylesheet fails to load"],
+                hint: "Missing semicolons can cause cascading parsing errors.",
+                source: "Ch 4: CSS Fundamentals",
+                sourceUrl: "https://info340.github.io/css-fundamentals.html"
+            },
+            {
+                question: "What happens if you use a shorthand property AFTER setting its individual component property earlier in the same rule?",
+                correct: "The shorthand overrides the earlier component properties",
+                wrong: ["The component properties override the shorthand", "Both are combined together", "A syntax error occurs"],
+                hint: "Later declarations override earlier ones—shorthand sets ALL components.",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "What happens when multiple media queries apply at the same time (e.g., min-width: 768px and min-width: 992px)?",
+                correct: "All matching queries apply, conflicts resolved by specificity then source order",
+                wrong: ["Only the first matching query applies", "Only the last matching query applies", "The browser picks one at random"],
+                hint: "Media queries don't cancel each other—they all apply if conditions are met.",
+                source: "Ch 8: Responsive CSS",
+                sourceUrl: "https://info340.github.io/responsive-css.html"
+            },
+            {
+                question: "What is a CSS framework?",
+                correct: "A pre-built set of CSS classes and patterns for consistent design",
+                wrong: ["A programming language for styling", "A browser extension for CSS editing", "A tool for compressing CSS files"],
+                hint: "Frameworks like Bootstrap provide ready-to-use CSS classes.",
+                source: "Ch 9: CSS Frameworks",
+                sourceUrl: "https://info340.github.io/css-frameworks.html"
+            },
+            {
+                question: "What is required for interactive Bootstrap components (such as dropdowns or modals) to function properly?",
+                correct: "Bootstrap's JavaScript bundle",
+                wrong: ["Only the CSS file", "jQuery library only", "A special Bootstrap browser"],
+                hint: "Dropdowns, modals, and carousels need JavaScript for interactivity.",
+                source: "Ch 9: CSS Frameworks",
+                sourceUrl: "https://info340.github.io/css-frameworks.html"
+            },
+            {
+                question: "What is the effect of setting an element's box-sizing: border-box property?",
+                correct: "Width and height include padding and border",
+                wrong: ["Width and height exclude padding and border", "Only the border is included in width", "The element becomes a flexbox container"],
+                hint: "border-box makes sizing more predictable by including padding/border in the width.",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "What is the main objective in making a web page responsive?",
+                correct: "Make content usable across different screen sizes without horizontal scrolling",
+                wrong: ["Make the page load faster on mobile devices", "Reduce the amount of CSS needed", "Support older browsers"],
+                hint: "Responsive design adapts layout to work on any screen size.",
+                source: "Ch 8: Responsive CSS",
+                sourceUrl: "https://info340.github.io/responsive-css.html"
+            },
+            {
+                question: "What is the primary reason for writing CSS rules in a different file than the HTML?",
+                correct: "Separation of concerns, easier maintenance, reuse, and caching",
+                wrong: ["CSS cannot be written in HTML files", "It makes the page load faster always", "Browsers require external CSS files"],
+                hint: "Separating CSS from HTML makes code cleaner and more maintainable.",
+                source: "Ch 4: CSS Fundamentals",
+                sourceUrl: "https://info340.github.io/css-fundamentals.html"
+            },
+            {
+                question: "What is the purpose of specifying the viewport meta element in a page?",
+                correct: "Tells mobile browsers how to set viewport width and scaling",
+                wrong: ["Sets the background color of the page", "Defines the page title for search engines", "Controls which CSS file to load"],
+                hint: "Without the viewport meta tag, mobile browsers render pages at desktop width.",
+                source: "Ch 8: Responsive CSS",
+                sourceUrl: "https://info340.github.io/responsive-css.html"
+            },
+            {
+                question: "What is the purpose of the :first-child pseudo-class?",
+                correct: "Targets an element only if it is the first child of its parent",
+                wrong: ["Targets the first element on the entire page", "Targets all children of the first element", "Targets elements that have children"],
+                hint: "It's about position relative to siblings, not the whole document.",
+                source: "Ch 6: CSS Selectors",
+                sourceUrl: "https://info340.github.io/css-selectors.html"
+            },
+            {
+                question: "What is the recommended way to organize media queries in a CSS stylesheet?",
+                correct: "Mobile-first: base styles first, then min-width queries in increasing order",
+                wrong: ["Desktop-first: large screens first, then max-width queries", "Alphabetically by breakpoint name", "All media queries at the top of the stylesheet"],
+                hint: "Start with the smallest screen, then enhance for larger ones.",
+                source: "Ch 8: Responsive CSS",
+                sourceUrl: "https://info340.github.io/responsive-css.html"
+            },
+            {
+                question: "When including a CSS framework and your own stylesheet, which file should be linked last in the &lt;head&gt;?",
+                correct: "Your own stylesheet, so you can override framework defaults",
+                wrong: ["The framework, so it has the final say", "It doesn't matter, order is irrelevant", "They should be in the same file"],
+                hint: "Later stylesheets can override earlier ones due to the cascade.",
+                source: "Ch 9: CSS Frameworks",
+                sourceUrl: "https://info340.github.io/css-frameworks.html"
+            },
+            {
+                question: "When using a Flexbox, what does the flex-grow property control?",
+                correct: "How much an item expands to fill available extra space",
+                wrong: ["The initial size of the item", "How much the item shrinks when space is limited", "The order of items in the container"],
+                hint: "grow = expand, shrink = contract, basis = initial size",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "When using Bootstrap, what is the effect does giving an element the class col-md-6?",
+                correct: "Takes 6 of 12 columns (half width) on medium screens and larger",
+                wrong: ["Takes 6 pixels of width on all screens", "Creates 6 columns inside the element", "Sets margin to 6 units on medium screens"],
+                hint: "Bootstrap uses a 12-column grid. 6/12 = half width.",
+                source: "Ch 9: CSS Frameworks",
+                sourceUrl: "https://info340.github.io/css-frameworks.html"
+            },
+            {
+                question: "When using Bootstrap, what is the purpose of including the btn class on an element?",
+                correct: "Applies base button styling, then add variants like btn-primary",
+                wrong: ["Creates a submit button automatically", "Adds JavaScript click handlers", "Makes any element into a link"],
+                hint: "btn is the base class; variants like btn-primary add colors.",
+                source: "Ch 9: CSS Frameworks",
+                sourceUrl: "https://info340.github.io/css-frameworks.html"
+            },
+            {
+                question: "When would it be appropriate to use the float property?",
+                correct: "For wrapping text around an image or small element",
+                wrong: ["For creating multi-column page layouts", "For centering elements horizontally", "For creating responsive grids"],
+                hint: "Float is mostly for text wrapping—use Flexbox/Grid for layouts.",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "Which CSS property removes an element from both the visible page flow and screen reader's perceived content?",
+                correct: "display: none",
+                wrong: ["visibility: hidden", "opacity: 0", "position: absolute"],
+                hint: "display: none removes completely; visibility: hidden just makes invisible.",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "Which CSS unit is relative to the parent element's font size?",
+                correct: "em",
+                wrong: ["rem", "px", "vh"],
+                hint: "em = parent's font size, rem = root element's font size",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "Which of the following is most appropriate as a mobile-first design strategy?",
+                correct: "Default styles for smallest screens, then min-width queries for larger",
+                wrong: ["Default styles for largest screens, then max-width queries for smaller", "Use only percentage-based widths", "Create separate CSS files for each device"],
+                hint: "Mobile-first starts small and adds complexity for bigger screens.",
+                source: "Ch 8: Responsive CSS",
+                sourceUrl: "https://info340.github.io/responsive-css.html"
+            },
+            {
+                question: "Which of the following is the correct order of selectors to style a hyperlink so that properties are not overwritten?",
+                correct: ":link, :visited, :hover, :active (LVHA)",
+                wrong: [":active, :hover, :visited, :link", ":hover, :active, :link, :visited", ":visited, :link, :active, :hover"],
+                hint: "Remember: LoVe HAte (LVHA)",
+                source: "Ch 6: CSS Selectors",
+                sourceUrl: "https://info340.github.io/css-selectors.html"
+            },
+            {
+                question: "Which of the following media query expressions would apply only when the screen is narrower than 600px?",
+                correct: "@media (max-width: 600px)",
+                wrong: ["@media (min-width: 600px)", "@media (width: 600px)", "@media (screen-width < 600px)"],
+                hint: "max-width means 'up to this width'—a maximum threshold.",
+                source: "Ch 8: Responsive CSS",
+                sourceUrl: "https://info340.github.io/responsive-css.html"
+            },
+            {
+                question: "Which of the following properties is NOT inherited by default?",
+                correct: "margin, padding, or border",
+                wrong: ["color", "font-family", "font-size"],
+                hint: "Text properties inherit; layout/box properties don't.",
+                source: "Ch 4: CSS Fundamentals",
+                sourceUrl: "https://info340.github.io/css-fundamentals.html"
+            },
+            {
+                question: "Which of the following scenarios is the most appropriate scenario to use a Flexbox?",
+                correct: "Laying out items in a row or column with flexible alignment",
+                wrong: ["Creating a full page grid layout", "Adding animations to elements", "Styling text content"],
+                hint: "Flexbox excels at one-dimensional layouts (row OR column).",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "Which of the following selectors has the highest specificity?",
+                correct: "Inline styles, then ID, then class, then element",
+                wrong: ["Element, then class, then ID, then inline", "Class, then ID, then element, then inline", "All selectors have equal specificity"],
+                hint: "Specificity order: inline > ID > class > element",
+                source: "Ch 6: CSS Selectors",
+                sourceUrl: "https://info340.github.io/css-selectors.html"
+            },
+            {
+                question: "Which of the following statements about CSS inheritance is correct?",
+                correct: "Text/font properties often inherit, layout properties usually don't",
+                wrong: ["All properties inherit by default", "No properties inherit by default", "Only color properties inherit"],
+                hint: "Font and text styles flow down; margins and padding don't.",
+                source: "Ch 4: CSS Fundamentals",
+                sourceUrl: "https://info340.github.io/css-fundamentals.html"
+            },
+            {
+                question: "Which of the following statements is true about an element with the display: flex property?",
+                correct: "It becomes a flex container and direct children become flex items",
+                wrong: ["It becomes a flex item inside its parent", "All descendants become flex items", "It creates a new block formatting context only"],
+                hint: "Flexbox affects the container and its direct children only.",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "Which property controls the space between an element's content and its border?",
+                correct: "padding",
+                wrong: ["margin", "border-spacing", "gap"],
+                hint: "Content → padding → border → margin (inside to outside)",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "Which selector correctly targets every even‑numbered &lt;li&gt; element in an ordered list (with counting starting at 1)?",
+                correct: "li:nth-child(even)",
+                wrong: ["li:nth-child(odd)", "li:even", "li[even]"],
+                hint: "nth-child can use 'even', 'odd', or formulas like 2n.",
+                source: "Ch 6: CSS Selectors",
+                sourceUrl: "https://info340.github.io/css-selectors.html"
+            },
+            {
+                question: "Which selector targets all &lt;p&gt; elements inside a &lt;header&gt;?",
+                correct: "header p (descendant selector)",
+                wrong: ["header > p (only direct children)", "header + p (adjacent sibling)", "header, p (both separately)"],
+                hint: "Space between selectors means 'anywhere inside' (descendant).",
+                source: "Ch 6: CSS Selectors",
+                sourceUrl: "https://info340.github.io/css-selectors.html"
+            },
+            {
+                question: "Which symbol is used to denote a grouping selector in CSS?",
+                correct: "Comma (,)",
+                wrong: ["Greater than (>)", "Plus (+)", "Tilde (~)"],
+                hint: "Commas let you apply the same styles to multiple selectors.",
+                source: "Ch 6: CSS Selectors",
+                sourceUrl: "https://info340.github.io/css-selectors.html"
+            },
+            {
+                question: "Why is it discouraged to use id selectors for styling?",
+                correct: "Too specific, making overrides harder, and not reusable",
+                wrong: ["IDs don't work in CSS", "IDs are slower to process", "IDs can only be used in JavaScript"],
+                hint: "High specificity makes CSS harder to maintain and override.",
+                source: "Ch 6: CSS Selectors",
+                sourceUrl: "https://info340.github.io/css-selectors.html"
+            },
+            {
+                question: "Why should you use a minified version of a CSS framework file (e.g., bootstrap.min.css) when including it in a webpage?",
+                correct: "Smaller file size, faster download",
+                wrong: ["It has more features", "It's easier to read and debug", "It's required for production"],
+                hint: "Minification removes whitespace and comments to reduce file size.",
+                source: "Ch 9: CSS Frameworks",
+                sourceUrl: "https://info340.github.io/css-frameworks.html"
+            }
+        ];
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+        let totalQuestions = 20;
+        let userAnswers = [];
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function startQuiz(count) {
+            totalQuestions = count;
+            currentQuestions = shuffleArray(allQuestions).slice(0, count);
+            currentQuestionIndex = 0;
+            score = 0;
+            answered = false;
+            userAnswers = new Array(count).fill(null);
+
+            document.getElementById('quiz-start').classList.add('hidden');
+            document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('quiz-content').classList.remove('hidden');
+
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            const previousAnswer = userAnswers[currentQuestionIndex];
+            answered = previousAnswer !== null;
+
+            document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
+            document.getElementById('progress-bar').style.width = `${((currentQuestionIndex) / totalQuestions) * 100}%`;
+            document.getElementById('question-text').innerHTML = question.question;
+
+            // Update score display
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('current-score').textContent = `Score: ${score}/${answeredCount}`;
+
+            // Reset hint
+            document.getElementById('hint-btn').classList.remove('hidden');
+            document.getElementById('hint-text').classList.add('hidden');
+            document.getElementById('hint-text').textContent = question.hint;
+
+            // Source
+            document.getElementById('source-text').innerHTML = `<strong>Source:</strong> <a href="${question.sourceUrl}" target="_blank">${question.source}</a>`;
+
+            const options = shuffleArray([question.correct, ...question.wrong]);
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            options.forEach((option) => {
+                const li = document.createElement('li');
+                li.className = 'quiz-option';
+                li.innerHTML = option;
+
+                if (previousAnswer !== null) {
+                    li.classList.add('disabled');
+                    if (option === question.correct) {
+                        li.classList.add('correct');
+                    }
+                    if (option === previousAnswer && previousAnswer !== question.correct) {
+                        li.classList.add('incorrect');
+                    }
+                } else {
+                    li.onclick = () => selectOption(li, option === question.correct, option);
+                }
+                optionsContainer.appendChild(li);
+            });
+
+            // Show/hide source based on answered state
+            if (previousAnswer !== null) {
+                document.getElementById('source-text').classList.remove('hidden');
+                document.getElementById('hint-btn').classList.add('hidden');
+            } else {
+                document.getElementById('source-text').classList.add('hidden');
+            }
+
+            // Update button states
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            document.getElementById('next-btn').disabled = previousAnswer === null;
+            document.getElementById('next-btn').textContent = currentQuestionIndex === totalQuestions - 1 ? 'See Results' : 'Next Question';
+        }
+
+        function showHint() {
+            document.getElementById('hint-text').classList.remove('hidden');
+            document.getElementById('hint-btn').classList.add('hidden');
+        }
+
+        function selectOption(element, isCorrect, selectedOption) {
+            if (answered) return;
+            answered = true;
+
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                if (opt.innerHTML === currentQuestions[currentQuestionIndex].correct) {
+                    opt.classList.add('correct');
+                }
+            });
+
+            if (isCorrect) {
+                score++;
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+            }
+
+            // Update score display
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('current-score').textContent = `Score: ${score}/${answeredCount}`;
+
+            // Show source
+            document.getElementById('source-text').classList.remove('hidden');
+
+            // Hide hint button if still showing
+            document.getElementById('hint-btn').classList.add('hidden');
+
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex >= totalQuestions) {
+                showResults();
+            } else {
+                showQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-content').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('score-display').textContent = `${score}/${totalQuestions}`;
+
+            let message = '';
+            if (percentage >= 90) message = 'Excellent! You\'re ready for the quiz!';
+            else if (percentage >= 80) message = 'Great job! Just a bit more review.';
+            else if (percentage >= 70) message = 'Good effort! Review the study guide.';
+            else if (percentage >= 60) message = 'Keep studying! You\'re getting there.';
+            else message = 'Review the study guide and try again!';
+
+            document.getElementById('score-message').textContent = `${percentage}% - ${message}`;
+        }
+    </script>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>
