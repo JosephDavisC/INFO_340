@@ -57,6 +57,21 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 - React
 - Git & GitHub
 - Jest (Testing)
+- Node.js (Build script)
+
+## Build System
+
+Landing page and week summary pages are generated from `build/data.js`.
+
+```bash
+# Regenerate landing page + all week pages
+node build/build.js
+
+# Scaffold a new content page with boilerplate
+node build/build.js new "Week-N/Page-Name" "Page Title"
+```
+
+No dependencies required — just Node.js.
 
 ## Author
 **Joseph Davis Chamdani**
