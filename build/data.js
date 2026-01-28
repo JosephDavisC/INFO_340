@@ -104,6 +104,7 @@ module.exports = {
             activities: [
                 { label: 'Jan 26', title: 'JavaScript: Variables, Arrays, Objects', path: 'Jan-26-2026/' },
                 { label: 'Jan 28', title: 'Functional JavaScript: Callbacks & Array Methods', path: 'Jan-28-2026/' },
+                { label: 'Project Check-In', title: 'Draft 1 Progress & Git Collaboration (Lab)', path: 'Project-Check-In/' },
                 { label: 'Problem Set 05', title: 'JavaScript Basics', path: 'Problem-Set-05/' },
             ],
             concepts: [
