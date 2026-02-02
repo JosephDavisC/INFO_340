@@ -52,6 +52,14 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 
 ---
 
+## Week 5
+
+| Date | Topic | Type | Link |
+|------|-------|------|------|
+| Feb 2, 2026 | DOM Manipulation & Events | In-Class | [View](https://info340.joechamdani.com/Week-5/Feb-2-2026/) |
+
+---
+
 ## Tech Stack
 - HTML5
 - CSS3

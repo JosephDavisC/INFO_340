@@ -117,8 +117,30 @@ module.exports = {
             ],
             resourcesNote: 'From INFO 340: Client-Side Development',
             resources: [
-                { title: 'Ch 10: JavaScript', url: 'https://info340.github.io/javascript.html' },
-                { title: 'Ch 11: Functional Programming', url: 'https://info340.github.io/functional-programming.html' },
+                { title: 'Ch 10: JavaScript Fundamentals', url: 'https://info340.github.io/javascript.html' },
+                { title: 'Ch 11: Functional Programming in JS', url: 'https://info340.github.io/functional-programming.html' },
+            ],
+        },
+        {
+            number: 5,
+            dateRange: 'Feb 2-8',
+            subtitle: 'DOM Manipulation & Events',
+            description: 'DOM Manipulation, Event Handling, and Interactive Web Apps.',
+            landingDesc: 'DOM Manipulation & Events',
+            activities: [
+                { label: 'Feb 2', title: 'DOM Manipulation & Events', path: 'Feb-2-2026/' },
+            ],
+            concepts: [
+                { term: 'DOM', desc: 'Document Object Model - tree of element nodes from HTML' },
+                { term: 'Selecting Elements', desc: '<code>querySelector()</code>, <code>querySelectorAll()</code>' },
+                { term: 'Modifying Content', desc: '<code>textContent</code>, <code>innerHTML</code>' },
+                { term: 'Classes', desc: '<code>classList.add()</code>, <code>classList.remove()</code>, <code>classList.toggle()</code>' },
+                { term: 'Creating Elements', desc: '<code>createElement()</code>, <code>appendChild()</code>' },
+                { term: 'Events', desc: '<code>addEventListener()</code>, event handlers, <code>event.preventDefault()</code>' },
+            ],
+            resourcesNote: 'From INFO 340: Client-Side Development',
+            resources: [
+                { title: 'Ch 12: Document Object Model (DOM)', url: 'https://info340.github.io/dom.html' },
             ],
         },
     ],

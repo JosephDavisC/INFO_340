@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feb 2 - DOM Manipulation - INFO 340</title>
+    <meta name="description" content="INFO 340 Feb 2, 2026 - DOM Manipulation, Event Handling, and Interactive Web Apps.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Feb 2 - DOM Manipulation - INFO 340">
+    <meta property="og:description" content="DOM Manipulation, Event Handling, and Interactive Web Apps.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-5/Feb-2-2026/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Feb 2 - DOM Manipulation - INFO 340">
+    <meta name="twitter:description" content="DOM Manipulation, Event Handling, and Interactive Web Apps.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 5</a></p>
+    <h1>Feb 2, 2026</h1>
+    <p class="week-subtitle">DOM Manipulation & Events</p>
+
+    <section class="summary">
+        <h2>Lecture Notes</h2>
+        <p><strong>Slides:</strong> <a href="https://slides.com/joelross/info340wi26-dom" target="_blank">The DOM</a></p>
+
+        <h3>The Document Object Model (DOM)</h3>
+        <ul>
+            <li>The DOM is a tree of element nodes representing HTML structure</li>
+            <li>JavaScript can access and manipulate this tree programmatically</li>
+            <li>The <code>document</code> object is the entry point to the DOM</li>
+        </ul>
+
+        <h3>Selecting Elements</h3>
+        <ul>
+            <li><code>document.querySelector(selector)</code> — returns first matching element</li>
+            <li><code>document.querySelectorAll(selector)</code> — returns NodeList of all matches</li>
+            <li>Use any CSS selector: <code>'#id'</code>, <code>'.class'</code>, <code>'tag'</code>, <code>'div > p'</code></li>
+        </ul>
+
+        <h3>Modifying Content</h3>
+        <ul>
+            <li><code>element.textContent</code> — get/set text content (no HTML parsing)</li>
+            <li><code>element.innerHTML</code> — get/set HTML content (parses HTML tags)</li>
+        </ul>
+
+        <h3>Changing Attributes & Styles</h3>
+        <ul>
+            <li>Attributes: <code>element.src</code>, <code>element.href</code>, <code>element.alt</code></li>
+            <li>Classes: <code>classList.add('class')</code>, <code>classList.remove('class')</code>, <code>classList.toggle('class')</code></li>
+            <li>Inline styles: <code>element.style.fontSize = '2rem'</code> (camelCase property names)</li>
+        </ul>
+
+        <h3>Creating Elements</h3>
+        <ul>
+            <li><code>document.createElement('tag')</code> — creates a new element</li>
+            <li><code>parent.appendChild(element)</code> — adds element as last child</li>
+            <li>Set properties before appending: <code>newDiv.textContent = 'Hello'</code></li>
+        </ul>
+
+        <h3>Render Functions</h3>
+        <ul>
+            <li>Create functions like <code>renderCard(data)</code> that build and return DOM elements</li>
+            <li>Keeps code organized and reusable</li>
+            <li>Pattern: create element → set properties → append children → return element</li>
+        </ul>
+
+        <h3>Event Handling</h3>
+        <ul>
+            <li><code>element.addEventListener('event', callback)</code> — registers an event handler</li>
+            <li>Common events: <code>'click'</code>, <code>'submit'</code>, <code>'input'</code>, <code>'change'</code></li>
+            <li>Callback receives an <code>event</code> object with details about the event</li>
+            <li><code>event.preventDefault()</code> — stops default browser behavior (e.g., form submission)</li>
+        </ul>
+
+        <h3>Web App Architecture</h3>
+        <ul>
+            <li>Define application <strong>state</strong> (data) as variables</li>
+            <li>Create <strong>render functions</strong> to display state</li>
+            <li>On user actions, <strong>update state</strong> then <strong>re-render</strong></li>
+        </ul>
+
+        <h3>Form Handling</h3>
+        <ul>
+            <li>Listen for <code>'submit'</code> event on the form element</li>
+            <li>Call <code>event.preventDefault()</code> to stop page reload</li>
+            <li>Access input values via <code>inputElement.value</code></li>
+        </ul>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>DOM:</strong> Tree representation of HTML that JavaScript can manipulate</li>
+            <li><strong>querySelector:</strong> Select elements using CSS selectors</li>
+            <li><strong>textContent vs innerHTML:</strong> Plain text vs HTML parsing</li>
+            <li><strong>classList:</strong> Add, remove, or toggle CSS classes</li>
+            <li><strong>createElement:</strong> Dynamically build new DOM elements</li>
+            <li><strong>addEventListener:</strong> Respond to user interactions</li>
+            <li><strong>preventDefault:</strong> Stop default browser behavior</li>
+        </ul>
+    </section>
+
+    <section class="resources">
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://info340.github.io/dom.html" target="_blank">Ch 12: Document Object Model (DOM)</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model" target="_blank">MDN: DOM</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>
