@@ -129,6 +129,7 @@ module.exports = {
             landingDesc: 'DOM Manipulation & Events',
             activities: [
                 { label: 'Feb 2', title: 'DOM Manipulation & Events', path: 'Feb-2-2026/' },
+                { label: 'Project Check-In', title: 'Peer Feedback on Draft 1 (Lab)', path: 'Project-Check-In/' },
             ],
             concepts: [
                 { term: 'DOM', desc: 'Document Object Model - tree of element nodes from HTML' },
