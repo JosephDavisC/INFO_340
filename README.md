@@ -49,6 +49,7 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 | Jan 26, 2026 | JavaScript: Variables, Arrays, Objects | In-Class | [View](https://info340.joechamdani.com/Week-4/Jan-26-2026/) |
 | Jan 28, 2026 | Functional JavaScript: Callbacks & Array Methods | In-Class | [View](https://info340.joechamdani.com/Week-4/Jan-28-2026/) |
 | Jan 28, 2026 | Draft 1 Progress & Git Collaboration | Project Check-In | [View](https://info340.joechamdani.com/Week-4/Project-Check-In/) |
+| Feb 1, 2026 | Static Mock-Up | Project Draft 1 | [View](https://info340.joechamdani.com/Week-4/Project-Draft-1/) |
 
 ---
 

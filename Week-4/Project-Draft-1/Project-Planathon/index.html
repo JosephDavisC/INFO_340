@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Joseph Davis Chamdani, Kenneth Wu, Rowan Cooper, Winson Teh">
+  <meta name="description" content="Planathon helps hackathon organizers plan and manage events with task management, team coordination, and milestone tracking.">
+  <title>Dashboard - Planathon</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body class="dashboard-page">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <a href="index.html" class="sidebar-logo">
+        <img src="img/logo.png" alt="Planathon logo">
+        <span>Planathon</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <a href="index.html" class="active">Dashboard</a>
+        <a href="task.html">Tasks</a>
+        <a href="teams.html">Teams</a>
+        <a href="milestones.html">Milestones</a>
+      </nav>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="user-info">
+        <img class="user-avatar" src="img/Logo_Joseph.PNG" alt="Joseph profile">
+        <div>
+          <p class="user-name">Joseph</p>
+          <p class="user-role">Organizer</p>
+        </div>
+      </div>
+      <a href="splash.html" class="logout-btn">↪ Logout</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <div class="dashboard-header">
+      <h1 class="fw-bold">Welcome back, Joseph</h1>
+      <p>Hackathon (Name) 2026</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <p class="stat-label">Upcoming Milestones</p>
+            <p class="stat-number">5</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <p class="stat-label">Pending Tasks</p>
+            <p class="stat-number">12</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <p class="stat-label">Team Members</p>
+            <p class="stat-number">4</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Tasks and Upcoming Milestones -->
+    <div class="row g-4">
+      <!-- Recent Tasks -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-3">
+              <h2 class="h5">Recent Tasks</h2>
+              <a href="task.html">View All</a>
+            </div>
+
+            <div class="border rounded p-3 mb-2">
+              <p class="mb-1">Confirm venue booking</p>
+              <span class="badge text-danger border border-danger">High</span>
+              <span class="text-muted ms-2">Joseph</span>
+            </div>
+
+            <div class="border rounded p-3 mb-2">
+              <p class="mb-1">Send sponsor emails</p>
+              <span class="badge text-warning border border-warning">Medium</span>
+              <span class="text-muted ms-2">Rowan</span>
+            </div>
+
+            <div class="border rounded p-3 mb-2">
+              <p class="mb-1">Update website copy</p>
+              <span class="badge text-primary border border-primary">Low</span>
+              <span class="text-muted ms-2">Winson</span>
+            </div>
+
+            <div class="border rounded p-3">
+              <p class="mb-1">Order swag items</p>
+              <span class="badge text-danger border border-danger">High</span>
+              <span class="text-muted ms-2">Kenneth</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Milestones -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-3">
+              <h2 class="h5">Upcoming Milestones</h2>
+              <a href="milestones.html">View All</a>
+            </div>
+
+            <div class="border rounded p-3 mb-2 d-flex justify-content-between align-items-center">
+              <div>
+                <p class="mb-0">Registration Opens</p>
+                <small class="text-muted">Jan 25, 2026</small>
+              </div>
+              <span class="badge text-primary border border-primary">Upcoming</span>
+            </div>
+
+            <div class="border rounded p-3 mb-2 d-flex justify-content-between align-items-center">
+              <div>
+                <p class="mb-0">Sponsor Confirmations Due</p>
+                <small class="text-muted">Feb 1, 2026</small>
+              </div>
+              <span class="badge text-primary border border-primary">Upcoming</span>
+            </div>
+
+            <div class="border rounded p-3 mb-2 d-flex justify-content-between align-items-center">
+              <div>
+                <p class="mb-0">Schedule Release</p>
+                <small class="text-muted">Feb 10, 2026</small>
+              </div>
+              <span class="badge text-primary border border-primary">Upcoming</span>
+            </div>
+
+            <div class="border rounded p-3 d-flex justify-content-between align-items-center">
+              <div>
+                <p class="mb-0">Venue Deposit Paid</p>
+                <small class="text-muted">Jan 15, 2026</small>
+              </div>
+              <span class="badge text-success border border-success">Completed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="dashboard-footer">
+      <p>&copy; 2026 Planathon</p>
+    </footer>
+  </main>
+
+</body>
+</html>
