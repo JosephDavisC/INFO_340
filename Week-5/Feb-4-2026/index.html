@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feb 4: ES6+ Syntax - INFO 340</title>
+    <meta name="description" content="INFO 340 Feb 4, 2026 - ES6+ Syntax: Arrow functions, destructuring, spread operator, and modules.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Feb 4: ES6+ Syntax - INFO 340">
+    <meta property="og:description" content="ES6+ Syntax: Arrow functions, destructuring, spread operator, and modules.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-5/Feb-4-2026/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Feb 4: ES6+ Syntax - INFO 340">
+    <meta name="twitter:description" content="ES6+ Syntax: Arrow functions, destructuring, spread operator, and modules.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 5</a></p>
+    <h1>ES6+ Syntax</h1>
+    <p class="week-subtitle">February 4, 2026</p>
+
+    <section class="summary">
+        <h2>Topics Covered</h2>
+        <p><strong>Slides:</strong> <a href="https://slides.com/joelross/info340wi26-es6" target="_blank">slides.com/joelross/info340wi26-es6</a></p>
+
+        <h3>JavaScript History</h3>
+        <ul>
+            <li><strong>ECMAScript</strong> is the official JavaScript standard</li>
+            <li><strong>ES6 (2015)</strong> was a major revision with widespread browser support</li>
+            <li>Annual releases since 2016, named by year (ES2016, ES2017, etc.)</li>
+            <li>Browser compatibility varies - check <a href="https://compat-table.github.io/compat-table/es6/" target="_blank">compat-table.github.io</a></li>
+        </ul>
+
+        <h3>Arrow Functions</h3>
+        <p>Shortcut syntax using <code>=></code> for function declarations:</p>
+        <pre><code>// Traditional function
+const foo = function(params) { return 'foo ' + params; }
+
+// Arrow function (block body)
+const foo = (params) => { return 'foo ' + params; }
+
+// Concise body (single expression, implicit return)
+const foo = (params) => 'foo ' + params;
+
+// Single parameter (parentheses optional)
+const double = x => x * 2;</code></pre>
+        <p><strong>Best practice:</strong> Always use explicit block syntax <code>{ return ... }</code> for readability.</p>
+
+        <h3>Destructuring Assignment</h3>
+        <p>Unpacking array or object values into separate variables:</p>
+        <pre><code>// Array destructuring
+const [x, y, z] = [1, 2, 3];
+console.log(x); // 1
+
+// Object destructuring
+const {a, b, c} = {a: 1, b: 2, c: 3};
+console.log(b); // 2
+
+// Function parameter destructuring
+function getFullName({first, last}) {
+    return first + " " + last;
+}
+getFullName({first: "Ada", last: "Lovelace"}); // "Ada Lovelace"</code></pre>
+
+        <h3>Spread Operator (<code>...</code>)</h3>
+        <p>Expands elements when declaring new arrays or objects:</p>
+        <pre><code>// Spread in arrays
+const original = ['a', 'b', 'c'];
+const newArray = [...original, 'd', 'e'];
+// ['a', 'b', 'c', 'd', 'e']
+
+// Spread in objects
+const person = {name: 'Ada', age: 36};
+const personWithHat = {hat: 'bowler', ...person};
+// {hat: 'bowler', name: 'Ada', age: 36}
+
+// Copying arrays/objects
+const copy = [...original];
+const clone = {...person};</code></pre>
+
+        <h3>ES6 Modules</h3>
+        <p>Self-contained scripts with isolated namespaces:</p>
+        <pre><code>// Exporting (my-module.js)
+export function foo() { return 'foo'; }
+export const bar = 'bar';
+export default function sayHello() { return 'Hello!'; }
+
+// Importing
+import {foo, bar} from './my-module.js';  // named imports
+import greet from './my-module.js';        // default import
+import * as myModule from './my-module.js'; // import all</code></pre>
+        <p><strong>Best practice:</strong> Export only necessary values; prefer named exports over default.</p>
+
+        <h3>Development Tools</h3>
+        <p>Use <strong>live-server</strong> to run a local HTTP server (required for ES6 modules):</p>
+        <pre><code>npx live-server .</code></pre>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>Arrow Functions:</strong> Shorter syntax with <code>=></code>, implicit return for single expressions</li>
+            <li><strong>Destructuring:</strong> Unpack arrays <code>[a, b] = arr</code> or objects <code>{x, y} = obj</code></li>
+            <li><strong>Spread Operator:</strong> <code>...</code> expands elements into new arrays/objects</li>
+            <li><strong>ES6 Modules:</strong> <code>import</code>/<code>export</code> for code organization</li>
+            <li><strong>Named vs Default:</strong> Named exports use <code>{}</code>, default exports don't</li>
+            <li><strong>live-server:</strong> Local HTTP server for testing modules</li>
+        </ul>
+    </section>
+
+    <section class="resources">
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://info340.github.io/es6.html" target="_blank">Ch 13: ES6+ Features</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions" target="_blank">MDN: Arrow Functions</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" target="_blank">MDN: Destructuring</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules" target="_blank">MDN: JavaScript Modules</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

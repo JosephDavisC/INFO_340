@@ -299,13 +299,27 @@ footer a:hover {
 }
 
 /* Code blocks */
-.syntax pre {
-    background: #2d2d2d;
-    color: #f8f8f2;
-    padding: 1rem;
+pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 1rem 1.25rem;
     border-radius: 8px;
     overflow-x: auto;
-    margin: 0.5rem 0 1.5rem;
+    margin: 1rem 0 1.5rem;
+    border: 1px solid #333;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.syntax pre {
+    background: #1e1e1e;
 }
 
 .syntax pre code {

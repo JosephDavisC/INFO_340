@@ -58,6 +58,7 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 | Date | Topic | Type | Link |
 |------|-------|------|------|
 | Feb 2, 2026 | DOM Manipulation & Events | In-Class | [View](https://info340.joechamdani.com/Week-5/Feb-2-2026/) |
+| Feb 4, 2026 | ES6+ Syntax | In-Class | [View](https://info340.joechamdani.com/Week-5/Feb-4-2026/) |
 | Feb 4, 2026 | Peer Feedback on Draft 1 | Project Check-In | [View](https://info340.joechamdani.com/Week-5/Project-Check-In/) |
 
 ---
