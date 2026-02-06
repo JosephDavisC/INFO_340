@@ -132,6 +132,7 @@ module.exports = {
                 { label: 'Feb 2', title: 'DOM Manipulation & Events', path: 'Feb-2-2026/' },
                 { label: 'Feb 4', title: 'ES6+ Syntax', path: 'Feb-4-2026/' },
                 { label: 'Project Check-In', title: 'Peer Feedback on Draft 1 (Lab)', path: 'Project-Check-In/' },
+                { label: 'Problem Set 06', title: 'DOM, Events, ES6 Modules', path: 'Problem-Set-06/' },
             ],
             concepts: [
                 { term: 'DOM', desc: 'Document Object Model - tree of element nodes from HTML' },
@@ -146,6 +147,31 @@ module.exports = {
             resources: [
                 { title: 'Ch 12: Document Object Model (DOM)', url: 'https://info340.github.io/dom.html' },
                 { title: 'Ch 13: ES6+ Features', url: 'https://info340.github.io/es6.html' },
+            ],
+        },
+        {
+            number: 6,
+            dateRange: 'Feb 9-15',
+            subtitle: 'React Fundamentals',
+            description: 'React Components, JSX, Props, and State.',
+            landingDesc: 'React Fundamentals',
+            activities: [
+                { label: 'Quiz 3', title: 'Study Guide (34 Q&A)', path: 'Quiz-3/' },
+            ],
+            concepts: [
+                { term: 'Callbacks', desc: 'Functions passed to other functions to be executed later' },
+                { term: 'Closures', desc: 'Functions that remember their surrounding scope' },
+                { term: 'Pure Functions', desc: 'No side effects, same input always produces same output' },
+                { term: 'Array Methods', desc: '<code>forEach()</code>, <code>map()</code>, <code>filter()</code>, <code>reduce()</code>' },
+                { term: 'DOM Manipulation', desc: '<code>querySelector()</code>, <code>classList</code>, <code>addEventListener()</code>' },
+                { term: 'ES6 Modules', desc: '<code>import</code>/<code>export</code>, destructuring, spread operator' },
+            ],
+            resourcesNote: 'From INFO 340: Client-Side Development',
+            resources: [
+                { title: 'Ch 10: JavaScript', url: 'https://info340.github.io/javascript.html' },
+                { title: 'Ch 11: Functional Programming', url: 'https://info340.github.io/functional-programming.html' },
+                { title: 'Ch 12: DOM', url: 'https://info340.github.io/dom.html' },
+                { title: 'Ch 13: ES6+', url: 'https://info340.github.io/es6.html' },
             ],
         },
     ],

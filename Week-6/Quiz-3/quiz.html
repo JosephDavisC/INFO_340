@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 3 Practice - INFO 340</title>
+    <meta name="description" content="Practice quiz for INFO 340 Quiz 3 - JavaScript, Functional Programming, DOM, and ES6+.">
+    <meta name="author" content="Joseph Davis Chamdani">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/quiz.css">
+    <link rel="icon" href="/img/favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <p><a href="./" class="back-link">&larr; Back to Study Guide</a></p>
+    <h1>Quiz 3 Practice</h1>
+
+    <div class="quiz-container">
+        <div id="quiz-start" class="quiz-header">
+            <p>Test your knowledge with questions from the Quiz 3 study guide.</p>
+            <p>Topics: JavaScript, Functional Programming, DOM, ES6+ Syntax</p>
+            <div class="quiz-mode-select">
+                <button class="quiz-btn" onclick="startQuiz(17)">17 Random Questions</button>
+                <button class="quiz-btn" onclick="startQuiz(34)">All 34 Questions</button>
+            </div>
+        </div>
+
+        <div id="quiz-content" class="hidden">
+            <div class="quiz-progress">
+                <div class="quiz-progress-bar" id="progress-bar" style="width: 0%"></div>
+            </div>
+            <div class="quiz-stats">
+                <span class="question-counter" id="question-counter">Question 1 of 17</span>
+                <span class="quiz-current-score" id="current-score">Score: 0/0</span>
+            </div>
+            <div class="quiz-question" id="question-container">
+                <h3 id="question-text"></h3>
+                <button class="quiz-hint-btn" id="hint-btn" onclick="showHint()">Show Hint</button>
+                <div class="quiz-hint hidden" id="hint-text"></div>
+                <ul class="quiz-options" id="options-container"></ul>
+                <div class="quiz-source hidden" id="source-text"></div>
+            </div>
+            <div class="quiz-actions">
+                <button class="quiz-btn" id="prev-btn" onclick="prevQuestion()" disabled>Previous Question</button>
+                <button class="quiz-btn" id="next-btn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <div id="quiz-results" class="quiz-results hidden">
+            <h2>Quiz Complete!</h2>
+            <div class="quiz-score" id="score-display"></div>
+            <p class="quiz-message" id="score-message"></p>
+            <div class="quiz-actions-final">
+                <button class="quiz-btn" onclick="downloadPDF()">Download PDF</button>
+                <button class="quiz-btn" onclick="retryQuiz()">Try Again</button>
+                <button class="quiz-btn" onclick="window.location.href='./'">Back to Study Guide</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden PDF Content -->
+    <div id="pdf-content" style="display: none;"></div>
+
+    <script>
+        const allQuestions = [
+            {
+                question: "How can you change the CSS class of an element using JavaScript?",
+                correct: "Use classList.add(), classList.remove(), or classList.toggle()",
+                wrong: ["Use element.className = 'class' only", "Use element.style.class = 'class'", "CSS classes cannot be changed with JavaScript"],
+                hint: "The classList property provides methods to manipulate classes.",
+                source: "Ch 12: DOM",
+                sourceUrl: "https://info340.github.io/dom.html"
+            },
+            {
+                question: "What does calling event.preventDefault() do in an event handler?",
+                correct: "Stops the browser's default behavior for that event",
+                wrong: ["Stops the event from bubbling up", "Prevents all future events", "Removes the event listener"],
+                hint: "Think about what normally happens when you submit a form or click a link.",
+                source: "Ch 12: DOM",
+                sourceUrl: "https://info340.github.io/dom.html"
+            },
+            {
+                question: "What does destructuring do in JavaScript?",
+                correct: "Unpacks values from arrays or properties from objects into separate variables",
+                wrong: ["Deletes properties from objects", "Converts objects to arrays", "Removes elements from arrays"],
+                hint: "It's a shorthand for extracting multiple values at once.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "What does the Document Object Model (DOM) represent?",
+                correct: "A tree-like structure of element nodes representing the HTML document",
+                wrong: ["The CSS stylesheet of a page", "The JavaScript code of a page", "The server-side database"],
+                hint: "It's the browser's programmatic representation of the webpage structure.",
+                source: "Ch 12: DOM",
+                sourceUrl: "https://info340.github.io/dom.html"
+            },
+            {
+                question: "What does the document.querySelector() method return when used in JavaScript?",
+                correct: "The first element matching the CSS selector, or null if none found",
+                wrong: ["All elements matching the selector", "A string of the element's HTML", "The element's ID only"],
+                hint: "It uses CSS selector syntax and returns a single element.",
+                source: "Ch 12: DOM",
+                sourceUrl: "https://info340.github.io/dom.html"
+            },
+            {
+                question: "What is a callback function?",
+                correct: "A function passed as an argument to another function, to be executed later",
+                wrong: ["A function that calls itself", "A function that returns another function", "A function declared inside a loop"],
+                hint: "The receiving function 'calls back' to execute it when needed.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "What is a closure in JavaScript?",
+                correct: "When a function remembers and accesses variables from its surrounding scope",
+                wrong: ["When a function is closed/terminated", "When a loop finishes executing", "When an object is sealed"],
+                hint: "The inner function 'closes over' variables from outer scope.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "What is an ARIA live region used for?",
+                correct: "Notifying screen readers when content changes dynamically",
+                wrong: ["Making elements draggable", "Adding animations to elements", "Hiding content from all users"],
+                hint: "It's an accessibility feature for dynamic content updates.",
+                source: "Ch 12: DOM",
+                sourceUrl: "https://info340.github.io/dom.html"
+            },
+            {
+                question: "What is the difference between named and default exports in ES6 modules?",
+                correct: "Named exports use braces when importing; default exports don't",
+                wrong: ["Default exports are faster to load", "Named exports can only export functions", "There is no difference"],
+                hint: "import {foo} vs import foo - notice the braces.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "What is the main difference between a named function and an anonymous function assigned to a variable?",
+                correct: "Named functions are hoisted; anonymous function expressions are not",
+                wrong: ["Anonymous functions are faster", "Named functions cannot take parameters", "There is no difference in behavior"],
+                hint: "Think about whether you can call the function before it's defined.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "What is the main purpose of ES6 (ECMAScript 2015) in JavaScript development?",
+                correct: "To introduce syntactic shortcuts that make JavaScript more concise and readable",
+                wrong: ["To make JavaScript run faster", "To replace HTML and CSS", "To enable server-side programming only"],
+                hint: "ES6 added features like arrow functions, destructuring, and modules.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "What is the output of: const arr = ['a', 'b', 'c']; arr[5] = 'f'; console.log(arr.length);",
+                correct: "6",
+                wrong: ["3", "4", "5"],
+                hint: "Assigning to index 5 extends the array to include that index.",
+                source: "Ch 10: JavaScript",
+                sourceUrl: "https://info340.github.io/javascript.html"
+            },
+            {
+                question: "What is the primary reason JavaScript is used in web development?",
+                correct: "To enable interactivity and dynamic behavior in web pages",
+                wrong: ["To style web pages", "To structure web content", "To store data on servers"],
+                hint: "It's the only programming language that runs natively in browsers.",
+                source: "Ch 10: JavaScript",
+                sourceUrl: "https://info340.github.io/javascript.html"
+            },
+            {
+                question: "What is the purpose of declaring 'use strict'; at the beginning of a JavaScript file?",
+                correct: "To enable strict mode, which catches common coding errors",
+                wrong: ["To make the code run faster", "To enable new ES6 features", "To disable console logging"],
+                hint: "It makes JavaScript throw errors for things that would otherwise fail silently.",
+                source: "Ch 10: JavaScript",
+                sourceUrl: "https://info340.github.io/javascript.html"
+            },
+            {
+                question: "What is the purpose of event.target in an event listener?",
+                correct: "To reference the specific element that triggered the event",
+                wrong: ["To set the destination URL", "To cancel the event", "To get the event type"],
+                hint: "If you click a button inside a div, event.target is the button.",
+                source: "Ch 12: DOM",
+                sourceUrl: "https://info340.github.io/dom.html"
+            },
+            {
+                question: "What is the purpose of the import statement in ES6 modules?",
+                correct: "To load exported values from other modules into the current file",
+                wrong: ["To download files from the internet", "To include CSS stylesheets", "To declare new variables"],
+                hint: "It brings in code that was exported from another file.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "What is the spread operator (...) used for in JavaScript?",
+                correct: "To expand array or object contents into a new context",
+                wrong: ["To create a range of numbers", "To divide numbers", "To concatenate strings"],
+                hint: "It 'spreads out' the elements, useful for copying or merging.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "Which array method is best used to perform an action on each element without returning a new array?",
+                correct: "forEach()",
+                wrong: ["map()", "filter()", "reduce()"],
+                hint: "It executes a callback but returns undefined.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "Which array method is best used when you want to create a new array that contains only a subset of elements?",
+                correct: "filter()",
+                wrong: ["map()", "forEach()", "reduce()"],
+                hint: "It keeps elements where the callback returns true.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "Which is the more appropriate use case for passing a function as an argument?",
+                correct: "Event handlers and array method callbacks",
+                wrong: ["Declaring variables", "Creating HTML elements", "Styling elements"],
+                hint: "You pass functions when specifying what should happen at a particular moment.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "Which keyword is used to make a variable in a module publicly accessible in ES6?",
+                correct: "export",
+                wrong: ["public", "global", "share"],
+                hint: "You use this keyword before const, function, or class declarations.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "Which of the following array methods is used to transform each element of an array into a new array?",
+                correct: "map()",
+                wrong: ["filter()", "forEach()", "find()"],
+                hint: "It creates a new array with transformed values, same length as original.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "Which of the following best describes JavaScript as a programming language?",
+                correct: "A dynamically-typed, interpreted language",
+                wrong: ["A statically-typed, compiled language", "A markup language", "A query language"],
+                hint: "Variables adopt the type of their current value at runtime.",
+                source: "Ch 10: JavaScript",
+                sourceUrl: "https://info340.github.io/javascript.html"
+            },
+            {
+                question: "Which of the following is NOT a benefit of using pure functions in JavaScript?",
+                correct: "They can modify external state directly",
+                wrong: ["They are easier to test", "They are predictable", "They are easier to debug"],
+                hint: "Pure functions specifically avoid side effects and external state.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "Which of the following is NOT a characteristic of a pure function in JavaScript?",
+                correct: "It modifies global variables",
+                wrong: ["It always returns the same output for the same input", "It has no side effects", "It only operates on its inputs"],
+                hint: "Pure functions don't change anything outside themselves.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "Which of the following is NOT a reason to use block-body arrow functions instead of concise-body?",
+                correct: "They are shorter to write",
+                wrong: ["Better readability", "Easier debugging with breakpoints", "Can include multiple statements"],
+                hint: "Concise-body is shorter; block-body is chosen for other reasons.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "Which of the following is true about the difference between textContent and innerHTML?",
+                correct: "textContent treats content as plain text; innerHTML parses HTML",
+                wrong: ["They are exactly the same", "innerHTML is always faster", "textContent can include HTML tags"],
+                hint: "One escapes HTML, the other renders it.",
+                source: "Ch 12: DOM",
+                sourceUrl: "https://info340.github.io/dom.html"
+            },
+            {
+                question: "Which of the following statements about const is true?",
+                correct: "The reference cannot be reassigned, but object properties can still be modified",
+                wrong: ["The value is completely immutable", "const variables cannot hold objects", "const is the same as let"],
+                hint: "const prevents reassignment, not mutation of the value itself.",
+                source: "Ch 10: JavaScript",
+                sourceUrl: "https://info340.github.io/javascript.html"
+            },
+            {
+                question: "Which of the following statements about when to use arrow functions vs. function declarations is accurate?",
+                correct: "Arrow functions are preferred for callbacks because they retain lexical 'this'",
+                wrong: ["Function declarations should always be used", "Arrow functions are always faster", "They are completely interchangeable"],
+                hint: "Arrow functions solve the common 'this' context problem in callbacks.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "Which of the following statements is NOT true about Object properties in JavaScript?",
+                correct: "Object properties must be declared in advance",
+                wrong: ["Properties can be accessed with dot or bracket notation", "Properties can be added at any time", "Keys can be strings or symbols"],
+                hint: "Objects in JavaScript are very flexible and dynamic.",
+                source: "Ch 10: JavaScript",
+                sourceUrl: "https://info340.github.io/javascript.html"
+            },
+            {
+                question: "Which of the following values is considered 'falsy' in JavaScript?",
+                correct: "0, '', null, undefined, NaN, false",
+                wrong: ["Empty array []", "Empty object {}", "The string 'false'"],
+                hint: "There are exactly 6 falsy values; everything else is truthy.",
+                source: "Ch 10: JavaScript",
+                sourceUrl: "https://info340.github.io/javascript.html"
+            },
+            {
+                question: "Why are arrow functions preferred for callbacks in JavaScript?",
+                correct: "They retain the lexical 'this' from their surrounding scope",
+                wrong: ["They run faster than regular functions", "They can take more parameters", "They are required by ES6"],
+                hint: "The 'this' keyword behaves differently in arrow functions.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "Why is it recommended to use === instead of == in JavaScript?",
+                correct: "=== compares both value and type without type coercion",
+                wrong: ["=== is faster", "== doesn't work with strings", "=== allows null comparisons"],
+                hint: "With ==, '5' == 5 is true, which can cause bugs.",
+                source: "Ch 10: JavaScript",
+                sourceUrl: "https://info340.github.io/javascript.html"
+            },
+            {
+                question: "Why must a callback function passed to .map() return a value?",
+                correct: "Because map() collects return values to create the new array",
+                wrong: ["It's just a coding convention", "The function will error otherwise", "map() ignores the return value"],
+                hint: "If you don't return, undefined fills the new array.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            }
+        ];
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+        let totalQuestions = 17;
+        let userAnswers = [];
+        let lastQuizCount = 17;
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function startQuiz(count) {
+            totalQuestions = count;
+            lastQuizCount = count;
+            currentQuestions = shuffleArray(allQuestions).slice(0, count);
+            currentQuestionIndex = 0;
+            score = 0;
+            answered = false;
+            userAnswers = new Array(count).fill(null);
+
+            // Reset progress bar
+            document.getElementById('progress-bar').style.width = '0%';
+
+            document.getElementById('quiz-start').classList.add('hidden');
+            document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('quiz-content').classList.remove('hidden');
+
+            showQuestion();
+        }
+
+        function retryQuiz() {
+            startQuiz(lastQuizCount);
+        }
+
+        function downloadPDF() {
+            const percentage = Math.round((score / totalQuestions) * 100);
+            const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            let html = `
+                <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 20px; max-width: 800px;">
+                    <div style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #4b2e83; padding-bottom: 20px;">
+                        <h1 style="color: #4b2e83; margin: 0 0 10px 0;">Quiz 3 Practice Results</h1>
+                        <p style="color: #666; margin: 5px 0;">INFO 340 - Client-Side Web Development</p>
+                        <p style="color: #666; margin: 5px 0;">${date}</p>
+                    </div>
+
+                    <div style="text-align: center; margin-bottom: 30px; padding: 20px; background: #f5f5f5; border-radius: 8px;">
+                        <div style="font-size: 48px; font-weight: bold; color: #4b2e83;">${score}/${totalQuestions}</div>
+                        <div style="font-size: 24px; color: #666;">${percentage}%</div>
+                        <p style="margin-top: 10px; color: #333;">Topics: JavaScript, Functional Programming, DOM, ES6+ Syntax</p>
+                    </div>
+
+                    <h2 style="color: #4b2e83; border-bottom: 2px solid #b7a57a; padding-bottom: 10px;">Question Review</h2>
+            `;
+
+            currentQuestions.forEach((q, i) => {
+                const userAnswer = userAnswers[i];
+                const isCorrect = userAnswer === q.correct;
+                const statusColor = isCorrect ? '#28a745' : '#dc3545';
+                const statusText = isCorrect ? '✓ Correct' : '✗ Incorrect';
+
+                html += `
+                    <div style="margin-bottom: 25px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; border-left: 4px solid ${statusColor};">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <strong style="color: #4b2e83;">Question ${i + 1}</strong>
+                            <span style="color: ${statusColor}; font-weight: bold;">${statusText}</span>
+                        </div>
+                        <p style="margin: 10px 0; color: #333;"><strong>Q:</strong> ${q.question}</p>
+                        <p style="margin: 5px 0; color: ${isCorrect ? '#28a745' : '#dc3545'};">
+                            <strong>Your Answer:</strong> ${userAnswer || 'Not answered'}
+                        </p>
+                        ${!isCorrect ? `<p style="margin: 5px 0; color: #28a745;"><strong>Correct Answer:</strong> ${q.correct}</p>` : ''}
+                        <p style="margin: 10px 0 0 0; padding: 10px; background: #fffbeb; border-radius: 4px; color: #666; font-size: 14px;">
+                            <strong>Hint:</strong> ${q.hint}
+                        </p>
+                    </div>
+                `;
+            });
+
+            html += `
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #b7a57a; text-align: center; color: #666; font-size: 14px;">
+                        <p>Study more at: <span style="color: #4b2e83;">info340.joechamdani.com/Week-6/Quiz-3/</span></p>
+                    </div>
+                </div>
+            `;
+
+            const element = document.getElementById('pdf-content');
+            element.innerHTML = html;
+            element.style.display = 'block';
+
+            const opt = {
+                margin: 10,
+                filename: 'Quiz3-Results.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                element.style.display = 'none';
+            });
+        }
+
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            const previousAnswer = userAnswers[currentQuestionIndex];
+            answered = previousAnswer !== null;
+
+            document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
+            document.getElementById('progress-bar').style.width = `${((currentQuestionIndex) / totalQuestions) * 100}%`;
+            document.getElementById('question-text').innerHTML = question.question;
+
+            // Update score display
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('current-score').textContent = `Score: ${score}/${answeredCount}`;
+
+            // Reset hint
+            document.getElementById('hint-btn').classList.remove('hidden');
+            document.getElementById('hint-text').classList.add('hidden');
+            document.getElementById('hint-text').textContent = question.hint;
+
+            // Source
+            document.getElementById('source-text').innerHTML = `<strong>Source:</strong> <a href="${question.sourceUrl}" target="_blank">${question.source}</a>`;
+
+            const options = shuffleArray([question.correct, ...question.wrong]);
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            options.forEach((option) => {
+                const li = document.createElement('li');
+                li.className = 'quiz-option';
+                li.innerHTML = option;
+
+                if (previousAnswer !== null) {
+                    li.classList.add('disabled');
+                    if (option === question.correct) {
+                        li.classList.add('correct');
+                    }
+                    if (option === previousAnswer && previousAnswer !== question.correct) {
+                        li.classList.add('incorrect');
+                    }
+                } else {
+                    li.onclick = () => selectOption(li, option === question.correct, option);
+                }
+                optionsContainer.appendChild(li);
+            });
+
+            // Show/hide source based on answered state
+            if (previousAnswer !== null) {
+                document.getElementById('source-text').classList.remove('hidden');
+                document.getElementById('hint-btn').classList.add('hidden');
+            } else {
+                document.getElementById('source-text').classList.add('hidden');
+            }
+
+            // Update button states
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            document.getElementById('next-btn').disabled = previousAnswer === null;
+            document.getElementById('next-btn').textContent = currentQuestionIndex === totalQuestions - 1 ? 'See Results' : 'Next Question';
+        }
+
+        function showHint() {
+            document.getElementById('hint-text').classList.remove('hidden');
+            document.getElementById('hint-btn').classList.add('hidden');
+        }
+
+        function selectOption(element, isCorrect, selectedOption) {
+            if (answered) return;
+            answered = true;
+
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                if (opt.innerHTML === currentQuestions[currentQuestionIndex].correct) {
+                    opt.classList.add('correct');
+                }
+            });
+
+            if (isCorrect) {
+                score++;
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+            }
+
+            // Update score display
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('current-score').textContent = `Score: ${score}/${answeredCount}`;
+
+            // Show source
+            document.getElementById('source-text').classList.remove('hidden');
+
+            // Hide hint button if still showing
+            document.getElementById('hint-btn').classList.add('hidden');
+
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex >= totalQuestions) {
+                showResults();
+            } else {
+                showQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-content').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('score-display').textContent = `${score}/${totalQuestions}`;
+
+            let message = '';
+            if (percentage >= 90) message = 'Excellent! You\'re ready for the quiz!';
+            else if (percentage >= 80) message = 'Great job! Just a bit more review.';
+            else if (percentage >= 70) message = 'Good effort! Review the study guide.';
+            else if (percentage >= 60) message = 'Keep studying! You\'re getting there.';
+            else message = 'Review the study guide and try again!';
+
+            document.getElementById('score-message').textContent = `${percentage}% - ${message}`;
+        }
+    </script>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

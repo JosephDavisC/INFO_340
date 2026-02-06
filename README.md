@@ -60,6 +60,15 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 | Feb 2, 2026 | DOM Manipulation & Events | In-Class | [View](https://info340.joechamdani.com/Week-5/Feb-2-2026/) |
 | Feb 4, 2026 | ES6+ Syntax | In-Class | [View](https://info340.joechamdani.com/Week-5/Feb-4-2026/) |
 | Feb 4, 2026 | Peer Feedback on Draft 1 | Project Check-In | [View](https://info340.joechamdani.com/Week-5/Project-Check-In/) |
+| Feb 4, 2026 | DOM, Events, ES6 Modules | Problem Set 06 | [View](https://info340.joechamdani.com/Week-5/Problem-Set-06/) |
+
+---
+
+## Week 6
+
+| Date | Topic | Type | Link |
+|------|-------|------|------|
+| Feb 9, 2026 | Quiz 3 | Study Guide + Practice Quiz | [View](https://info340.joechamdani.com/Week-6/Quiz-3/) |
 
 ---
 

@@ -204,3 +204,15 @@
     justify-content: center;
     flex-wrap: wrap;
 }
+
+.quiz-actions-final {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+.quiz-actions-final .quiz-btn {
+    min-width: 140px;
+}

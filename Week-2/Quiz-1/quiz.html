@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/quiz.css">
     <link rel="icon" href="/img/favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
     <p><a href="./" class="back-link">&larr; Back to Study Guide</a></p>
@@ -49,10 +50,16 @@
             <h2>Quiz Complete!</h2>
             <div class="quiz-score" id="score-display"></div>
             <p class="quiz-message" id="score-message"></p>
-            <button class="quiz-btn" onclick="startQuiz(totalQuestions)">Try Again</button>
-            <button class="quiz-btn" onclick="window.location.href='./'">Back to Study Guide</button>
+            <div class="quiz-actions-final">
+                <button class="quiz-btn" onclick="downloadPDF()">Download PDF</button>
+                <button class="quiz-btn" onclick="retryQuiz()">Try Again</button>
+                <button class="quiz-btn" onclick="window.location.href='./'">Back to Study Guide</button>
+            </div>
         </div>
     </div>
+
+    <!-- Hidden PDF Content -->
+    <div id="pdf-content" style="display: none;"></div>
 
     <script>
         const allQuestions = [
@@ -304,6 +311,7 @@
         let answered = false;
         let totalQuestions = 15;
         let userAnswers = [];
+        let lastQuizCount = 15;
 
         function shuffleArray(array) {
             const shuffled = [...array];
@@ -316,6 +324,7 @@
 
         function startQuiz(count) {
             totalQuestions = count;
+            lastQuizCount = count;
             currentQuestions = shuffleArray(allQuestions).slice(0, count);
             currentQuestionIndex = 0;
             score = 0;
@@ -325,6 +334,7 @@
             document.getElementById('quiz-start').classList.add('hidden');
             document.getElementById('quiz-results').classList.add('hidden');
             document.getElementById('quiz-content').classList.remove('hidden');
+            document.getElementById('progress-bar').style.width = '0%';
 
             showQuestion();
         }
@@ -458,6 +468,80 @@
             else message = 'Review the study guide and try again!';
 
             document.getElementById('score-message').textContent = `${percentage}% - ${message}`;
+        }
+
+        function retryQuiz() {
+            startQuiz(lastQuizCount);
+        }
+
+        function downloadPDF() {
+            const percentage = Math.round((score / totalQuestions) * 100);
+            const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            let html = `
+                <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 20px; max-width: 800px;">
+                    <div style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #4b2e83; padding-bottom: 20px;">
+                        <h1 style="color: #4b2e83; margin: 0 0 10px 0;">Quiz 1 Practice Results</h1>
+                        <p style="color: #666; margin: 5px 0;">INFO 340 - Client-Side Web Development</p>
+                        <p style="color: #666; margin: 5px 0;">${date}</p>
+                    </div>
+
+                    <div style="text-align: center; margin-bottom: 30px; padding: 20px; background: #f5f5f5; border-radius: 8px;">
+                        <div style="font-size: 48px; font-weight: bold; color: #4b2e83;">${score}/${totalQuestions}</div>
+                        <div style="font-size: 24px; color: #666;">${percentage}%</div>
+                        <p style="margin-top: 10px; color: #333;">Topics: Git, Command Line, HTML, Semantic HTML, Accessibility</p>
+                    </div>
+
+                    <h2 style="color: #4b2e83; border-bottom: 2px solid #b7a57a; padding-bottom: 10px;">Question Review</h2>
+            `;
+
+            currentQuestions.forEach((q, i) => {
+                const userAnswer = userAnswers[i];
+                const isCorrect = userAnswer === q.correct;
+                const statusColor = isCorrect ? '#28a745' : '#dc3545';
+                const statusText = isCorrect ? '✓ Correct' : '✗ Incorrect';
+
+                html += `
+                    <div style="margin-bottom: 25px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; border-left: 4px solid ${statusColor};">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <strong style="color: #4b2e83;">Question ${i + 1}</strong>
+                            <span style="color: ${statusColor}; font-weight: bold;">${statusText}</span>
+                        </div>
+                        <p style="margin: 10px 0; color: #333;"><strong>Q:</strong> ${q.question}</p>
+                        <p style="margin: 5px 0; color: ${isCorrect ? '#28a745' : '#dc3545'};">
+                            <strong>Your Answer:</strong> ${userAnswer || 'Not answered'}
+                        </p>
+                        ${!isCorrect ? `<p style="margin: 5px 0; color: #28a745;"><strong>Correct Answer:</strong> ${q.correct}</p>` : ''}
+                        <p style="margin: 10px 0 0 0; padding: 10px; background: #fffbeb; border-radius: 4px; color: #666; font-size: 14px;">
+                            <strong>Hint:</strong> ${q.hint}
+                        </p>
+                    </div>
+                `;
+            });
+
+            html += `
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #b7a57a; text-align: center; color: #666; font-size: 14px;">
+                        <p>Study more at: <span style="color: #4b2e83;">info340.joechamdani.com/Week-2/Quiz-1/</span></p>
+                    </div>
+                </div>
+            `;
+
+            const element = document.getElementById('pdf-content');
+            element.innerHTML = html;
+            element.style.display = 'block';
+
+            const opt = {
+                margin: 10,
+                filename: 'Quiz1-Results.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                element.style.display = 'none';
+            });
         }
     </script>
 

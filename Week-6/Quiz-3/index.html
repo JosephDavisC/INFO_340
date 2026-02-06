@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 3 Study Guide - INFO 340</title>
+    <meta name="description" content="INFO 340 Quiz 3 Study Guide - JavaScript, Functional Programming, DOM, and ES6+ concepts.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Quiz 3 Study Guide - INFO 340">
+    <meta property="og:description" content="Study guide covering JavaScript, Functional Programming, DOM, and ES6+ concepts.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-6/Quiz-3/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quiz 3 Study Guide - INFO 340">
+    <meta name="twitter:description" content="Study guide covering JavaScript, Functional Programming, DOM, and ES6+ concepts.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/quiz.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 6</a></p>
+    <h1>Quiz 3 Study Guide</h1>
+
+    <section class="quiz-intro">
+        <p>This study guide covers possible questions for Quiz 3. I answered each question based on my understanding to help me prepare.</p>
+        <p class="quiz-sources"><strong>Sources:</strong></p>
+        <ul class="quiz-sources-list">
+            <li><strong>INFO 340:</strong> <a href="https://info340.github.io/javascript.html" target="_blank">Ch 10: JavaScript</a>, <a href="https://info340.github.io/functional-programming.html" target="_blank">Ch 11: Functional Programming</a>, <a href="https://info340.github.io/dom.html" target="_blank">Ch 12: DOM</a>, <a href="https://info340.github.io/es6.html" target="_blank">Ch 13: ES6+</a></li>
+        </ul>
+        <a href="quiz.html" class="take-quiz-btn">Take Practice Quiz</a>
+    </section>
+
+    <section class="quiz-section">
+        <div class="qa">
+            <p class="question">Q1. How can you change the CSS class of an element using JavaScript?</p>
+            <p class="answer">Use <code>element.classList.add('class')</code>, <code>element.classList.remove('class')</code>, or <code>element.classList.toggle('class')</code> to modify CSS classes. This is preferred over directly manipulating inline styles because it maintains separation between JavaScript behavior and CSS presentation.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q2. What does calling event.preventDefault() do in an event handler?</p>
+            <p class="answer">It stops the browser's default behavior for that event. For example, calling it on a form's submit event prevents the page from reloading, and calling it on a link's click event prevents navigation to the href URL. This lets you handle the event with custom JavaScript logic instead.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q3. What does destructuring do in JavaScript?</p>
+            <p class="answer">Destructuring unpacks values from arrays or properties from objects into separate variables in a single statement. For arrays: <code>const [x, y] = [1, 2]</code>. For objects: <code>const {name, age} = person</code>. It can also be used in function parameters to extract specific properties from an argument object.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q4. What does the Document Object Model (DOM) represent?</p>
+            <p class="answer">The DOM is a tree-like structure of element nodes that represents the HTML document. It's the browser's interpretation of the HTML, and JavaScript can access and manipulate this tree programmatically through the <code>document</code> object. The DOM IS the rendered HTML, not the source code.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q5. What does the document.querySelector() method return when used in JavaScript?</p>
+            <p class="answer">It returns the first element that matches the specified CSS selector, or <code>null</code> if no match is found. It's the most flexible selection method because it accepts any valid CSS selector (ID, class, tag, descendant, etc.).</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q6. What is a callback function?</p>
+            <p class="answer">A callback function is a function passed as an argument to another function, which then "calls back" to execute it when needed. For example, in <code>setTimeout(myFunction, 1000)</code>, myFunction is the callback that gets executed after 1 second. Don't use parentheses when passing—that would call it immediately.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q7. What is a closure in JavaScript?</p>
+            <p class="answer">A closure occurs when a function "remembers" and can access variables from its surrounding scope, even after that outer scope has finished executing. This allows functions to preserve data without relying on global variables. The inner function "closes over" the variables it references.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q8. What is an ARIA live region used for?</p>
+            <p class="answer">An ARIA live region (using <code>aria-live="polite"</code>) notifies screen readers when content changes dynamically on the page. When content inside the live region updates, the screen reader announces the change to the user. Always use "polite" to avoid interrupting current content.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q9. What is the difference between named and default exports in ES6 modules?</p>
+            <p class="answer"><strong>Named exports:</strong> Use <code>export const foo = ...</code> and import with braces: <code>import {foo} from './module.js'</code>. You can have multiple named exports per file.<br><br><strong>Default exports:</strong> Use <code>export default value</code> and import without braces: <code>import anyName from './module.js'</code>. Only one default export per file. Named exports are generally preferred.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q10. What is the main difference between a named function and an anonymous function assigned to a variable?</p>
+            <p class="answer">The main difference is hoisting. Named function declarations (<code>function foo() {}</code>) are hoisted to the top of their scope, so they can be called before they appear in the code. Anonymous functions assigned to variables (<code>const foo = function() {}</code>) are not hoisted, so they must be defined before use. Best practice: declare all functions before using them.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q11. What is the main purpose of ES6 (ECMAScript 2015) in JavaScript development?</p>
+            <p class="answer">ES6 introduced "syntactic shortcuts" and new features that make JavaScript more concise, readable, and expressive. Key additions include arrow functions, destructuring, spread operator, let/const, template literals, classes, and modules. It was a major revision that modernized the language.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q12. What is the output of the following code?<br><code>const arr = ['a', 'b', 'c']; arr[5] = 'f'; console.log(arr.length);</code></p>
+            <p class="answer">The output is <code>6</code>. When you assign a value to an index beyond the array's current length, JavaScript automatically extends the array. The indices 3 and 4 become "empty slots" (undefined), and the length becomes 6 to accommodate index 5.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q13. What is the primary reason JavaScript is used in web development?</p>
+            <p class="answer">JavaScript enables interactivity and dynamic behavior in web pages. It's the only programming language that runs natively in web browsers, allowing developers to respond to user actions, manipulate the DOM, fetch data from servers, and create rich user experiences without page reloads.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q14. What is the purpose of declaring 'use strict'; at the beginning of a JavaScript file?</p>
+            <p class="answer">It enables strict mode, which catches common coding errors that would otherwise fail silently. For example, assigning to an undeclared variable throws an error in strict mode instead of creating a global variable. It helps prevent bugs and enforces better coding practices.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q15. What is the purpose of event.target in an event listener?</p>
+            <p class="answer"><code>event.target</code> refers to the specific element that triggered the event (the element that was actually clicked, for example). This is useful when you have event listeners on parent elements but need to know which child element was interacted with. It's the "target" of the user's action.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q16. What is the purpose of the import statement in ES6 modules?</p>
+            <p class="answer">The <code>import</code> statement loads exported values from other JavaScript modules into the current file. It allows code organization by splitting functionality across multiple files. Syntax: <code>import {foo, bar} from './module.js'</code>. Local files need <code>./</code> prefix; library imports don't.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q17. What is the spread operator (...) used for in JavaScript?</p>
+            <p class="answer">The spread operator <code>...</code> expands array or object contents into a new context. Common uses include: copying arrays (<code>[...arr]</code>), copying objects (<code>{...obj}</code>), merging arrays (<code>[...arr1, ...arr2]</code>), and passing array elements as function arguments. It creates shallow copies.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q18. Which array method is best used to perform an action on each element without returning a new array?</p>
+            <p class="answer"><code>forEach()</code> executes a callback function on each array element but does not return anything (returns undefined). Use it when you want to "do something" with each element (like logging or updating external state) rather than transforming the array.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q19. Which array method is best used when you want to create a new array that contains only a subset of elements?</p>
+            <p class="answer"><code>filter()</code> creates a new array containing only elements for which the callback returns <code>true</code>. It acts as a "whitelist" mechanism. For example: <code>numbers.filter(n => n > 5)</code> keeps only numbers greater than 5.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q20. Which is the more appropriate use case for passing a function as an argument?</p>
+            <p class="answer">Passing a function as an argument is appropriate when you want to specify what action should happen at a particular moment, especially for: event handlers (what to do when clicked), array methods (how to transform/filter each element), timers (what to do after delay), and async operations (what to do when data arrives).</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q21. Which keyword is used to make a variable in a module publicly accessible in ES6?</p>
+            <p class="answer">The <code>export</code> keyword makes variables, functions, or classes publicly accessible to other modules. Use <code>export const foo = ...</code> for named exports or <code>export default</code> for the default export. Without export, declarations are private to the module.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q22. Which of the following array methods is used to transform each element of an array into a new array?</p>
+            <p class="answer"><code>map()</code> transforms each element using a callback function and returns a new array with the transformed values. The new array has the same length as the original. Example: <code>nums.map(n => n * 2)</code> doubles each number.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q23. Which of the following best describes JavaScript as a programming language?</p>
+            <p class="answer">JavaScript is a dynamically-typed, interpreted language. Variables adopt the type of their current value (no type declarations needed), and type is determined at runtime. It supports multiple paradigms including object-oriented and functional programming.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q24. Which of the following is NOT a benefit of using pure functions in JavaScript?</p>
+            <p class="answer">Pure functions are easier to test, reason about, and debug because they always produce the same output for the same input and have no side effects. However, pure functions are NOT beneficial when you need to modify external state, interact with the DOM, or perform I/O operations—those require impure functions.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q25. Which of the following is NOT a characteristic of a pure function in JavaScript?</p>
+            <p class="answer">Pure functions: (1) operate only on their inputs, (2) never modify inputs—return new data instead, (3) produce no side effects, (4) always return identical outputs for identical inputs. A function that modifies global variables, changes its arguments, or logs to console is NOT pure.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q26. Which of the following is NOT a reason you use block-body arrow functions instead of concise-body arrow functions?</p>
+            <p class="answer">Block-body arrow functions (<code>() => { return ... }</code>) are preferred for: readability, debugging (you can add breakpoints), and multi-statement logic. Concise-body (<code>() => value</code>) is shorter but sacrifices these benefits. Being "shorter" is NOT a reason to choose block-body—that's actually when you'd use concise-body.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q27. Which of the following is true about the difference between an element's textContent and its innerHTML?</p>
+            <p class="answer"><code>textContent</code> treats content as plain text—HTML tags are escaped and displayed literally. <code>innerHTML</code> parses the string as HTML, so tags like <code>&lt;em&gt;</code> render as styled elements. Use textContent for plain text (safer), innerHTML for inserting HTML (but beware of security risks with untrusted content).</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q28. Which of the following statements about const is true?</p>
+            <p class="answer"><code>const</code> declares a variable whose reference cannot be reassigned. However, if the value is an object or array, you CAN still modify its properties or elements—const only prevents reassigning the variable itself. For truly immutable data, you'd need additional techniques like Object.freeze().</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q29. Which of the following statements about when to use arrow functions vs. function declarations is accurate?</p>
+            <p class="answer">Arrow functions should be the default choice for callbacks because they retain the lexical <code>this</code> context, preventing common bugs. Function declarations are better for top-level named functions, methods that need their own <code>this</code>, or when you need hoisting. Use arrow functions for short callbacks passed to array methods or event handlers.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q30. Which of the following statements is NOT true about Object properties in JavaScript?</p>
+            <p class="answer">Object properties can be accessed with dot notation (<code>obj.key</code>) or bracket notation (<code>obj['key']</code>). Bracket notation is required when the key is stored in a variable or contains special characters. Properties can be added, modified, or deleted at any time. It is NOT true that object properties must be declared in advance.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q31. Which of the following values is considered "falsy" in JavaScript?</p>
+            <p class="answer">Falsy values are: <code>false</code>, <code>0</code>, <code>''</code> (empty string), <code>null</code>, <code>undefined</code>, and <code>NaN</code>. All other values are truthy, including empty arrays <code>[]</code> and empty objects <code>{}</code>. This is important for conditional checks like <code>if(value)</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q32. Why are arrow functions preferred for callbacks in JavaScript?</p>
+            <p class="answer">Arrow functions retain the lexical <code>this</code> from their surrounding scope, preventing the common bug where <code>this</code> changes unexpectedly inside callbacks. They also have shorter syntax, making code more concise. For callbacks in array methods and event handlers, arrow functions are the standard choice.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q33. Why is it recommended to use === instead of == in JavaScript?</p>
+            <p class="answer"><code>===</code> (strict equality) compares both value AND type without type coercion. <code>==</code> (loose equality) performs type coercion, leading to unexpected results like <code>'40' == 40</code> being true. Using <code>===</code> prevents subtle bugs and makes comparisons predictable.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q34. Why must a callback function passed to .map() return a value?</p>
+            <p class="answer">The <code>map()</code> method creates a new array by collecting the return value of the callback for each element. If the callback doesn't return anything, <code>undefined</code> will be placed in the new array for that element. The whole point of map is to transform values, so the callback must return the transformed value.</p>
+        </div>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>
