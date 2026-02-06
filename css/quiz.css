@@ -216,3 +216,93 @@
 .quiz-actions-final .quiz-btn {
     min-width: 140px;
 }
+
+/* Review section after quiz completion */
+#quiz-review {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #b7a57a;
+}
+
+#quiz-review h2 {
+    color: #4b2e83;
+    margin-bottom: 1.5rem;
+}
+
+.review-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #ddd;
+}
+
+.review-item.review-correct {
+    border-left-color: #28a745;
+}
+
+.review-item.review-incorrect {
+    border-left-color: #dc3545;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.review-number {
+    font-weight: bold;
+    color: #4b2e83;
+}
+
+.review-status {
+    font-weight: bold;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+}
+
+.review-correct .review-status {
+    background: #d4edda;
+    color: #28a745;
+}
+
+.review-incorrect .review-status {
+    background: #f8d7da;
+    color: #dc3545;
+}
+
+.review-question {
+    margin: 0.5rem 0;
+    color: #333;
+}
+
+.review-answer {
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.review-correct-answer {
+    color: #28a745;
+}
+
+.review-hint {
+    background: #fffbeb;
+    border-radius: 4px;
+    padding: 0.75rem;
+    margin: 0.75rem 0 0.5rem 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.review-source {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0.5rem 0 0 0;
+}
+
+.review-source a {
+    color: #4b2e83;
+}

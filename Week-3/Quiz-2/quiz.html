@@ -56,6 +56,8 @@
                 <button class="quiz-btn" onclick="window.location.href='./'">Back to Study Guide</button>
             </div>
         </div>
+
+        <div id="quiz-review" class="hidden"></div>
     </div>
 
     <!-- Hidden PDF Content -->
@@ -416,6 +418,7 @@
 
             document.getElementById('quiz-start').classList.add('hidden');
             document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('quiz-review').classList.add('hidden');
             document.getElementById('quiz-content').classList.remove('hidden');
 
             showQuestion();
@@ -624,6 +627,38 @@
             else message = 'Review the study guide and try again!';
 
             document.getElementById('score-message').textContent = `${percentage}% - ${message}`;
+
+            renderReview();
+        }
+
+        function renderReview() {
+            const reviewContainer = document.getElementById('quiz-review');
+            reviewContainer.classList.remove('hidden');
+
+            let html = '<h2>Review Your Answers</h2>';
+
+            currentQuestions.forEach((q, i) => {
+                const userAnswer = userAnswers[i];
+                const isCorrect = userAnswer === q.correct;
+                const statusClass = isCorrect ? 'review-correct' : 'review-incorrect';
+                const statusText = isCorrect ? 'Correct' : 'Incorrect';
+
+                html += `
+                    <div class="review-item ${statusClass}">
+                        <div class="review-header">
+                            <span class="review-number">Question ${i + 1}</span>
+                            <span class="review-status">${statusText}</span>
+                        </div>
+                        <p class="review-question">${q.question}</p>
+                        <p class="review-answer"><strong>Your Answer:</strong> ${userAnswer || 'Not answered'}</p>
+                        ${!isCorrect ? `<p class="review-answer review-correct-answer"><strong>Correct Answer:</strong> ${q.correct}</p>` : ''}
+                        <p class="review-hint"><strong>Hint:</strong> ${q.hint}</p>
+                        <p class="review-source"><strong>Source:</strong> <a href="${q.sourceUrl}" target="_blank">${q.source}</a></p>
+                    </div>
+                `;
+            });
+
+            reviewContainer.innerHTML = html;
         }
     </script>
 
