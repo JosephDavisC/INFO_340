@@ -68,6 +68,7 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 
 | Date | Topic | Type | Link |
 |------|-------|------|------|
+| Feb 9, 2026 | React Introduction | In-Class | [View](https://info340.joechamdani.com/Week-6/Feb-9-2026/) |
 | Feb 9, 2026 | Quiz 3 | Study Guide + Practice Quiz | [View](https://info340.joechamdani.com/Week-6/Quiz-3/) |
 
 ---

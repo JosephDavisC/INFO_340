@@ -125,8 +125,34 @@
         <priority>0.6</priority>
     </url>
     <url>
+        <loc>https://info340.joechamdani.com/Week-5/Feb-4-2026/</loc>
+        <lastmod>2026-02-04</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <url>
         <loc>https://info340.joechamdani.com/Week-5/Project-Check-In/</loc>
         <lastmod>2026-02-04</lastmod>
         <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://info340.joechamdani.com/Week-5/Problem-Set-06/</loc>
+        <lastmod>2026-02-04</lastmod>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://info340.joechamdani.com/Week-6/</loc>
+        <lastmod>2026-02-09</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://info340.joechamdani.com/Week-6/Feb-9-2026/</loc>
+        <lastmod>2026-02-09</lastmod>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://info340.joechamdani.com/Week-6/Quiz-3/</loc>
+        <lastmod>2026-02-06</lastmod>
+        <priority>0.7</priority>
     </url>
 </urlset>

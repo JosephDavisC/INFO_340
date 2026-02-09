@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feb 9: React Introduction - INFO 340</title>
+    <meta name="description" content="INFO 340 Feb 9, 2026 - Introduction to React: Components, JSX, and Props.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Feb 9: React Introduction - INFO 340">
+    <meta property="og:description" content="Introduction to React: Components, JSX, and Props.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-6/Feb-9-2026/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Feb 9: React Introduction - INFO 340">
+    <meta name="twitter:description" content="Introduction to React: Components, JSX, and Props.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 6</a></p>
+    <h1>React Introduction</h1>
+    <p class="week-subtitle">February 9, 2026</p>
+
+    <section class="summary">
+        <h2>Topics Covered</h2>
+        <p><strong>Slides:</strong> <a href="https://slides.com/joelross/info340wi26-react-intro" target="_blank">slides.com/joelross/info340wi26-react-intro</a></p>
+
+        <h3>What is React?</h3>
+        <ul>
+            <li>React is a JavaScript library for dynamically generating and interacting with the DOM</li>
+            <li>Organizes UI into reusable components</li>
+            <li>Efficiently updates the rendered DOM through virtual DOM optimization</li>
+            <li>Declarative approach: describe what the UI should look like, React handles the how</li>
+        </ul>
+
+        <h3>Hello React</h3>
+        <p>React uses <code>React.createElement()</code> to create DOM elements:</p>
+        <pre><code>const msgElem = React.createElement('h1',
+  { id: 'hello', className: 'myClass' },
+  'Hello World!');</code></pre>
+        <ul>
+            <li>First argument: element type (tag name)</li>
+            <li>Second argument: props object (attributes)</li>
+            <li>Third argument: children (content)</li>
+        </ul>
+
+        <h3>JSX (JavaScript XML)</h3>
+        <p>JSX is shorthand syntax that transpiles to <code>React.createElement()</code> calls:</p>
+        <pre><code>const msgElem = &lt;h1 id="hello" className="myclass"&gt;Hello World&lt;/h1&gt;;</code></pre>
+        <ul>
+            <li>Looks like HTML but is actually JavaScript</li>
+            <li>Use <code>className</code> instead of <code>class</code> (reserved keyword in JavaScript)</li>
+            <li>Self-closing tags required for void elements: <code>&lt;img /&gt;</code>, <code>&lt;input /&gt;</code></li>
+            <li>Inline expressions use curly braces: <code>{variable}</code></li>
+            <li>Multiple root elements require a fragment: <code>&lt;&gt;...&lt;/&gt;</code></li>
+            <li>Comments use: <code>{/* comment */}</code></li>
+        </ul>
+
+        <h3>Vite Development Server</h3>
+        <ul>
+            <li>Build tool that transpiles JSX into pure JavaScript</li>
+            <li>Manages dependencies and bundles code</li>
+            <li>Auto-reloads browser on code changes</li>
+            <li>Displays syntax errors in console</li>
+            <li>Start with: <code>npm run dev</code></li>
+        </ul>
+
+        <h3>React Components</h3>
+        <p>Components are functions that return DOM elements:</p>
+        <pre><code>function HelloMessage(props) {
+  return &lt;h1&gt;Hello World!&lt;/h1&gt;;
+}</code></pre>
+        <ul>
+            <li>Component names must start with capital letter</li>
+            <li><strong>Critical rule:</strong> Always render as <code>&lt;HelloMessage /&gt;</code>, never call <code>HelloMessage()</code></li>
+            <li>Components accept a <code>props</code> parameter for input</li>
+            <li>Must return a single root element (use fragments if needed)</li>
+        </ul>
+
+        <h3>Props (Properties)</h3>
+        <p>Props are input parameters passed to components:</p>
+        <pre><code>const msg = &lt;MessageItem message="Hello" /&gt;;
+
+function MessageItem(props) {
+  return &lt;li&gt;{props.message.toUpperCase()}&lt;/li&gt;;
+}</code></pre>
+        <ul>
+            <li>Props can be strings, numbers, arrays, objects, or functions</li>
+            <li>String values can be passed directly: <code>message="Hello"</code></li>
+            <li>Non-string values use curly braces: <code>count={42}</code></li>
+            <li>Props are read-only (immutable)</li>
+        </ul>
+
+        <h3>Component Composition</h3>
+        <p>Build complex UIs by nesting components and mapping arrays:</p>
+        <pre><code>function MessageList(props) {
+  const msgComponents = props.messages.map((msgStr) =&gt; (
+    &lt;MessageItem message={msgStr} key={msgStr} /&gt;
+  ));
+  return &lt;ul&gt;{msgComponents}&lt;/ul&gt;;
+}</code></pre>
+        <ul>
+            <li>Use <code>.map()</code> to create components from arrays</li>
+            <li>Each list item needs a unique <code>key</code> prop (React requirement)</li>
+            <li>Keys help React identify which items changed, added, or removed</li>
+        </ul>
+
+        <h3>Module System</h3>
+        <p>Components defined in separate files and imported:</p>
+        <pre><code>// Messages.js
+export function HelloMessage(props) {
+  return &lt;h1&gt;Hello World&lt;/h1&gt;;
+}
+
+// App.js
+import { HelloMessage } from './Messages.js';
+
+export default function App(props) {
+  return &lt;HelloMessage /&gt;;
+}</code></pre>
+        <ul>
+            <li>Named exports: <code>export function ComponentName() {}</code></li>
+            <li>Default exports: <code>export default function App() {}</code></li>
+            <li>Import with: <code>import { ComponentName } from './file.js'</code></li>
+        </ul>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>React:</strong> JavaScript library for building UIs with components</li>
+            <li><strong>JSX:</strong> XML-like syntax that transpiles to <code>React.createElement()</code></li>
+            <li><strong>Components:</strong> Functions that return JSX (must start with capital letter)</li>
+            <li><strong>Props:</strong> Immutable input parameters passed to components</li>
+            <li><strong>Composition:</strong> Building complex UIs by nesting components</li>
+            <li><strong>Virtual DOM:</strong> React's optimization layer for efficient updates</li>
+            <li><strong>Vite:</strong> Build tool for transpiling JSX and managing dependencies</li>
+            <li><strong>Key Prop:</strong> Unique identifier for list items (required by React)</li>
+        </ul>
+    </section>
+
+    <section class="resources">
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://info340.github.io/react-intro.html" target="_blank">Ch 14: React Introduction</a></li>
+            <li><a href="https://react.dev/learn" target="_blank">React Official Docs: Quick Start</a></li>
+            <li><a href="https://vitejs.dev/" target="_blank">Vite Documentation</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>
