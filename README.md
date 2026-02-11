@@ -70,6 +70,7 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 |------|-------|------|------|
 | Feb 9, 2026 | React Introduction | In-Class | [View](https://info340.joechamdani.com/Week-6/Feb-9-2026/) |
 | Feb 11, 2026 | React Apps: State & Events | In-Class | [View](https://info340.joechamdani.com/Week-6/Feb-11-2026/) |
+| Feb 11, 2026 | Vite React Scaffolding for Draft 2 | Project Check-In | [View](https://info340.joechamdani.com/Week-6/Project-Check-In/) |
 | Feb 9, 2026 | Quiz 3 | Study Guide + Practice Quiz | [View](https://info340.joechamdani.com/Week-6/Quiz-3/) |
 
 ---

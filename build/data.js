@@ -158,6 +158,7 @@ module.exports = {
             activities: [
                 { label: 'Feb 9', title: 'React Introduction', path: 'Feb-9-2026/' },
                 { label: 'Feb 11', title: 'React Apps: State & Events', path: 'Feb-11-2026/' },
+                { label: 'Project Check-In', title: 'Vite React Scaffolding for Draft 2 (Lab)', path: 'Project-Check-In/' },
                 { label: 'Quiz 3', title: 'Study Guide (34 Q&A)', path: 'Quiz-3/' },
             ],
             concepts: [
