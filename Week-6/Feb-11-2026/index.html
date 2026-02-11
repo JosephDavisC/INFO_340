@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feb 11: React Apps - INFO 340</title>
+    <meta name="description" content="INFO 340 Feb 11, 2026 - React Apps: State, Events, and Interactive Components.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Feb 11: React Apps - INFO 340">
+    <meta property="og:description" content="React Apps: State, Events, and Interactive Components.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-6/Feb-11-2026/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Feb 11: React Apps - INFO 340">
+    <meta name="twitter:description" content="React Apps: State, Events, and Interactive Components.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 6</a></p>
+    <h1>React Apps</h1>
+    <p class="week-subtitle">February 11, 2026</p>
+
+    <section class="summary">
+        <h2>Topics Covered</h2>
+        <p><strong>Slides:</strong> <a href="https://slides.com/joelross/info340wi26-react-apps" target="_blank">slides.com/joelross/info340wi26-react-apps</a></p>
+
+        <h3>Development Workflow</h3>
+        <ul>
+            <li>Use <strong>Vite</strong> dev server to transpile React, manage dependencies, and auto-reload</li>
+            <li>Always test in browser before running Jest</li>
+            <li>Git workflow: merge starter branch into main for updates</li>
+        </ul>
+
+        <h3>React Components Review</h3>
+        <ul>
+            <li>Components are functions that return JSX elements</li>
+            <li>Component names must be capitalized</li>
+            <li>Props are input parameters passed via XML-style attributes</li>
+            <li>Access props through the <code>props</code> object parameter</li>
+            <li>Props can be strings, arrays, objects, or functions (callbacks)</li>
+        </ul>
+
+        <h3>Component Composition</h3>
+        <ul>
+            <li>Arrays of components render as sibling elements</li>
+            <li>Use <code>.map()</code> to create component collections from data arrays</li>
+            <li>Each list item needs a unique <code>key</code> prop to help React track changes</li>
+            <li>Pattern: "passing props down" from parent to child components</li>
+        </ul>
+
+        <h3>State Management with useState()</h3>
+        <p>State tracks internal, changeable data within a component:</p>
+        <pre><code>const [count, setCount] = useState(0);
+
+const handleClick = () =&gt; {
+  setCount(count + 1);
+};</code></pre>
+        <ul>
+            <li><code>useState(initialValue)</code> returns an array: <code>[stateVar, setterFunction]</code></li>
+            <li>Naming convention: <code>[variable, setVariable]</code></li>
+            <li>Calling the setter function triggers a <strong>re-render</strong> of the component</li>
+            <li>State updates are <strong>asynchronous</strong> — logging state in event handlers won't reflect new values immediately</li>
+        </ul>
+
+        <h3>State vs Props</h3>
+        <ul>
+            <li><strong>Props:</strong> Passed from parent, unchanging from the component's perspective</li>
+            <li><strong>State:</strong> Changes over time, usually through user interaction</li>
+            <li>Don't use state if the value can be derived from other state or props</li>
+            <li>If data doesn't change, it's a prop. If it changes over time, it's state</li>
+        </ul>
+
+        <h3>Event Handling in React</h3>
+        <ul>
+            <li>React uses special props for events: <code>onClick</code>, <code>onChange</code>, <code>onSubmit</code></li>
+            <li>Pass a callback function (don't call it): <code>onClick={handleClick}</code></li>
+            <li>Event listeners attach only to HTML elements, <strong>not</strong> custom components</li>
+            <li>Use <code>event.preventDefault()</code> for form submissions</li>
+        </ul>
+
+        <h3>Debugging React</h3>
+        <ul>
+            <li>Log state at the rendering level (top of component function), not inside event handlers</li>
+            <li>State changes are async, so <code>console.log</code> inside handlers shows old values</li>
+            <li>Use React DevTools to inspect component tree and state</li>
+        </ul>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>useState():</strong> React Hook that returns <code>[stateVar, setStateVar]</code> for managing component state</li>
+            <li><strong>State vs Props:</strong> State changes over time (internal), props are passed from parent (immutable)</li>
+            <li><strong>Re-rendering:</strong> Calling a state setter triggers React to re-render the component</li>
+            <li><strong>Event Props:</strong> <code>onClick</code>, <code>onChange</code>, <code>onSubmit</code> for handling user interaction</li>
+            <li><strong>Async State:</strong> State updates don't happen immediately — log at render level to debug</li>
+            <li><strong>Derived Values:</strong> Don't store in state what you can compute from existing state/props</li>
+        </ul>
+    </section>
+
+    <section class="resources">
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://info340.github.io/react-intro.html" target="_blank">Ch 14: React Introduction</a></li>
+            <li><a href="https://info340.github.io/interactive-react.html" target="_blank">Ch 15: Interactive React</a></li>
+            <li><a href="https://info340.github.io/client-side-routing.html" target="_blank">Ch 16: Client-Side Routing</a></li>
+            <li><a href="https://react.dev/reference/react/useState" target="_blank">React Docs: useState</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

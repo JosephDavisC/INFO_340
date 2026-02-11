@@ -157,6 +157,7 @@ module.exports = {
             landingDesc: 'React Fundamentals',
             activities: [
                 { label: 'Feb 9', title: 'React Introduction', path: 'Feb-9-2026/' },
+                { label: 'Feb 11', title: 'React Apps: State & Events', path: 'Feb-11-2026/' },
                 { label: 'Quiz 3', title: 'Study Guide (34 Q&A)', path: 'Quiz-3/' },
             ],
             concepts: [
@@ -164,13 +165,14 @@ module.exports = {
                 { term: 'JSX', desc: 'XML-like syntax that transpiles to <code>React.createElement()</code>' },
                 { term: 'Components', desc: 'Functions returning JSX (must start with capital letter)' },
                 { term: 'Props', desc: 'Immutable input parameters passed to components' },
-                { term: 'Composition', desc: 'Building complex UIs by nesting components' },
-                { term: 'Virtual DOM', desc: 'React optimization layer for efficient updates' },
-                { term: 'Vite', desc: 'Build tool for transpiling JSX and managing dependencies' },
+                { term: 'State', desc: '<code>useState()</code> Hook for managing changeable component data' },
+                { term: 'Events', desc: '<code>onClick</code>, <code>onChange</code>, <code>onSubmit</code> event props' },
+                { term: 'Re-rendering', desc: 'State setter calls trigger component re-renders' },
             ],
             resourcesNote: 'From INFO 340: Client-Side Development',
             resources: [
                 { title: 'Ch 14: React Introduction', url: 'https://info340.github.io/react-intro.html' },
+                { title: 'Ch 15: Interactive React', url: 'https://info340.github.io/interactive-react.html' },
             ],
         },
     ],
