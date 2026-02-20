@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feb 18: Interactive React - INFO 340</title>
+    <meta name="description" content="INFO 340 Feb 18, 2026 - Interactive React: State, Controlled Forms, and Lifting State Up.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Feb 18: Interactive React - INFO 340">
+    <meta property="og:description" content="Interactive React: State, Controlled Forms, and Lifting State Up.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-7/Feb-18-2026/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Feb 18: Interactive React - INFO 340">
+    <meta name="twitter:description" content="Interactive React: State, Controlled Forms, and Lifting State Up.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 7</a></p>
+    <h1>Interactive React</h1>
+    <p class="week-subtitle">February 18, 2026</p>
+
+    <section class="summary">
+        <h2>Topics Covered</h2>
+        <p><strong>Slides:</strong> <a href="https://slides.com/joelross/info340wi26-interactive-react" target="_blank">slides.com/joelross/info340wi26-interactive-react</a></p>
+
+        <h3>React Events</h3>
+        <ul>
+            <li>Event listeners attach to HTML elements using special props like <code>onClick</code>, <code>onChange</code>, <code>onSubmit</code></li>
+            <li>Pass a callback function, don't call it: <code>onClick={handleClick}</code> not <code>onClick={handleClick()}</code></li>
+            <li>Callback receives the DOM event object as a parameter</li>
+            <li>Event listeners only attach to HTML elements, <strong>not</strong> custom components</li>
+        </ul>
+
+        <h3>State with useState()</h3>
+        <p>State tracks internal component data that changes over time:</p>
+        <pre><code>const [count, setCount] = useState(0);
+
+const handleClick = () =&gt; {
+  setCount(count + 1);
+};</code></pre>
+        <ul>
+            <li><code>useState(initialValue)</code> returns <code>[stateVar, setterFunction]</code></li>
+            <li>Calling the setter triggers a <strong>re-render</strong> of the component</li>
+            <li>State changes are <strong>asynchronous</strong> — <code>console.log</code> in handlers shows old values</li>
+            <li>Multiple state variables work independently within a single component</li>
+            <li>Don't store values in state that can be derived from other state or props</li>
+        </ul>
+
+        <h3>State vs Props</h3>
+        <ul>
+            <li><strong>Props:</strong> Passed from parent, unchanging from the component's perspective</li>
+            <li><strong>State:</strong> Changes over time, usually through user interaction</li>
+            <li>If data doesn't change, it's a prop. If it changes over time, it's state</li>
+        </ul>
+
+        <h3>Controlled Forms</h3>
+        <p>Form inputs store their data in state, making React the source of truth:</p>
+        <pre><code>const [inputValue, setInputValue] = useState('');
+
+const handleChange = (event) =&gt; {
+  setInputValue(event.target.value);
+};
+
+return &lt;input value={inputValue} onChange={handleChange} /&gt;;</code></pre>
+        <ul>
+            <li>Controlled inputs require both <code>value</code> and <code>onChange</code> attributes</li>
+            <li>React state is the single source of truth for the input's value</li>
+            <li>Every keystroke triggers <code>onChange</code>, updating state and re-rendering</li>
+        </ul>
+
+        <h3>Lifting State Up</h3>
+        <ul>
+            <li>When multiple components need the same data, <strong>lift state up</strong> to their closest common parent</li>
+            <li>Parent owns the state and passes it down as props</li>
+            <li>Child components receive <strong>callback functions</strong> as props to modify parent state</li>
+            <li>Don't pass state setters directly — wrap them in handler functions</li>
+        </ul>
+        <pre><code>// Parent component
+function App() {
+  const [items, setItems] = useState([]);
+
+  const addItem = (newItem) =&gt; {
+    setItems([...items, newItem]);
+  };
+
+  return (
+    &lt;&gt;
+      &lt;AddForm onAdd={addItem} /&gt;
+      &lt;ItemList items={items} /&gt;
+    &lt;/&gt;
+  );
+}
+
+// Child component
+function AddForm({ onAdd }) {
+  const handleSubmit = (event) =&gt; {
+    event.preventDefault();
+    onAdd(newItemData);
+  };
+  // ...
+}</code></pre>
+
+        <h3>Project Draft 2</h3>
+        <ul>
+            <li>Refactor Draft 1 into a React application</li>
+            <li>Render all content through components with props</li>
+            <li>Implement routing for page navigation</li>
+            <li>Add one interactive feature with event handling and state</li>
+            <li>Deploy to Firebase hosting</li>
+        </ul>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>useState():</strong> Hook returning <code>[stateVar, setter]</code> for managing dynamic data</li>
+            <li><strong>Controlled Forms:</strong> Inputs with <code>value</code> and <code>onChange</code> tied to state</li>
+            <li><strong>Lifting State Up:</strong> Move shared state to the closest common parent component</li>
+            <li><strong>Callback Props:</strong> Pass handler functions to children to modify parent state</li>
+            <li><strong>Async State:</strong> State updates are batched, log at render level to debug</li>
+            <li><strong>Derived Values:</strong> Compute from state/props instead of storing separately</li>
+        </ul>
+    </section>
+
+    <section class="resources">
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://info340.github.io/interactive-react.html" target="_blank">Ch 15: Interactive React</a></li>
+            <li><a href="https://info340.github.io/client-side-routing.html" target="_blank">Ch 16: Client-Side Routing</a></li>
+            <li><a href="https://react.dev/reference/react/useState" target="_blank">React Docs: useState</a></li>
+            <li><a href="https://react.dev/learn/sharing-state-between-components" target="_blank">React Docs: Sharing State</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

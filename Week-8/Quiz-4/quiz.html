@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 4 Practice - INFO 340</title>
+    <meta name="description" content="Practice quiz for INFO 340 Quiz 4 - React Components, State, Props, Forms, and Routing.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Quiz 4 Practice - INFO 340">
+    <meta property="og:description" content="Practice quiz for INFO 340 Quiz 4 - React Components, State, Props, Forms, and Routing.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-8/Quiz-4/quiz.html">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quiz 4 Practice - INFO 340">
+    <meta name="twitter:description" content="Practice quiz for INFO 340 Quiz 4 - React Components, State, Props, Forms, and Routing.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/quiz.css">
+    <link rel="icon" href="/img/favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <p><a href="./" class="back-link">&larr; Back to Study Guide</a></p>
+    <h1>Quiz 4 Practice</h1>
+
+    <div class="quiz-container">
+        <div id="quiz-start" class="quiz-header">
+            <p>Test your knowledge with questions from the Quiz 4 study guide.</p>
+            <p>Topics: React Components, State, Props, Forms, Routing</p>
+            <div class="quiz-mode-select">
+                <button class="quiz-btn" onclick="startQuiz(18)">18 Random Questions</button>
+                <button class="quiz-btn" onclick="startQuiz(35)">All 35 Questions</button>
+            </div>
+        </div>
+
+        <div id="quiz-content" class="hidden">
+            <div class="quiz-progress">
+                <div class="quiz-progress-bar" id="progress-bar" style="width: 0%"></div>
+            </div>
+            <div class="quiz-stats">
+                <span class="question-counter" id="question-counter">Question 1 of 18</span>
+                <span class="quiz-current-score" id="current-score">Score: 0/0</span>
+            </div>
+            <div class="quiz-question" id="question-container">
+                <h3 id="question-text"></h3>
+                <button class="quiz-hint-btn" id="hint-btn" onclick="showHint()">Show Hint</button>
+                <div class="quiz-hint hidden" id="hint-text"></div>
+                <ul class="quiz-options" id="options-container"></ul>
+                <div class="quiz-source hidden" id="source-text"></div>
+            </div>
+            <div class="quiz-actions">
+                <button class="quiz-btn" id="prev-btn" onclick="prevQuestion()" disabled>Previous Question</button>
+                <button class="quiz-btn" id="next-btn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <div id="quiz-results" class="quiz-results hidden">
+            <h2>Quiz Complete!</h2>
+            <div class="quiz-score" id="score-display"></div>
+            <p class="quiz-message" id="score-message"></p>
+            <div class="quiz-actions-final">
+                <button class="quiz-btn" onclick="downloadPDF()">Download PDF</button>
+                <button class="quiz-btn" onclick="retryQuiz()">Try Again</button>
+                <button class="quiz-btn" onclick="window.location.href='./'">Back to Study Guide</button>
+            </div>
+        </div>
+
+        <div id="quiz-review" class="hidden"></div>
+    </div>
+
+    <!-- Hidden PDF Content -->
+    <div id="pdf-content" style="display: none;"></div>
+
+    <script>
+        const allQuestions = [
+            {
+                question: "How can a child component update its parent's state?",
+                correct: "By calling a callback function passed down as a prop from the parent",
+                wrong: ["By directly modifying the parent's state variable", "By importing the parent's useState hook", "By using a global state variable"],
+                hint: "The parent passes a handler function as a prop to the child.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "How does one define props that should be passed into a React component?",
+                correct: "As XML-style attributes when rendering the component in JSX",
+                wrong: ["By declaring them inside the component function", "By using a global props object", "By adding them to the component's state"],
+                hint: "Props look like HTML attributes: <Component name=\"Ada\" />",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "How is the map() function commonly used in React components?",
+                correct: "To transform an array of data into an array of React components",
+                wrong: ["To navigate between pages", "To update component state", "To style components dynamically"],
+                hint: "It converts data arrays into renderable component arrays.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "How should a child component update its parent's state?",
+                correct: "By invoking a callback function received as a prop",
+                wrong: ["By directly calling the parent's setState", "By modifying the props object", "By using document.querySelector on the parent"],
+                hint: "The parent defines a handler and passes it down as a prop.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What content is usually found in a React application's index.html file?",
+                correct: "A single <div id=\"root\"> element and a script tag loading the entry point",
+                wrong: ["All the application's HTML content", "Multiple page layouts and navigation", "CSS stylesheets and inline styles"],
+                hint: "React injects all its content into one root div element.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What does a React component's state represent?",
+                correct: "Internal, changeable data that triggers re-renders when updated",
+                wrong: ["The component's CSS styles", "The component's position in the DOM", "Static configuration data"],
+                hint: "State is for data that changes over time, usually from user interaction.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What does ReactDOM.createRoot() do?",
+                correct: "Creates a React rendering context for a DOM element to render components into",
+                wrong: ["Creates a new HTML file", "Initializes the React Router", "Creates a new React component"],
+                hint: "It takes a DOM element and returns a root with a .render() method.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What does the command npm run dev do in a Vite React project?",
+                correct: "Starts a development server that transpiles JSX and auto-reloads on changes",
+                wrong: ["Builds the project for production", "Runs the test suite", "Installs project dependencies"],
+                hint: "It's the command you run during development to see your app in the browser.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What does the second argument in useEffect(callback, []) signify?",
+                correct: "The dependency array — an empty array means the effect runs only once on mount",
+                wrong: ["The return value of the effect", "The initial state value", "The list of components to re-render"],
+                hint: "Variables in this array control when the effect re-runs.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What does the useState() function return?",
+                correct: "An array with the current state value and a setter function",
+                wrong: ["A single state value", "An object with get and set methods", "A promise that resolves to the state"],
+                hint: "Use array destructuring: const [value, setValue] = useState(0)",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What does \"lifting state up\" mean in React?",
+                correct: "Moving shared state to the closest common ancestor of components that need it",
+                wrong: ["Moving state from state to props", "Deleting state from child components", "Making state variables global"],
+                hint: "The parent owns the state and passes it down as props.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What happens when you call a state setter function?",
+                correct: "React schedules an asynchronous re-render of the component with the new value",
+                wrong: ["The state updates immediately and synchronously", "The entire application re-renders", "The component is removed from the DOM"],
+                hint: "The update doesn't happen instantly — it's batched and asynchronous.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What is a controlled input in React forms?",
+                correct: "An input whose value is tied to React state via value and onChange attributes",
+                wrong: ["An input with a placeholder attribute", "An input that is disabled", "An input inside a form element"],
+                hint: "React state becomes the single source of truth for the input's value.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What is JSX?",
+                correct: "A syntax extension that lets you write HTML-like code in JavaScript, transpiled to React.createElement() calls",
+                wrong: ["A new programming language", "A CSS preprocessor", "A database query language"],
+                hint: "It looks like HTML but is actually JavaScript under the hood.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What is React primarily used for?",
+                correct: "Building user interfaces through reusable components with efficient DOM updates",
+                wrong: ["Server-side database management", "Styling web pages with CSS", "Managing network requests"],
+                hint: "React is a JavaScript library for building UIs declaratively.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What is the correct way to define a React function component?",
+                correct: "A capitalized function that accepts props and returns JSX",
+                wrong: ["A lowercase function that returns a string", "A class that extends React.Component", "An arrow function assigned to a lowercase variable"],
+                hint: "Component names MUST start with a capital letter.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What is the main advantage of using React compared to DOM functions?",
+                correct: "React automatically re-renders only changed parts of the UI via virtual DOM",
+                wrong: ["React makes web pages load faster", "React eliminates the need for JavaScript", "React works without a browser"],
+                hint: "You describe what the UI should look like; React handles the updates.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What is the main difference between props and state?",
+                correct: "Props are passed from parent and immutable; state is internal and changeable",
+                wrong: ["Props are for styling; state is for content", "Props are faster than state", "There is no difference"],
+                hint: "Props flow down from parent; state is owned by the component.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What is the primary purpose of the useEffect() hook in React?",
+                correct: "To handle side effects like data fetching, subscriptions, and DOM manipulation",
+                wrong: ["To define component props", "To create new components", "To style components"],
+                hint: "Side effects are operations that reach outside the component.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What is the purpose of React.StrictMode?",
+                correct: "To enable additional error checking and warnings during development",
+                wrong: ["To make the app run faster", "To prevent users from editing forms", "To enforce TypeScript usage"],
+                hint: "It double-renders components in development to catch bugs.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What is the recommended way to organize React components in large projects?",
+                correct: "Place each component in its own file inside a src/components/ directory",
+                wrong: ["Put all components in a single file", "Store components in the public folder", "Use inline components only"],
+                hint: "Separate files with named exports, grouped by feature.",
+                source: "Ch 16: Client-Side Routing",
+                sourceUrl: "https://info340.github.io/client-side-routing.html"
+            },
+            {
+                question: "What type of data can props hold?",
+                correct: "Any JavaScript value: strings, numbers, arrays, objects, functions, and components",
+                wrong: ["Only strings and numbers", "Only objects and arrays", "Only primitive types"],
+                hint: "Props can be any JS value — even callback functions.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Which attribute is used to register a click event in React?",
+                correct: "onClick (camelCase)",
+                wrong: ["onclick (lowercase)", "click", "onpress"],
+                hint: "React uses camelCase for all event attributes.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Which attribute name is used in JSX instead of class?",
+                correct: "className",
+                wrong: ["cssClass", "htmlClass", "classList"],
+                hint: "'class' is a reserved keyword in JavaScript.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Which hook is used for side effects like data fetching?",
+                correct: "useEffect()",
+                wrong: ["useState()", "useContext()", "useCallback()"],
+                hint: "It runs after render and accepts a dependency array.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Which is the recommended way to define an event handler for a React component?",
+                correct: "Define a handler function and pass it by reference: onClick={handleClick}",
+                wrong: ["Use inline HTML event attributes", "Call the function directly: onClick={handleClick()}", "Use addEventListener inside the component"],
+                hint: "Don't use parentheses — that calls it immediately during render.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Which of the following best describes what values can be included inside a JSX inline expression?",
+                correct: "Any JavaScript expression that produces a value (variables, ternaries, function calls)",
+                wrong: ["Only string values", "Any JavaScript code including if/else and loops", "Only numbers and booleans"],
+                hint: "Expressions produce values; statements (if/else, for) do not.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Which of the following is NOT true about React components?",
+                correct: "Components can be called as regular functions like MyComponent()",
+                wrong: ["Components must start with a capital letter", "Components return JSX", "Components can accept props"],
+                hint: "You render components as JSX elements, not function calls.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Which of the following should NOT be stored in a component's state?",
+                correct: "Values that can be derived (computed) from existing state or props",
+                wrong: ["User input from a form", "Whether a modal is open or closed", "A list of items from an API"],
+                hint: "If you can calculate it from other data, don't store it separately.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Which React hook is used to manage state in function components?",
+                correct: "useState()",
+                wrong: ["useEffect()", "useRef()", "useReducer()"],
+                hint: "It returns a state variable and a setter function.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Which tool transpiles JSX into regular JavaScript?",
+                correct: "Vite (using Babel under the hood)",
+                wrong: ["Node.js", "React itself", "The web browser"],
+                hint: "This build tool also provides hot module replacement during development.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Why is the key prop important when rendering lists?",
+                correct: "It gives each item a unique identity so React can efficiently track changes",
+                wrong: ["It determines the display order", "It sets the CSS class for each item", "It is required for the list to render"],
+                hint: "Without keys, React must re-render the entire list on every change.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Why might logging a state variable immediately after calling its setter print the old value?",
+                correct: "Because state updates are asynchronous — the component hasn't re-rendered yet",
+                wrong: ["Because console.log is broken in React", "Because the setter function failed", "Because state variables are read-only"],
+                hint: "Log at the top of the component function to see the latest value.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Why should you never update state directly using an assignment operator?",
+                correct: "Direct mutation doesn't trigger a re-render — only the setter function does",
+                wrong: ["It causes a syntax error", "It deletes the state variable", "It makes the component unmount"],
+                hint: "React only knows to update the UI when the setter is called.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Why should you use controlled inputs in a React form?",
+                correct: "To keep React state as the single source of truth, preventing sync issues with the DOM",
+                wrong: ["To make inputs read-only", "To prevent form submission", "To improve page load speed"],
+                hint: "Controlled inputs ensure React always knows the current form values.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            }
+        ];
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+        let totalQuestions = 18;
+        let userAnswers = [];
+        let lastQuizCount = 18;
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function startQuiz(count) {
+            totalQuestions = count;
+            lastQuizCount = count;
+            currentQuestions = shuffleArray(allQuestions).slice(0, count);
+            currentQuestionIndex = 0;
+            score = 0;
+            answered = false;
+            userAnswers = new Array(count).fill(null);
+
+            document.getElementById('progress-bar').style.width = '0%';
+            document.getElementById('quiz-start').classList.add('hidden');
+            document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('quiz-review').classList.add('hidden');
+            document.getElementById('quiz-content').classList.remove('hidden');
+
+            showQuestion();
+        }
+
+        function retryQuiz() {
+            startQuiz(lastQuizCount);
+        }
+
+        function downloadPDF() {
+            const percentage = Math.round((score / totalQuestions) * 100);
+            const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            let html = `
+                <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 20px; max-width: 800px;">
+                    <div style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #4b2e83; padding-bottom: 20px;">
+                        <h1 style="color: #4b2e83; margin: 0 0 10px 0;">Quiz 4 Practice Results</h1>
+                        <p style="color: #666; margin: 5px 0;">INFO 340 - Client-Side Web Development</p>
+                        <p style="color: #666; margin: 5px 0;">${date}</p>
+                    </div>
+                    <div style="text-align: center; margin-bottom: 30px; padding: 20px; background: #f5f5f5; border-radius: 8px;">
+                        <div style="font-size: 48px; font-weight: bold; color: #4b2e83;">${score}/${totalQuestions}</div>
+                        <div style="font-size: 24px; color: #666;">${percentage}%</div>
+                        <p style="margin-top: 10px; color: #333;">Topics: React Components, State, Props, Forms, Routing</p>
+                    </div>
+                    <h2 style="color: #4b2e83; border-bottom: 2px solid #b7a57a; padding-bottom: 10px;">Question Review</h2>
+            `;
+
+            currentQuestions.forEach((q, i) => {
+                const userAnswer = userAnswers[i];
+                const isCorrect = userAnswer === q.correct;
+                const statusColor = isCorrect ? '#28a745' : '#dc3545';
+                const statusText = isCorrect ? '✓ Correct' : '✗ Incorrect';
+
+                html += `
+                    <div style="margin-bottom: 25px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; border-left: 4px solid ${statusColor};">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <strong style="color: #4b2e83;">Question ${i + 1}</strong>
+                            <span style="color: ${statusColor}; font-weight: bold;">${statusText}</span>
+                        </div>
+                        <p style="margin: 10px 0; color: #333;"><strong>Q:</strong> ${q.question}</p>
+                        <p style="margin: 5px 0; color: ${isCorrect ? '#28a745' : '#dc3545'};">
+                            <strong>Your Answer:</strong> ${userAnswer || 'Not answered'}
+                        </p>
+                        ${!isCorrect ? `<p style="margin: 5px 0; color: #28a745;"><strong>Correct Answer:</strong> ${q.correct}</p>` : ''}
+                        <p style="margin: 10px 0 0 0; padding: 10px; background: #fffbeb; border-radius: 4px; color: #666; font-size: 14px;">
+                            <strong>Hint:</strong> ${q.hint}
+                        </p>
+                    </div>
+                `;
+            });
+
+            html += `
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #b7a57a; text-align: center; color: #666; font-size: 14px;">
+                        <p>Study more at: <span style="color: #4b2e83;">info340.joechamdani.com/Week-8/Quiz-4/</span></p>
+                    </div>
+                </div>
+            `;
+
+            const element = document.getElementById('pdf-content');
+            element.innerHTML = html;
+            element.style.display = 'block';
+
+            const opt = {
+                margin: 10,
+                filename: 'Quiz4-Results.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                element.style.display = 'none';
+            });
+        }
+
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            const previousAnswer = userAnswers[currentQuestionIndex];
+            answered = previousAnswer !== null;
+
+            document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
+            document.getElementById('progress-bar').style.width = `${((currentQuestionIndex) / totalQuestions) * 100}%`;
+            document.getElementById('question-text').innerHTML = question.question;
+
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('current-score').textContent = `Score: ${score}/${answeredCount}`;
+
+            document.getElementById('hint-btn').classList.remove('hidden');
+            document.getElementById('hint-text').classList.add('hidden');
+            document.getElementById('hint-text').textContent = question.hint;
+
+            document.getElementById('source-text').innerHTML = `<strong>Source:</strong> <a href="${question.sourceUrl}" target="_blank">${question.source}</a>`;
+
+            const options = shuffleArray([question.correct, ...question.wrong]);
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            options.forEach((option) => {
+                const li = document.createElement('li');
+                li.className = 'quiz-option';
+                li.innerHTML = option;
+
+                if (previousAnswer !== null) {
+                    li.classList.add('disabled');
+                    if (option === question.correct) {
+                        li.classList.add('correct');
+                    }
+                    if (option === previousAnswer && previousAnswer !== question.correct) {
+                        li.classList.add('incorrect');
+                    }
+                } else {
+                    li.onclick = () => selectOption(li, option === question.correct, option);
+                }
+                optionsContainer.appendChild(li);
+            });
+
+            if (previousAnswer !== null) {
+                document.getElementById('source-text').classList.remove('hidden');
+                document.getElementById('hint-btn').classList.add('hidden');
+            } else {
+                document.getElementById('source-text').classList.add('hidden');
+            }
+
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            document.getElementById('next-btn').disabled = previousAnswer === null;
+            document.getElementById('next-btn').textContent = currentQuestionIndex === totalQuestions - 1 ? 'See Results' : 'Next Question';
+        }
+
+        function showHint() {
+            document.getElementById('hint-text').classList.remove('hidden');
+            document.getElementById('hint-btn').classList.add('hidden');
+        }
+
+        function selectOption(element, isCorrect, selectedOption) {
+            if (answered) return;
+            answered = true;
+
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                if (opt.innerHTML === currentQuestions[currentQuestionIndex].correct) {
+                    opt.classList.add('correct');
+                }
+            });
+
+            if (isCorrect) {
+                score++;
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+            }
+
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('current-score').textContent = `Score: ${score}/${answeredCount}`;
+
+            document.getElementById('source-text').classList.remove('hidden');
+            document.getElementById('hint-btn').classList.add('hidden');
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex >= totalQuestions) {
+                showResults();
+            } else {
+                showQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-content').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('score-display').textContent = `${score}/${totalQuestions}`;
+
+            let message = '';
+            if (percentage >= 90) message = 'Excellent! You\'re ready for the quiz!';
+            else if (percentage >= 80) message = 'Great job! Just a bit more review.';
+            else if (percentage >= 70) message = 'Good effort! Review the study guide.';
+            else if (percentage >= 60) message = 'Keep studying! You\'re getting there.';
+            else message = 'Review the study guide and try again!';
+
+            document.getElementById('score-message').textContent = `${percentage}% - ${message}`;
+
+            renderReview();
+        }
+
+        function renderReview() {
+            const reviewContainer = document.getElementById('quiz-review');
+            reviewContainer.classList.remove('hidden');
+
+            let html = '<h2>Review Your Answers</h2>';
+
+            currentQuestions.forEach((q, i) => {
+                const userAnswer = userAnswers[i];
+                const isCorrect = userAnswer === q.correct;
+                const statusClass = isCorrect ? 'review-correct' : 'review-incorrect';
+                const statusText = isCorrect ? 'Correct' : 'Incorrect';
+
+                html += `
+                    <div class="review-item ${statusClass}">
+                        <div class="review-header">
+                            <span class="review-number">Question ${i + 1}</span>
+                            <span class="review-status">${statusText}</span>
+                        </div>
+                        <p class="review-question">${q.question}</p>
+                        <p class="review-answer"><strong>Your Answer:</strong> ${userAnswer || 'Not answered'}</p>
+                        ${!isCorrect ? `<p class="review-answer review-correct-answer"><strong>Correct Answer:</strong> ${q.correct}</p>` : ''}
+                        <p class="review-hint"><strong>Hint:</strong> ${q.hint}</p>
+                        <p class="review-source"><strong>Source:</strong> <a href="${q.sourceUrl}" target="_blank">${q.source}</a></p>
+                    </div>
+                `;
+            });
+
+            reviewContainer.innerHTML = html;
+        }
+    </script>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

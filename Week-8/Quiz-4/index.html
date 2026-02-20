@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 4 Study Guide - INFO 340</title>
+    <meta name="description" content="INFO 340 Quiz 4 Study Guide - React Components, State, Props, Forms, and Routing.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Quiz 4 Study Guide - INFO 340">
+    <meta property="og:description" content="Study guide covering React Components, State, Props, Forms, and Routing.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-8/Quiz-4/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quiz 4 Study Guide - INFO 340">
+    <meta name="twitter:description" content="Study guide covering React Components, State, Props, Forms, and Routing.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/quiz.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 8</a></p>
+    <h1>Quiz 4 Study Guide</h1>
+
+    <section class="quiz-intro">
+        <p>This study guide covers possible questions for Quiz 4. I answered each question based on my understanding to help me prepare.</p>
+        <p class="quiz-sources"><strong>Sources:</strong></p>
+        <ul class="quiz-sources-list">
+            <li><strong>INFO 340:</strong> <a href="https://info340.github.io/interactive-react.html" target="_blank">Ch 15: Interactive React</a>, <a href="https://info340.github.io/client-side-routing.html" target="_blank">Ch 16: Client-Side Routing</a></li>
+        </ul>
+        <a href="quiz.html" class="take-quiz-btn">Take Practice Quiz</a>
+    </section>
+
+    <section class="quiz-section">
+        <div class="qa">
+            <p class="question">Q1. How can a child component update its parent's state?</p>
+            <p class="answer">The parent passes a callback function as a prop to the child. The child calls this callback (e.g., <code>props.onUpdate(newValue)</code>) when it needs to update the parent's state. The child never directly accesses or modifies the parent's state variable or setter function.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q2. How does one define props that should be passed into a React component?</p>
+            <p class="answer">Props are passed as XML-style attributes when rendering the component: <code>&lt;MyComponent name="Ada" age={36} /&gt;</code>. Inside the component, they are accessed through the <code>props</code> parameter object: <code>props.name</code>, <code>props.age</code>. You can also use destructuring: <code>function MyComponent({ name, age })</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q3. How is the map() function commonly used in React components?</p>
+            <p class="answer">The <code>map()</code> function transforms an array of data into an array of React components for rendering. For example: <code>props.items.map((item) =&gt; &lt;ListItem key={item.id} data={item} /&gt;)</code>. Each mapped element needs a unique <code>key</code> prop so React can efficiently track changes.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q4. How should a child component update its parent's state?</p>
+            <p class="answer">By calling a callback function that was passed down as a prop from the parent. The parent defines a handler function that calls its own state setter, then passes that handler to the child. The child invokes <code>props.onAction(data)</code> when needed. This maintains unidirectional data flow.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q5. What content is usually found in a React application's index.html file?</p>
+            <p class="answer">A minimal HTML file containing a single <code>&lt;div id="root"&gt;&lt;/div&gt;</code> element where all React components are injected. It also loads the entry point script (<code>src/main.jsx</code>) which bootstraps the React application using <code>ReactDOM.createRoot()</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q6. What does a React component's state represent?</p>
+            <p class="answer">State represents internal, changeable data within a component that changes over time, usually due to user interaction. When state changes, React automatically re-renders the component to reflect the updated data. State is private to the component that owns it.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q7. What does ReactDOM.createRoot() do?</p>
+            <p class="answer">It creates a React rendering context (root) for a specified DOM element, enabling React to manage that element's content. It takes a DOM element as an argument (e.g., <code>document.getElementById('root')</code>) and returns a root object with a <code>.render()</code> method to render React components into the DOM.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q8. What does the command npm run dev do in a Vite React project?</p>
+            <p class="answer">It starts the Vite development server (typically at <code>localhost:5173</code>) which transpiles JSX into regular JavaScript, manages module dependencies, automatically reloads the browser when files change (hot module replacement), and displays syntax errors in the browser.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q9. What does the second argument in useEffect(callback, []) signify?</p>
+            <p class="answer">The second argument is the <strong>dependency array</strong>. An empty array <code>[]</code> means the effect runs only once when the component first mounts (similar to "on component load"). If variables are listed in the array, the effect re-runs whenever those values change. Omitting the array entirely causes the effect to run after every render.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q10. What does the useState() function return?</p>
+            <p class="answer">It returns an array with exactly two elements: the current state value and a setter function to update it. Use array destructuring to assign them: <code>const [count, setCount] = useState(0)</code>. The setter function name conventionally follows the pattern <code>setVariableName</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q11. What does "lifting state up" mean in React?</p>
+            <p class="answer">It means moving shared state to the closest common ancestor (parent) of the components that need it. The parent owns the state and passes it down as props. Children that need to modify the state receive callback functions as props. This ensures a single source of truth for the data.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q12. What happens when you call a state setter function?</p>
+            <p class="answer">React schedules a re-render of the component with the new state value. The component function is called again, and the JSX is regenerated with the updated data. The state update is <strong>asynchronous</strong>, so the new value is not immediately available in the same event handler where the setter was called.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q13. What is a controlled input in React forms?</p>
+            <p class="answer">A controlled input is a form element whose value is controlled by React state. It requires both a <code>value</code> attribute tied to state and an <code>onChange</code> handler that updates state on every change: <code>&lt;input value={text} onChange={(e) =&gt; setText(e.target.value)} /&gt;</code>. React becomes the single source of truth for the input's value.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q14. What is JSX?</p>
+            <p class="answer">JSX (JavaScript XML) is a syntax extension that allows you to write HTML-like code directly in JavaScript. It gets transpiled (converted) into <code>React.createElement()</code> calls by tools like Babel/Vite. JSX uses <code>className</code> instead of <code>class</code>, requires self-closing tags for void elements, and uses curly braces <code>{}</code> for JavaScript expressions.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q15. What is React primarily used for?</p>
+            <p class="answer">React is a JavaScript library primarily used for building user interfaces through reusable components. It efficiently updates the DOM using a virtual DOM, enabling developers to create interactive, data-driven web applications. React takes a declarative approach: you describe what the UI should look like, and React handles the updates.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q16. What is the correct way to define a React function component?</p>
+            <p class="answer">A function component is a JavaScript function that starts with a <strong>capital letter</strong>, accepts a <code>props</code> parameter, and returns JSX (a single root element). Example: <code>function MyComponent(props) { return &lt;div&gt;{props.text}&lt;/div&gt;; }</code>. It is rendered as <code>&lt;MyComponent /&gt;</code>, never called directly as <code>MyComponent()</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q17. What is the main advantage of using React compared to DOM functions?</p>
+            <p class="answer">React automatically tracks data changes and efficiently re-renders only the parts of the UI that need updating through its virtual DOM. With vanilla DOM functions, you must manually create, update, and remove elements. React's declarative approach lets you describe the desired UI state, and it handles the DOM manipulation.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q18. What is the main difference between props and state?</p>
+            <p class="answer"><strong>Props</strong> are passed from a parent component and are read-only (immutable) from the receiving component's perspective. <strong>State</strong> is internal data managed within the component that changes over time, usually through user interaction. Props flow down, state is local. If data doesn't change, use props; if it changes over time, use state.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q19. What is the primary purpose of the useEffect() hook in React?</p>
+            <p class="answer">The <code>useEffect()</code> hook handles <strong>side effects</strong> in function components, such as fetching data from APIs, setting up subscriptions, or directly manipulating the DOM. It runs after the component renders and can be controlled with a dependency array to determine when it re-runs.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q20. What is the purpose of React.StrictMode?</p>
+            <p class="answer"><code>React.StrictMode</code> is an optional wrapper component that enables additional error checking and warnings during development. It helps identify deprecated practices, unsafe lifecycles, and potential bugs by intentionally double-rendering components. It only runs in development mode and has no effect in production.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q21. What is the recommended way to organize React components in large projects?</p>
+            <p class="answer">Place each component in its own file inside a <code>src/components/</code> directory. Use named exports (<code>export function MyComponent</code>) and import them where needed. Group related components together. The main <code>App.js</code> serves as the top-level component that composes the others.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q22. What type of data can props hold?</p>
+            <p class="answer">Props can hold any JavaScript value: strings, numbers, booleans, arrays, objects, functions (callbacks), and even other React components. String values can be passed directly in quotes, while all other types use curly braces: <code>&lt;Component name="Ada" age={36} items={array} onClick={handler} /&gt;</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q23. Which attribute is used to register a click event in React?</p>
+            <p class="answer">The <code>onClick</code> attribute (camelCase) is used on HTML elements: <code>&lt;button onClick={handleClick}&gt;Click&lt;/button&gt;</code>. Pass a function reference, not a function call. Event listeners only attach to HTML elements (lowercase tags), not custom React components.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q24. Which attribute name is used in JSX instead of class?</p>
+            <p class="answer"><code>className</code> is used instead of <code>class</code> because <code>class</code> is a reserved keyword in JavaScript. Example: <code>&lt;div className="container"&gt;</code>. Similarly, <code>htmlFor</code> is used instead of <code>for</code> on label elements.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q25. Which hook is used for side effects like data fetching?</p>
+            <p class="answer"><code>useEffect()</code> is used for side effects including data fetching, subscriptions, and DOM manipulation. It takes a callback function and an optional dependency array: <code>useEffect(() =&gt; { fetch(url).then(...) }, [])</code>. The empty array ensures the fetch runs only once on mount.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q26. Which is the recommended way to define an event handler for a React component?</p>
+            <p class="answer">Define the handler as a function inside the component, then pass it by reference (without parentheses) to the event prop: <code>const handleClick = () =&gt; { ... }; return &lt;button onClick={handleClick}&gt;</code>. Don't use <code>onClick={handleClick()}</code> as that calls the function immediately during render.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q27. Which of the following best describes what values can be included inside a JSX inline expression?</p>
+            <p class="answer">Any JavaScript <strong>expression</strong> that produces a value can go inside curly braces <code>{}</code>: variables, function calls, ternary operators, arithmetic, array methods like <code>.map()</code>. Statements like <code>if/else</code>, <code>for</code> loops, or variable declarations cannot be used directly inside JSX expressions.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q28. Which of the following is NOT true about React components?</p>
+            <p class="answer">It is NOT true that components can be called as regular functions (e.g., <code>MyComponent()</code>). Components must be rendered as JSX elements: <code>&lt;MyComponent /&gt;</code>. Components ARE: functions that return JSX, reusable, composable, and must start with a capital letter.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q29. Which of the following should NOT be stored in a component's state?</p>
+            <p class="answer">Values that can be <strong>derived</strong> (computed) from existing state or props should NOT be stored in state. For example, if you have a list in state, don't also store the list length in state since you can compute it with <code>list.length</code>. Also avoid storing props in state, and don't use state for values that never change.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q30. Which React hook is used to manage state in function components?</p>
+            <p class="answer"><code>useState()</code> is used to manage state. It accepts an initial value and returns an array with the current state and a setter function: <code>const [value, setValue] = useState(initialValue)</code>. Import it from React: <code>import { useState } from 'react'</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q31. Which tool transpiles JSX into regular JavaScript?</p>
+            <p class="answer"><strong>Vite</strong> (using Babel under the hood) transpiles JSX into regular JavaScript (<code>React.createElement()</code> calls) that browsers can understand. Vite also bundles modules, handles dependencies, and provides a development server with hot module replacement.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q32. Why is the key prop important when rendering lists?</p>
+            <p class="answer">The <code>key</code> prop gives each list item a stable, unique identity so React can efficiently track which items have changed, been added, or removed during re-renders. Without keys, React must re-render the entire list. Keys should be unique identifiers from the data (like IDs), not array indices.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q33. Why might logging out a state variable immediately after calling a state setter function print the old value?</p>
+            <p class="answer">Because state updates in React are <strong>asynchronous</strong>. When you call a setter like <code>setCount(5)</code>, React schedules the update but doesn't apply it immediately. The component hasn't re-rendered yet, so <code>count</code> still holds the old value. To see the new value, log at the top of the component function (render level), where it reflects the latest state after re-render.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q34. Why should you never update state directly using an assignment operator?</p>
+            <p class="answer">Directly mutating state (e.g., <code>stateVar = newValue</code> or <code>stateArray.push(item)</code>) does NOT trigger a re-render. React only knows to update the UI when the setter function is called. You must always create new copies of objects/arrays using spread operator and pass them to the setter: <code>setItems([...items, newItem])</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q35. Why should you use controlled inputs in a React form?</p>
+            <p class="answer">Controlled inputs keep React state as the <strong>single source of truth</strong> for form data, preventing React and the DOM from getting out of sync. This makes it easy to validate, transform, or submit form data since it's always available in state. It also enables features like disabling a submit button until the form is valid.</p>
+        </div>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

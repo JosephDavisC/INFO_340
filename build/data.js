@@ -176,5 +176,48 @@ module.exports = {
                 { title: 'Ch 15: Interactive React', url: 'https://info340.github.io/interactive-react.html' },
             ],
         },
+        {
+            number: 7,
+            dateRange: 'Feb 16-22',
+            subtitle: 'Interactive React',
+            description: 'Interactive React: State Management, Controlled Forms, and Component Communication.',
+            landingDesc: 'Interactive React',
+            activities: [
+                { label: 'Feb 18', title: 'Interactive React: State, Forms & Lifting State', path: 'Feb-18-2026/' },
+            ],
+            concepts: [
+                { term: 'Controlled Forms', desc: 'Inputs with <code>value</code> and <code>onChange</code> tied to state' },
+                { term: 'Lifting State Up', desc: 'Move shared state to closest common parent component' },
+                { term: 'Callback Props', desc: 'Pass handler functions to children to modify parent state' },
+                { term: 'Derived Values', desc: 'Compute from state/props instead of storing separately' },
+            ],
+            resourcesNote: 'From INFO 340: Client-Side Development',
+            resources: [
+                { title: 'Ch 15: Interactive React', url: 'https://info340.github.io/interactive-react.html' },
+                { title: 'Ch 16: Client-Side Routing', url: 'https://info340.github.io/client-side-routing.html' },
+            ],
+        },
+        {
+            number: 8,
+            dateRange: 'Feb 23 - Mar 1',
+            subtitle: 'React Routing & Effects',
+            description: 'Client-Side Routing, useEffect, and External Data.',
+            landingDesc: 'React Routing & Effects',
+            activities: [
+                { label: 'Quiz 4', title: 'Study Guide (35 Q&A)', path: 'Quiz-4/' },
+            ],
+            concepts: [
+                { term: 'Client-Side Routing', desc: 'React Router maps URL paths to components without page reloads' },
+                { term: 'useEffect', desc: 'Hook for side effects like data fetching and subscriptions' },
+                { term: 'Controlled Forms', desc: 'Inputs with <code>value</code> and <code>onChange</code> tied to state' },
+                { term: 'Lifting State Up', desc: 'Move shared state to closest common parent component' },
+                { term: 'URL Params', desc: '<code>useParams()</code> to access dynamic route segments' },
+            ],
+            resourcesNote: 'From INFO 340: Client-Side Development',
+            resources: [
+                { title: 'Ch 15: Interactive React', url: 'https://info340.github.io/interactive-react.html' },
+                { title: 'Ch 16: Client-Side Routing', url: 'https://info340.github.io/client-side-routing.html' },
+            ],
+        },
     ],
 };

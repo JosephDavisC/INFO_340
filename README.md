@@ -75,6 +75,22 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 
 ---
 
+## Week 7
+
+| Date | Topic | Type | Link |
+|------|-------|------|------|
+| Feb 18, 2026 | Interactive React: State, Forms & Lifting State | In-Class | [View](https://info340.joechamdani.com/Week-7/Feb-18-2026/) |
+
+---
+
+## Week 8
+
+| Date | Topic | Type | Link |
+|------|-------|------|------|
+| Feb 20, 2026 | Quiz 4 | Study Guide + Practice Quiz | [View](https://info340.joechamdani.com/Week-8/Quiz-4/) |
+
+---
+
 ## Tech Stack
 - HTML5
 - CSS3
