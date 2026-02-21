@@ -177,6 +177,11 @@
         <priority>0.6</priority>
     </url>
     <url>
+        <loc>https://info340.joechamdani.com/Week-7/Problem-Set-07/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <priority>0.7</priority>
+    </url>
+    <url>
         <loc>https://info340.joechamdani.com/Week-8/</loc>
         <lastmod>2026-02-20</lastmod>
         <changefreq>weekly</changefreq>

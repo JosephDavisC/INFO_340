@@ -80,6 +80,7 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 | Date | Topic | Type | Link |
 |------|-------|------|------|
 | Feb 18, 2026 | Interactive React: State, Forms & Lifting State | In-Class | [View](https://info340.joechamdani.com/Week-7/Feb-18-2026/) |
+| Feb 20, 2026 | React Components, Props, State, Interactive Data | Problem Set 07 | [View](https://info340.joechamdani.com/Week-7/Problem-Set-07/) |
 
 ---
 

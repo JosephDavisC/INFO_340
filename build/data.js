@@ -184,6 +184,7 @@ module.exports = {
             landingDesc: 'Interactive React',
             activities: [
                 { label: 'Feb 18', title: 'Interactive React: State, Forms & Lifting State', path: 'Feb-18-2026/' },
+                { label: 'Problem Set 07', title: 'React Components, Props, State, Interactive Data', path: 'Problem-Set-07/' },
             ],
             concepts: [
                 { term: 'Controlled Forms', desc: 'Inputs with <code>value</code> and <code>onChange</code> tied to state' },
