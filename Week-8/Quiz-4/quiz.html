@@ -82,7 +82,7 @@
             {
                 question: "How can a child component update its parent's state?",
                 correct: "By calling a callback function passed down as a prop from the parent",
-                wrong: ["By directly modifying the parent's state variable", "By importing the parent's useState hook", "By using a global state variable"],
+                wrong: ["By directly modifying the parent's state variable using assignment", "By importing the parent's useState hook into the child component", "By using a shared global state variable accessible to both components"],
                 hint: "The parent passes a handler function as a prop to the child.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -90,7 +90,7 @@
             {
                 question: "How does one define props that should be passed into a React component?",
                 correct: "As XML-style attributes when rendering the component in JSX",
-                wrong: ["By declaring them inside the component function", "By using a global props object", "By adding them to the component's state"],
+                wrong: ["By declaring them as variables inside the component function body", "By adding them to the component's internal state with useState", "By registering them in a separate props configuration file"],
                 hint: "Props look like HTML attributes: <Component name=\"Ada\" />",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -98,7 +98,7 @@
             {
                 question: "How is the map() function commonly used in React components?",
                 correct: "To transform an array of data into an array of React components",
-                wrong: ["To navigate between pages", "To update component state", "To style components dynamically"],
+                wrong: ["To navigate between different pages within a React application", "To update a component's internal state with new array values", "To register event listeners on multiple DOM elements at once"],
                 hint: "It converts data arrays into renderable component arrays.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -106,31 +106,31 @@
             {
                 question: "How should a child component update its parent's state?",
                 correct: "By invoking a callback function received as a prop",
-                wrong: ["By directly calling the parent's setState", "By modifying the props object", "By using document.querySelector on the parent"],
+                wrong: ["By directly calling the parent's setState from within", "By modifying the props object passed to the child", "By using document.querySelector to find the parent element"],
                 hint: "The parent defines a handler and passes it down as a prop.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
             },
             {
                 question: "What content is usually found in a React application's index.html file?",
-                correct: "A single <div id=\"root\"> element and a script tag loading the entry point",
-                wrong: ["All the application's HTML content", "Multiple page layouts and navigation", "CSS stylesheets and inline styles"],
+                correct: "A single div element with id root and a script tag loading the entry point",
+                wrong: ["All of the application's HTML content and component markup", "Multiple page layouts with navigation links between them", "CSS stylesheet links and inline styles for all components"],
                 hint: "React injects all its content into one root div element.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
             },
             {
                 question: "What does a React component's state represent?",
-                correct: "Internal, changeable data that triggers re-renders when updated",
-                wrong: ["The component's CSS styles", "The component's position in the DOM", "Static configuration data"],
+                correct: "Internal changeable data that triggers re-renders when updated",
+                wrong: ["The CSS styles and classes applied to the component's elements", "The component's current position and size within the DOM tree", "Static configuration data loaded once when the app starts"],
                 hint: "State is for data that changes over time, usually from user interaction.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
             },
             {
                 question: "What does ReactDOM.createRoot() do?",
-                correct: "Creates a React rendering context for a DOM element to render components into",
-                wrong: ["Creates a new HTML file", "Initializes the React Router", "Creates a new React component"],
+                correct: "Creates a rendering context for a DOM element to mount components into",
+                wrong: ["Creates a new HTML document structure for the application", "Initializes the React Router with the default route paths", "Creates a new component template from an existing HTML element"],
                 hint: "It takes a DOM element and returns a root with a .render() method.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -138,15 +138,15 @@
             {
                 question: "What does the command npm run dev do in a Vite React project?",
                 correct: "Starts a development server that transpiles JSX and auto-reloads on changes",
-                wrong: ["Builds the project for production", "Runs the test suite", "Installs project dependencies"],
+                wrong: ["Builds and bundles the project into optimized files for production", "Runs the full test suite and generates a coverage report", "Installs all project dependencies listed in the package.json file"],
                 hint: "It's the command you run during development to see your app in the browser.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
             },
             {
                 question: "What does the second argument in useEffect(callback, []) signify?",
-                correct: "The dependency array — an empty array means the effect runs only once on mount",
-                wrong: ["The return value of the effect", "The initial state value", "The list of components to re-render"],
+                correct: "The dependency array — an empty array means the effect runs only on mount",
+                wrong: ["The cleanup function that runs when the component is unmounted", "The initial state values that the effect should use on first render", "The list of child components that should re-render after the effect"],
                 hint: "Variables in this array control when the effect re-runs.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -154,15 +154,15 @@
             {
                 question: "What does the useState() function return?",
                 correct: "An array with the current state value and a setter function",
-                wrong: ["A single state value", "An object with get and set methods", "A promise that resolves to the state"],
+                wrong: ["A single state value that updates automatically on change", "An object with get and set methods for reading and writing", "A promise that resolves to the state value after rendering"],
                 hint: "Use array destructuring: const [value, setValue] = useState(0)",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
             },
             {
                 question: "What does \"lifting state up\" mean in React?",
-                correct: "Moving shared state to the closest common ancestor of components that need it",
-                wrong: ["Moving state from state to props", "Deleting state from child components", "Making state variables global"],
+                correct: "Moving shared state to the closest common ancestor of the components that need it",
+                wrong: ["Copying state values from child components into a global store for the application", "Deleting state from child components and replacing it with hardcoded prop values", "Converting local component state into URL parameters for the browser history"],
                 hint: "The parent owns the state and passes it down as props.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -170,31 +170,31 @@
             {
                 question: "What happens when you call a state setter function?",
                 correct: "React schedules an asynchronous re-render of the component with the new value",
-                wrong: ["The state updates immediately and synchronously", "The entire application re-renders", "The component is removed from the DOM"],
+                wrong: ["The state variable updates immediately and the current function continues", "Every component in the entire application tree gets re-rendered from scratch", "The component is removed from the DOM and replaced with a fresh instance"],
                 hint: "The update doesn't happen instantly — it's batched and asynchronous.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
             },
             {
                 question: "What is a controlled input in React forms?",
-                correct: "An input whose value is tied to React state via value and onChange attributes",
-                wrong: ["An input with a placeholder attribute", "An input that is disabled", "An input inside a form element"],
+                correct: "An input whose value is tied to React state via value and onChange",
+                wrong: ["An input that uses a placeholder attribute to show default text", "An input that is disabled and cannot be edited by the user", "An input wrapped inside a form element with an onSubmit handler"],
                 hint: "React state becomes the single source of truth for the input's value.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
             },
             {
                 question: "What is JSX?",
-                correct: "A syntax extension that lets you write HTML-like code in JavaScript, transpiled to React.createElement() calls",
-                wrong: ["A new programming language", "A CSS preprocessor", "A database query language"],
+                correct: "A syntax extension that lets you write HTML-like code in JavaScript",
+                wrong: ["A standalone programming language designed for building web apps", "A CSS preprocessor that compiles into standard stylesheets", "A server-side template engine for generating HTML responses"],
                 hint: "It looks like HTML but is actually JavaScript under the hood.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
             },
             {
                 question: "What is React primarily used for?",
-                correct: "Building user interfaces through reusable components with efficient DOM updates",
-                wrong: ["Server-side database management", "Styling web pages with CSS", "Managing network requests"],
+                correct: "Building user interfaces through reusable components",
+                wrong: ["Managing server-side databases and API endpoints", "Styling web pages with advanced CSS animations", "Handling network requests and server communication"],
                 hint: "React is a JavaScript library for building UIs declaratively.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -202,15 +202,15 @@
             {
                 question: "What is the correct way to define a React function component?",
                 correct: "A capitalized function that accepts props and returns JSX",
-                wrong: ["A lowercase function that returns a string", "A class that extends React.Component", "An arrow function assigned to a lowercase variable"],
+                wrong: ["A lowercase function that returns an HTML template string", "A class that extends React.Component with a render method", "An arrow function assigned to a lowercase variable name"],
                 hint: "Component names MUST start with a capital letter.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
             },
             {
                 question: "What is the main advantage of using React compared to DOM functions?",
-                correct: "React automatically re-renders only changed parts of the UI via virtual DOM",
-                wrong: ["React makes web pages load faster", "React eliminates the need for JavaScript", "React works without a browser"],
+                correct: "React automatically re-renders only the parts of the UI that changed",
+                wrong: ["React eliminates the need to write any JavaScript code at all", "React makes static web pages load significantly faster than vanilla JS", "React removes the requirement for a web browser to run applications"],
                 hint: "You describe what the UI should look like; React handles the updates.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -218,15 +218,15 @@
             {
                 question: "What is the main difference between props and state?",
                 correct: "Props are passed from parent and immutable; state is internal and changeable",
-                wrong: ["Props are for styling; state is for content", "Props are faster than state", "There is no difference"],
+                wrong: ["Props hold styling data while state holds content for the component", "Props update synchronously while state updates require a page refresh", "Props are only for strings while state can hold any JavaScript value"],
                 hint: "Props flow down from parent; state is owned by the component.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
             },
             {
                 question: "What is the primary purpose of the useEffect() hook in React?",
-                correct: "To handle side effects like data fetching, subscriptions, and DOM manipulation",
-                wrong: ["To define component props", "To create new components", "To style components"],
+                correct: "To handle side effects like data fetching and subscriptions",
+                wrong: ["To define the props that a component should receive", "To create and register new child components dynamically", "To apply inline CSS styles to component DOM elements"],
                 hint: "Side effects are operations that reach outside the component.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -234,23 +234,23 @@
             {
                 question: "What is the purpose of React.StrictMode?",
                 correct: "To enable additional error checking and warnings during development",
-                wrong: ["To make the app run faster", "To prevent users from editing forms", "To enforce TypeScript usage"],
+                wrong: ["To optimize the application for faster performance in production", "To prevent users from interacting with disabled form elements", "To enforce TypeScript type checking on all component props"],
                 hint: "It double-renders components in development to catch bugs.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
             },
             {
                 question: "What is the recommended way to organize React components in large projects?",
-                correct: "Place each component in its own file inside a src/components/ directory",
-                wrong: ["Put all components in a single file", "Store components in the public folder", "Use inline components only"],
+                correct: "Place each component in its own file inside a components directory",
+                wrong: ["Define all components together in a single App.jsx source file", "Store component files in the public folder alongside static assets", "Write components inline within the parent that renders them"],
                 hint: "Separate files with named exports, grouped by feature.",
                 source: "Ch 16: Client-Side Routing",
                 sourceUrl: "https://info340.github.io/client-side-routing.html"
             },
             {
                 question: "What type of data can props hold?",
-                correct: "Any JavaScript value: strings, numbers, arrays, objects, functions, and components",
-                wrong: ["Only strings and numbers", "Only objects and arrays", "Only primitive types"],
+                correct: "Any JavaScript value including strings, numbers, arrays, objects, and functions",
+                wrong: ["Only primitive types like strings, numbers, and boolean values", "Only objects and arrays that can be serialized to JSON format", "Only strings that will be rendered as text content in the DOM"],
                 hint: "Props can be any JS value — even callback functions.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -258,7 +258,7 @@
             {
                 question: "Which attribute is used to register a click event in React?",
                 correct: "onClick (camelCase)",
-                wrong: ["onclick (lowercase)", "click", "onpress"],
+                wrong: ["onclick (lowercase)", "addEventListener('click')", "onpress"],
                 hint: "React uses camelCase for all event attributes.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -281,8 +281,8 @@
             },
             {
                 question: "Which is the recommended way to define an event handler for a React component?",
-                correct: "Define a handler function and pass it by reference: onClick={handleClick}",
-                wrong: ["Use inline HTML event attributes", "Call the function directly: onClick={handleClick()}", "Use addEventListener inside the component"],
+                correct: "Define a named handler function and pass it by reference: onClick={handleClick}",
+                wrong: ["Use inline HTML event attributes like onclick=\"handleClick()\" in the JSX", "Call the function with parentheses directly: onClick={handleClick()}", "Use addEventListener inside the component function body after rendering"],
                 hint: "Don't use parentheses — that calls it immediately during render.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -290,7 +290,7 @@
             {
                 question: "Which of the following best describes what values can be included inside a JSX inline expression?",
                 correct: "Any JavaScript expression that produces a value (variables, ternaries, function calls)",
-                wrong: ["Only string values", "Any JavaScript code including if/else and loops", "Only numbers and booleans"],
+                wrong: ["Only string literals and template strings wrapped in curly braces", "Any JavaScript code including if/else statements and for loops", "Only numbers and booleans that can be rendered as text content"],
                 hint: "Expressions produce values; statements (if/else, for) do not.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -298,15 +298,15 @@
             {
                 question: "Which of the following is NOT true about React components?",
                 correct: "Components can be called as regular functions like MyComponent()",
-                wrong: ["Components must start with a capital letter", "Components return JSX", "Components can accept props"],
+                wrong: ["Components must have names that start with a capital letter", "Components return JSX that describes the UI to render", "Components can accept props as an input parameter"],
                 hint: "You render components as JSX elements, not function calls.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
             },
             {
                 question: "Which of the following should NOT be stored in a component's state?",
-                correct: "Values that can be derived (computed) from existing state or props",
-                wrong: ["User input from a form", "Whether a modal is open or closed", "A list of items from an API"],
+                correct: "Values that can be derived from existing state or props",
+                wrong: ["User input collected from a controlled form field", "A boolean tracking whether a modal is open or closed", "A list of items fetched from an external API"],
                 hint: "If you can calculate it from other data, don't store it separately.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -322,7 +322,7 @@
             {
                 question: "Which tool transpiles JSX into regular JavaScript?",
                 correct: "Vite (using Babel under the hood)",
-                wrong: ["Node.js", "React itself", "The web browser"],
+                wrong: ["Node.js runtime environment", "The React library itself", "The web browser's JS engine"],
                 hint: "This build tool also provides hot module replacement during development.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -330,7 +330,7 @@
             {
                 question: "Why is the key prop important when rendering lists?",
                 correct: "It gives each item a unique identity so React can efficiently track changes",
-                wrong: ["It determines the display order", "It sets the CSS class for each item", "It is required for the list to render"],
+                wrong: ["It determines the visual display order of items in the rendered list", "It assigns a CSS class name to each list item for targeted styling", "It controls which items are visible and which ones are hidden by default"],
                 hint: "Without keys, React must re-render the entire list on every change.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -338,7 +338,7 @@
             {
                 question: "Why might logging a state variable immediately after calling its setter print the old value?",
                 correct: "Because state updates are asynchronous — the component hasn't re-rendered yet",
-                wrong: ["Because console.log is broken in React", "Because the setter function failed", "Because state variables are read-only"],
+                wrong: ["Because console.log is not compatible with React's rendering pipeline", "Because the setter function silently failed to update the state value", "Because state variables in React are always read-only and cannot change"],
                 hint: "Log at the top of the component function to see the latest value.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
@@ -346,15 +346,15 @@
             {
                 question: "Why should you never update state directly using an assignment operator?",
                 correct: "Direct mutation doesn't trigger a re-render — only the setter function does",
-                wrong: ["It causes a syntax error", "It deletes the state variable", "It makes the component unmount"],
+                wrong: ["It causes a JavaScript syntax error that crashes the entire application", "It permanently deletes the state variable from the component's memory", "It forces the component to unmount and lose all of its current data"],
                 hint: "React only knows to update the UI when the setter is called.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
             },
             {
                 question: "Why should you use controlled inputs in a React form?",
-                correct: "To keep React state as the single source of truth, preventing sync issues with the DOM",
-                wrong: ["To make inputs read-only", "To prevent form submission", "To improve page load speed"],
+                correct: "To keep React state as the single source of truth for input values",
+                wrong: ["To make all form inputs read-only and prevent user editing", "To prevent the form from being submitted to the server", "To improve the initial page load speed of the application"],
                 hint: "Controlled inputs ensure React always knows the current form values.",
                 source: "Ch 15: Interactive React",
                 sourceUrl: "https://info340.github.io/interactive-react.html"
