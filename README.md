@@ -88,6 +88,7 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 
 | Date | Topic | Type | Link |
 |------|-------|------|------|
+| Feb 23, 2026 | React Libraries & Router | In-Class | [View](https://info340.joechamdani.com/Week-8/Feb-23-2026/) |
 | Feb 20, 2026 | Quiz 4 | Study Guide + Practice Quiz | [View](https://info340.joechamdani.com/Week-8/Quiz-4/) |
 
 ---

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Libraries & Router - INFO 340</title>
+    <meta name="description" content="INFO 340 Lecture Notes - React Libraries, Single-Page Applications, Client-Side Routing with React Router, and Firebase Hosting.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="React Libraries & Router - INFO 340">
+    <meta property="og:description" content="React Libraries, Single-Page Applications, Client-Side Routing with React Router, and Firebase Hosting.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-8/Feb-23-2026/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="React Libraries & Router - INFO 340">
+    <meta name="twitter:description" content="React Libraries, Single-Page Applications, Client-Side Routing with React Router, and Firebase Hosting.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 8</a></p>
+    <h1>React Libraries &amp; Router</h1>
+    <p><em>February 23, 2026 &mdash; Slides: <a href="https://slides.com/joelross/info340wi26-router" target="_blank">React Libraries &amp; Router</a></em></p>
+
+    <section class="summary">
+        <h2>Topics Covered</h2>
+
+        <h3>React Libraries</h3>
+        <ul>
+            <li>React components are self-contained, reusable elements &mdash; many pre-built component libraries exist online</li>
+            <li>Using a library: find it (npm, Google), install with <code>npm install lib-name</code>, import the component, render with expected props</li>
+        </ul>
+        <pre><code>// Using a React library
+import { ComponentName } from 'lib-name';
+
+function App() {
+    return &lt;ComponentName prop="value" /&gt;;
+}</code></pre>
+
+        <h3>Single-Page Applications</h3>
+        <ul>
+            <li>SPAs load a single HTML page and dynamically update content using JavaScript</li>
+            <li>Instead of requesting new pages from the server, the app renders different components based on the current URL</li>
+            <li>Client-side routing: render a different component depending on the URL</li>
+        </ul>
+        <pre><code>// Conceptual client-side routing
+function App(props) {
+    let componentToRender = null;
+    if (currentUrl === '/home') {
+        componentToRender = &lt;HomePage /&gt;;
+    } else if (currentUrl === '/about') {
+        componentToRender = &lt;AboutPage /&gt;;
+    }
+    return &lt;div&gt;{componentToRender}&lt;/div&gt;;
+}</code></pre>
+
+        <h3>React Router</h3>
+        <ul>
+            <li>A library of React Components that determine which components to render based on the current URL</li>
+            <li>Install: <code>npm install react-router</code></li>
+            <li>Used in declarative mode (not as data or framework)</li>
+        </ul>
+
+        <h3>BrowserRouter</h3>
+        <ul>
+            <li><code>BrowserRouter</code> tracks the current URL in its state and re-renders descendants when the URL changes</li>
+            <li>Wrap the entire <code>&lt;App /&gt;</code> in <code>&lt;BrowserRouter&gt;</code> in <code>main.jsx</code></li>
+        </ul>
+        <pre><code>import { BrowserRouter } from 'react-router';
+import App from './components/App.jsx';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    &lt;BrowserRouter&gt;
+        &lt;App /&gt;
+    &lt;/BrowserRouter&gt;
+);</code></pre>
+
+        <h3>Routes &amp; Route</h3>
+        <ul>
+            <li><code>&lt;Routes&gt;</code> contains <code>&lt;Route&gt;</code> elements that specify which component to render for each URL path</li>
+            <li><code>path</code> prop matches the URL, <code>element</code> prop specifies the component to render</li>
+        </ul>
+        <pre><code>import { Routes, Route } from 'react-router';
+
+function App(props) {
+    return (
+        &lt;Routes&gt;
+            &lt;Route path="home" element={&lt;HomePage /&gt;} /&gt;
+            &lt;Route path="about" element={&lt;AboutPage /&gt;} /&gt;
+        &lt;/Routes&gt;
+    );
+}</code></pre>
+
+        <h3>Link</h3>
+        <ul>
+            <li>Use <code>&lt;Link&gt;</code> instead of <code>&lt;a&gt;</code> for navigation between routes</li>
+            <li><code>to</code> prop specifies the destination path (like <code>href</code> for anchors)</li>
+            <li>Links update the URL state without reloading the page</li>
+        </ul>
+        <pre><code>import { Link } from 'react-router';
+
+function Nav(props) {
+    return (
+        &lt;nav&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;Link to="home"&gt;Home&lt;/Link&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;Link to="about"&gt;About&lt;/Link&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+    );
+}</code></pre>
+
+        <h3>URL Parameters</h3>
+        <ul>
+            <li>A URL parameter is a variable in the URL path, useful for routes pointing to similar resources</li>
+            <li>Use <code>:param</code> syntax in the path (e.g., <code>posts/:postId</code>)</li>
+            <li><code>useParams()</code> hook accesses the value of URL parameters</li>
+        </ul>
+        <pre><code>import { useParams } from 'react-router';
+
+// In Routes:
+&lt;Route path="posts/:postId" element={&lt;BlogPost /&gt;} /&gt;
+
+// In Component:
+function BlogPost(props) {
+    const urlParams = useParams();
+    const postId = urlParams.postId;
+    return &lt;h1&gt;You are looking at blog post {postId}&lt;/h1&gt;;
+}</code></pre>
+
+        <h3>Naming Routes (REST)</h3>
+        <ul>
+            <li>The web is based on REST architecture &mdash; each route should refer to a unique resource</li>
+            <li>Design routes first, components second</li>
+            <li>Think about what information belongs at each URL</li>
+        </ul>
+        <pre><code>&lt;Routes&gt;
+    &lt;Route path="/products" element={&lt;AllProductsPage /&gt;} /&gt;
+    &lt;Route path="/products/hat" element={&lt;HatPage /&gt;} /&gt;
+    &lt;Route path="/products/shoes" element={&lt;ShoesPage /&gt;} /&gt;
+    &lt;Route path="/account" element={&lt;AccountPage /&gt;} /&gt;
+&lt;/Routes&gt;</code></pre>
+
+        <h3>Nested Routes &amp; Outlet</h3>
+        <ul>
+            <li>Route paths correspond to URL segments, with nested <code>&lt;Route&gt;</code> elements for each segment</li>
+            <li>Nested routes render in place of an <code>&lt;Outlet /&gt;</code> component in the parent</li>
+        </ul>
+        <pre><code>import { Outlet } from 'react-router';
+
+function App(props) {
+    return (
+        &lt;Routes&gt;
+            &lt;Route path="user" element={&lt;UserLayout /&gt;}&gt;
+                &lt;Route path="profile" element={&lt;UserProfile /&gt;} /&gt;
+                &lt;Route path="favorites" element={&lt;FavoriteItems /&gt;} /&gt;
+            &lt;/Route&gt;
+            &lt;Route path="items" element={&lt;ItemList /&gt;} /&gt;
+        &lt;/Routes&gt;
+    );
+}
+
+function UserLayout(props) {
+    return (
+        &lt;div className="user-layout"&gt;
+            &lt;h1&gt;User Page&lt;/h1&gt;
+            &lt;Outlet /&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+
+        <h3>Protected Routes</h3>
+        <ul>
+            <li>Nested routes can restrict access &mdash; only show content if the user is logged in</li>
+            <li>A wrapper component checks authentication and either renders <code>&lt;Outlet /&gt;</code> or a fallback</li>
+        </ul>
+        <pre><code>function RequireAuth(props) {
+    if (!userIsLoggedIn) {
+        return &lt;p&gt;Forbidden!&lt;/p&gt;;
+    } else {
+        return &lt;Outlet /&gt;;
+    }
+}
+
+function App(props) {
+    return (
+        &lt;Routes&gt;
+            &lt;Route element={&lt;RequireAuth /&gt;}&gt;
+                &lt;Route path="profile" element={&lt;ProfilePage /&gt;} /&gt;
+                &lt;Route path="secret" element={&lt;SecretPage /&gt;} /&gt;
+            &lt;/Route&gt;
+            &lt;Route path="signin" element={&lt;SignInPage /&gt;} /&gt;
+        &lt;/Routes&gt;
+    );
+}</code></pre>
+
+        <h3>Firebase Hosting</h3>
+        <ul>
+            <li>GitHub Pages cannot cleanly handle client-side routing &mdash; use Firebase Hosting instead</li>
+            <li>Firebase provides web hosting, databases, and user authentication</li>
+            <li>Use Firebase CLI tools and Vite build scripts to deploy React apps</li>
+        </ul>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>Single-Page Application:</strong> One HTML page that dynamically swaps content via JavaScript</li>
+            <li><strong>Client-Side Routing:</strong> Rendering different components based on the URL without page reloads</li>
+            <li><strong>BrowserRouter:</strong> Wraps the app to track URL state and trigger re-renders on navigation</li>
+            <li><strong>Routes &amp; Route:</strong> <code>&lt;Route path="" element={} /&gt;</code> maps URL paths to components</li>
+            <li><strong>Link:</strong> Replaces <code>&lt;a&gt;</code> tags for client-side navigation without full page reloads</li>
+            <li><strong>URL Parameters:</strong> <code>:param</code> syntax in paths, accessed with <code>useParams()</code> hook</li>
+            <li><strong>Nested Routes:</strong> Child routes render inside parent's <code>&lt;Outlet /&gt;</code> component</li>
+            <li><strong>Protected Routes:</strong> Wrapper components that conditionally render <code>&lt;Outlet /&gt;</code> based on auth state</li>
+            <li><strong>Firebase Hosting:</strong> Alternative to GitHub Pages that supports client-side routing</li>
+        </ul>
+    </section>
+
+    <section class="resources">
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://info340.github.io/client-side-routing.html" target="_blank">Ch 16: Client-Side Routing</a></li>
+            <li><a href="https://vite.dev/guide/static-deploy#google-firebase" target="_blank">Vite: Deploying to Firebase</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>
