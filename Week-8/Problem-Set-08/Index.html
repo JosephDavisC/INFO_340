@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem Set 08 - INFO 340</title>
+    <meta name="description" content="INFO 340 Problem Set 08 - Client-Side Routing with React Router.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Problem Set 08 - INFO 340">
+    <meta property="og:description" content="Client-Side Routing with React Router.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-8/Problem-Set-08/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Problem Set 08 - INFO 340">
+    <meta name="twitter:description" content="Client-Side Routing with React Router.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 8</a></p>
+    <h1>Problem Set 08</h1>
+
+    <section class="summary">
+        <h2>Problem Set 08</h2>
+        <p><strong>Topics:</strong> Client-Side Routing with React Router</p>
+
+        <h3>Problem A: Code Changes</h3>
+        <ul>
+            <li>Wrapped <code>&lt;App&gt;</code> in <code>&lt;BrowserRouter&gt;</code> in <code>main.jsx</code> to enable client-side routing</li>
+            <li>Set up <code>&lt;Routes&gt;</code> with paths for <code>/about</code>, <code>/resources</code>, and <code>/adopt</code></li>
+            <li>Created nested routes under <code>/adopt</code> with an index route for <code>&lt;PetList&gt;</code> and a <code>:petName</code> param route for <code>&lt;PetDetail&gt;</code></li>
+            <li>Added <code>&lt;Outlet /&gt;</code> in <code>PetPage</code> to render child route content</li>
+            <li>Used <code>&lt;Navigate&gt;</code> catch-all route to redirect unknown URLs to <code>/adopt</code></li>
+            <li>Replaced <code>&lt;a&gt;</code> tags with <code>&lt;NavLink&gt;</code> in navigation and <code>&lt;Link&gt;</code> for pet cards and header</li>
+            <li>Used <code>useParams()</code> hook in <code>PetDetail</code> to access the pet name from the URL</li>
+        </ul>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>BrowserRouter:</strong> Wraps the app to track URL state and trigger re-renders on navigation</li>
+            <li><strong>Routes &amp; Route:</strong> Maps URL paths to specific components</li>
+            <li><strong>Nested Routes:</strong> Child routes render inside a parent's <code>&lt;Outlet /&gt;</code></li>
+            <li><strong>Index Route:</strong> Default child route rendered when the parent path is matched exactly</li>
+            <li><strong>URL Parameters:</strong> <code>:param</code> syntax in paths, accessed with <code>useParams()</code></li>
+            <li><strong>Link &amp; NavLink:</strong> Client-side navigation without page reloads; <code>NavLink</code> adds active styling</li>
+            <li><strong>Navigate:</strong> Programmatic redirect component for catch-all routes</li>
+        </ul>
+    </section>
+
+    <section class="resources">
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://info340.github.io/client-side-routing.html" target="_blank">Ch 16: Client-Side Routing</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

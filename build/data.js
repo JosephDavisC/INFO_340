@@ -205,6 +205,7 @@ module.exports = {
             description: 'Client-Side Routing, useEffect, and External Data.',
             landingDesc: 'React Routing & Effects',
             activities: [
+                { label: 'Problem Set 08', title: 'Client-Side Routing', path: 'Problem-Set-08/' },
                 { label: 'Feb 25', title: 'React Review & Work Time', path: 'Feb-25-2026/' },
                 { label: 'Feb 23', title: 'React Libraries & Router', path: 'Feb-23-2026/' },
                 { label: 'Quiz 4', title: 'Study Guide (35 Q&A)', path: 'Quiz-4/' },
