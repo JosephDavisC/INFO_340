@@ -89,9 +89,16 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 | Date | Topic | Type | Link |
 |------|-------|------|------|
 | Feb 27, 2026 | Problem Set 08 | Problem Set | [View](https://info340.joechamdani.com/Week-8/Problem-Set-08/) |
+| Feb 25, 2026 | Project Check-In | Project | [View](https://info340.joechamdani.com/Week-8/Project-Check-In/) |
 | Feb 25, 2026 | React Review & Work Time | In-Class | [View](https://info340.joechamdani.com/Week-8/Feb-25-2026/) |
 | Feb 23, 2026 | React Libraries & Router | In-Class | [View](https://info340.joechamdani.com/Week-8/Feb-23-2026/) |
 | Feb 20, 2026 | Quiz 4 | Study Guide + Practice Quiz | [View](https://info340.joechamdani.com/Week-8/Quiz-4/) |
+
+## Week 9
+
+| Date | Topic | Type | Link |
+|------|-------|------|------|
+| Mar 2, 2026 | AJAX | In-Class | [View](https://info340.joechamdani.com/Week-9/Mar-2-2026/) |
 
 ---
 

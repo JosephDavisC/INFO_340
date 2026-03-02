@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX - INFO 340</title>
+    <meta name="description" content="INFO 340 Lecture Notes - AJAX, fetch() and Promises, async/await, and the useEffect Hook.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="AJAX - INFO 340">
+    <meta property="og:description" content="AJAX, fetch() and Promises, async/await, and the useEffect Hook.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-9/Mar-2-2026/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AJAX - INFO 340">
+    <meta name="twitter:description" content="AJAX, fetch() and Promises, async/await, and the useEffect Hook.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 9</a></p>
+    <h1>AJAX</h1>
+    <p><em>March 2, 2026 &mdash; Slides: <a href="https://slides.com/joelross/info340wi26-ajax" target="_blank">AJAX</a></em></p>
+
+    <section class="summary">
+        <h2>Topics Covered</h2>
+
+        <h3>HTTP Requests</h3>
+        <ul>
+            <li>HTTP requests have three parts: protocol (how to handle), domain (who has info), resource path (what info)</li>
+            <li>Browsers send HTTP requests when following hyperlinks or submitting forms</li>
+            <li>Form <code>method</code>: <code>GET</code> appends data as query parameters, <code>POST</code> includes data in the request body</li>
+        </ul>
+        <pre><code>&lt;form method="GET" action="/signup"&gt;
+    &lt;label for="unameBox"&gt;Name:&lt;/label&gt;
+    &lt;input type="text" name="username" id="unameBox"&gt;
+    &lt;button type="submit"&gt;Sign up!&lt;/button&gt;
+&lt;/form&gt;
+// GET submits as: /signup?username=value</code></pre>
+
+        <h3>AJAX</h3>
+        <ul>
+            <li>AJAX = Asynchronous JavaScript And XML</li>
+            <li>A technique for having JavaScript code send an HTTP request, rather than the browser</li>
+            <li>Allows fetching data without reloading the page</li>
+        </ul>
+
+        <h3>XML vs JSON</h3>
+        <ul>
+            <li>XML (EXtensible Markup Language): generalized syntax for structured content with custom tags</li>
+            <li>JSON (JavaScript Object Notation): lighter-weight data format, standard for modern web APIs</li>
+            <li>Legacy <code>XMLHttpRequest</code> object is verbose and complicated &mdash; use <code>fetch()</code> instead</li>
+        </ul>
+
+        <h3>fetch()</h3>
+        <ul>
+            <li><code>fetch(url)</code> sends an HTTP request and returns a Promise</li>
+            <li>AJAX requests are asynchronous &mdash; the next line executes immediately without waiting for the response</li>
+        </ul>
+        <pre><code>fetch(url); // sends request, returns a Promise
+// next line runs immediately (doesn't wait)</code></pre>
+
+        <h3>Promises</h3>
+        <ul>
+            <li>A Promise is an "IOU" for data that will arrive in the future</li>
+            <li>Use <code>.then()</code> with a callback to handle the fulfilled value</li>
+            <li><code>response.json()</code> parses the response body as JSON &mdash; but returns another Promise</li>
+            <li>If <code>.then()</code> returns a Promise, you can chain another <code>.then()</code></li>
+        </ul>
+        <pre><code>fetch(url)
+    .then((response) =&gt; {
+        return response.json();
+    })
+    .then((data) =&gt; {
+        console.log(data);
+    })
+    .catch((error) =&gt; {
+        console.error(error.message);
+    });</code></pre>
+
+        <h3>async/await</h3>
+        <ul>
+            <li>ES2017 syntax for writing Promise-based code in a synchronous style</li>
+            <li><code>await</code> pauses execution until the Promise fulfills &mdash; only usable inside <code>async</code> functions</li>
+        </ul>
+        <pre><code>async function fetchData() {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+}</code></pre>
+
+        <h3>fetch() in React</h3>
+        <ul>
+            <li>Use <code>fetch()</code> inside event handlers or effect hooks</li>
+            <li>Assign the response data to state with the setter function to trigger a re-render</li>
+        </ul>
+
+        <h3>useEffect Hook</h3>
+        <ul>
+            <li><code>useEffect(callback, [])</code> runs the callback once after the component's first render</li>
+            <li>The empty array <code>[]</code> as the second argument means the effect only runs once (on mount)</li>
+            <li>Used for fetching data, setting up subscriptions, or other side effects</li>
+            <li>Return a cleanup function from the effect to disconnect listeners when the component unmounts</li>
+        </ul>
+        <pre><code>import { useEffect, useState } from 'react';
+
+function MyComponent() {
+    const [data, setData] = useState([]);
+
+    useEffect(() =&gt; {
+        fetch(url)
+            .then(res =&gt; res.json())
+            .then(data =&gt; setData(data))
+            .catch(err =&gt; console.error(err));
+
+        // optional cleanup function
+        return () =&gt; { /* disconnect listeners */ };
+    }, []); // empty array = run once on mount
+
+    return &lt;div&gt;{JSON.stringify(data)}&lt;/div&gt;;
+}</code></pre>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>AJAX:</strong> Asynchronous JavaScript And XML &mdash; sending HTTP requests from code instead of the browser</li>
+            <li><strong>fetch():</strong> Modern API for making HTTP requests, returns a Promise</li>
+            <li><strong>Promise:</strong> An object representing a future value; handled with <code>.then()</code> and <code>.catch()</code></li>
+            <li><strong>Promise Chaining:</strong> Return a Promise from <code>.then()</code> to chain additional <code>.then()</code> calls</li>
+            <li><strong>async/await:</strong> Syntactic sugar for Promises; <code>await</code> pauses until a Promise resolves</li>
+            <li><strong>response.json():</strong> Parses the response body as JSON, returns a new Promise</li>
+            <li><strong>useEffect:</strong> React Hook that runs side effects after render; empty dependency array <code>[]</code> runs once on mount</li>
+            <li><strong>Cleanup Function:</strong> Returned from <code>useEffect</code> to clean up subscriptions when the component unmounts</li>
+        </ul>
+    </section>
+
+    <section class="resources">
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://info340.github.io/ajax.html" target="_blank">Ch 17: AJAX Requests</a></li>
+            <li><a href="https://info340.github.io/interactive-react.html" target="_blank">Ch 15: Interactive React (useEffect)</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

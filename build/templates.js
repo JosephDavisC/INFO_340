@@ -136,6 +136,12 @@ ${skillTags}
             <h2>Course Work</h2>
             <ul class="week-list">
 ${weekItems}
+                <li>
+                    <a href="resources.html">
+                        <strong>All Resources</strong>
+                        <span>Slides, Textbook Chapters &amp; Links</span>
+                    </a>
+                </li>
             </ul>
         </section>
 

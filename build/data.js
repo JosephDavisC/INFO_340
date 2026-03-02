@@ -206,6 +206,7 @@ module.exports = {
             landingDesc: 'React Routing & Effects',
             activities: [
                 { label: 'Problem Set 08', title: 'Client-Side Routing', path: 'Problem-Set-08/' },
+                { label: 'Project Check-In', title: 'Draft 2 Progress & Git Collaboration (Lab)', path: 'Project-Check-In/' },
                 { label: 'Feb 25', title: 'React Review & Work Time', path: 'Feb-25-2026/' },
                 { label: 'Feb 23', title: 'React Libraries & Router', path: 'Feb-23-2026/' },
                 { label: 'Quiz 4', title: 'Study Guide (35 Q&A)', path: 'Quiz-4/' },
@@ -221,6 +222,28 @@ module.exports = {
             resources: [
                 { title: 'Ch 15: Interactive React', url: 'https://info340.github.io/interactive-react.html' },
                 { title: 'Ch 16: Client-Side Routing', url: 'https://info340.github.io/client-side-routing.html' },
+            ],
+        },
+        {
+            number: 9,
+            dateRange: 'Mar 2 - Mar 8',
+            subtitle: 'AJAX & External Data',
+            description: 'AJAX, fetch(), Promises, async/await, and useEffect.',
+            landingDesc: 'AJAX & External Data',
+            activities: [
+                { label: 'Mar 2', title: 'AJAX', path: 'Mar-2-2026/' },
+            ],
+            concepts: [
+                { term: 'AJAX', desc: 'Asynchronous JavaScript And XML — sending HTTP requests from code' },
+                { term: 'fetch()', desc: 'Modern API for HTTP requests, returns a Promise' },
+                { term: 'Promises', desc: '<code>.then()</code> chaining, <code>response.json()</code>, <code>.catch()</code> for errors' },
+                { term: 'async/await', desc: 'ES2017 syntax for synchronous-style Promise handling' },
+                { term: 'useEffect', desc: 'Hook for side effects after render; empty <code>[]</code> runs once on mount' },
+            ],
+            resourcesNote: 'From INFO 340: Client-Side Development',
+            resources: [
+                { title: 'Ch 17: AJAX Requests', url: 'https://info340.github.io/ajax.html' },
+                { title: 'Ch 15: Interactive React', url: 'https://info340.github.io/interactive-react.html' },
             ],
         },
     ],
