@@ -227,11 +227,12 @@ module.exports = {
         {
             number: 9,
             dateRange: 'Mar 2 - Mar 8',
-            subtitle: 'AJAX & External Data',
-            description: 'AJAX, fetch(), Promises, async/await, and useEffect.',
-            landingDesc: 'AJAX & External Data',
+            subtitle: 'AJAX & Firebase',
+            description: 'AJAX, fetch(), Promises, async/await, Firebase Realtime Database, and useEffect.',
+            landingDesc: 'AJAX & Firebase',
             activities: [
                 { label: 'Mar 2', title: 'AJAX', path: 'Mar-2-2026/' },
+                { label: 'Mar 4', title: 'Firebase Databases', path: 'Mar-4-2026/' },
             ],
             concepts: [
                 { term: 'AJAX', desc: 'Asynchronous JavaScript And XML — sending HTTP requests from code' },
@@ -239,10 +240,15 @@ module.exports = {
                 { term: 'Promises', desc: '<code>.then()</code> chaining, <code>response.json()</code>, <code>.catch()</code> for errors' },
                 { term: 'async/await', desc: 'ES2017 syntax for synchronous-style Promise handling' },
                 { term: 'useEffect', desc: 'Hook for side effects after render; empty <code>[]</code> runs once on mount' },
+                { term: 'Firebase', desc: 'Web backend solution — hosting, databases, authentication' },
+                { term: 'Realtime Database', desc: 'Single JSON object in the cloud with concurrent access' },
+                { term: 'onValue()', desc: 'Real-time listener that fires on data changes, returns unregister function' },
+                { term: 'set() / push()', desc: '<code>set()</code> replaces value, <code>push()</code> adds with auto-generated key' },
             ],
             resourcesNote: 'From INFO 340: Client-Side Development',
             resources: [
                 { title: 'Ch 17: AJAX Requests', url: 'https://info340.github.io/ajax.html' },
+                { title: 'Ch 19: Firebase', url: 'https://info340.github.io/firebase.html' },
                 { title: 'Ch 15: Interactive React', url: 'https://info340.github.io/interactive-react.html' },
             ],
         },

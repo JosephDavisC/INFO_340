@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Databases - INFO 340</title>
+    <meta name="description" content="INFO 340 Lecture - Firebase Databases: Realtime Database, reading and writing data, useEffect cleanup.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Firebase Databases - INFO 340">
+    <meta property="og:description" content="Firebase Databases: Realtime Database, reading and writing data, useEffect cleanup.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-9/Mar-4-2026/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Firebase Databases - INFO 340">
+    <meta name="twitter:description" content="Firebase Databases: Realtime Database, reading and writing data, useEffect cleanup.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 9</a></p>
+    <h1>Firebase Databases</h1>
+    <p class="week-subtitle">March 4, 2026 &bull; Week 9</p>
+
+    <section class="summary">
+        <h2>Topics Covered</h2>
+
+        <h3>Firebase Overview</h3>
+        <ul>
+            <li><strong>Firebase</strong> is a web backend solution providing hosting, databases, and user authentication without custom backend code</li>
+            <li>Created and managed through the <strong>Firebase Web Console</strong> at <code>console.firebase.google.com</code></li>
+            <li>Install in React projects with <code>npm install firebase</code></li>
+            <li>Configure with project credentials in your app's entry file</li>
+        </ul>
+
+        <h3>Realtime Database</h3>
+        <ul>
+            <li>The database is a <strong>single giant JSON object in the Cloud</strong> allowing concurrent multi-user access</li>
+            <li>Structure data as <strong>flat objects</strong> rather than deeply nested to optimize performance</li>
+            <li><strong>Security rules</strong> control read/write access &mdash; start in test mode for development, then restrict based on authentication</li>
+        </ul>
+
+        <h3>Data References</h3>
+        <ul>
+            <li>Get a database reference with <code>getDatabase()</code></li>
+            <li>Create references to specific paths with <code>ref(db, "path")</code></li>
+            <li>Use <strong>forward-slash path notation</strong> for nested access (e.g., <code>"people/sarah"</code>)</li>
+        </ul>
+<pre><code>import { getDatabase, ref } from 'firebase/database';
+
+const db = getDatabase();
+const peopleRef = ref(db, "people");
+const sarahRef = ref(db, "people/sarah");</code></pre>
+
+        <h3>Writing Data</h3>
+        <ul>
+            <li><code>set()</code> &mdash; replaces the entire value at a reference</li>
+            <li><code>push()</code> &mdash; auto-generates a unique key and adds a new child (for array-like structures)</li>
+            <li>Both return Promises &mdash; use <code>.then()</code> and <code>.catch()</code> for handling</li>
+        </ul>
+<pre><code>import { ref, set as firebaseSet } from 'firebase/database';
+
+// set() replaces the entire value
+firebaseSet(sarahRef, 43)
+  .then(() =&gt; console.log("saved!"))
+  .catch(err =&gt; console.log(err));</code></pre>
+
+<pre><code>import { ref, push as firebasePush } from 'firebase/database';
+
+// push() auto-generates a unique key
+firebasePush(taskRef, { description: 'First things first' });</code></pre>
+
+        <h3>Reading Data with Listeners</h3>
+        <ul>
+            <li><code>onValue()</code> sets up a <strong>real-time listener</strong> that fires whenever data changes</li>
+            <li>Callback receives a <strong>snapshot</strong> &mdash; call <code>snapshot.val()</code> to get the actual data</li>
+            <li>Returns an <strong>unregister function</strong> to stop listening</li>
+            <li>Real-time binding means automatic updates across all connected clients</li>
+        </ul>
+<pre><code>import { ref, onValue } from 'firebase/database';
+
+const unregisterFunction = onValue(amitRef, (snapshot) =&gt; {
+    const amitValue = snapshot.val();
+});</code></pre>
+
+        <h3>Effect Hook Cleanup</h3>
+        <ul>
+            <li><code>useEffect</code> can return a <strong>cleanup function</strong> that runs when the component unmounts</li>
+            <li>Use this to <strong>disconnect Firebase listeners</strong> and prevent memory leaks</li>
+            <li>The cleanup function is called automatically by React when the component is removed</li>
+        </ul>
+<pre><code>useEffect(() =&gt; {
+    const db = getDatabase();
+    const amitRef = ref(db, "people/amit");
+
+    const unregisterFunction = onValue(amitRef, (snapshot) =&gt; {
+        const data = snapshot.val();
+        // update state with data
+    });
+
+    // cleanup: disconnect listener on unmount
+    return () =&gt; unregisterFunction();
+}, []);</code></pre>
+
+        <h3>Firebase Arrays</h3>
+        <ul>
+            <li>Firebase stores arrays as <strong>objects with auto-generated keys</strong> to avoid race conditions</li>
+            <li>Always use <code>push()</code> instead of manual indexing for concurrent access safety</li>
+            <li>Convert snapshot objects to arrays by mapping over <code>Object.keys()</code></li>
+        </ul>
+<pre><code>// Convert Firebase object to array
+const allTasksKeys = Object.keys(allTasksObject);
+const allTasksArray = allTasksKeys.map((key) =&gt; {
+    const task = { ...allTasksObject[key] };
+    task.key = key;  // save key for later reference
+    return task;
+});</code></pre>
+
+        <h3>Updating Lecture Code</h3>
+        <ul>
+            <li>Pull starter code with Git:</li>
+        </ul>
+<pre><code>git checkout starter
+git pull
+git checkout main
+git merge starter --no-edit</code></pre>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>Firebase:</strong> Web backend solution &mdash; hosting, databases, authentication without custom server</li>
+            <li><strong>Realtime Database:</strong> Single JSON object in the cloud with concurrent access</li>
+            <li><strong>ref():</strong> Creates a reference to a specific path in the database</li>
+            <li><strong>set():</strong> Replaces the entire value at a reference (returns a Promise)</li>
+            <li><strong>push():</strong> Adds a new child with auto-generated key (for array-like data)</li>
+            <li><strong>onValue():</strong> Real-time listener that fires on every data change, returns unregister function</li>
+            <li><strong>snapshot.val():</strong> Extracts the actual data from a Firebase snapshot</li>
+            <li><strong>useEffect Cleanup:</strong> Return a function from useEffect to disconnect listeners on unmount</li>
+            <li><strong>Firebase Arrays:</strong> Stored as objects with auto-generated keys to prevent race conditions</li>
+        </ul>
+    </section>
+
+    <section class="resources">
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://slides.com/joelross/info340wi26-firebase-db" target="_blank">Lecture Slides: Firebase Databases</a></li>
+            <li><a href="https://info340.github.io/firebase.html" target="_blank">Ch 19: Firebase</a></li>
+            <li><a href="https://info340.github.io/ajax.html" target="_blank">Ch 18: AJAX Requests</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>
