@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 5 Study Guide - INFO 340</title>
+    <meta name="description" content="INFO 340 Quiz 5 Study Guide - Client-Side Routing, AJAX, and Firebase.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Quiz 5 Study Guide - INFO 340">
+    <meta property="og:description" content="Study guide covering Client-Side Routing, AJAX, and Firebase.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-9/Quiz-5/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quiz 5 Study Guide - INFO 340">
+    <meta name="twitter:description" content="Study guide covering Client-Side Routing, AJAX, and Firebase.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/quiz.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 9</a></p>
+    <h1>Quiz 5 Study Guide</h1>
+
+    <section class="quiz-intro">
+        <p>This study guide covers possible questions for Quiz 5. I answered each question based on my understanding to help me prepare.</p>
+        <p class="quiz-sources"><strong>Sources:</strong></p>
+        <ul class="quiz-sources-list">
+            <li><strong>INFO 340:</strong> <a href="https://info340.github.io/client-side-routing.html" target="_blank">Ch 17: Client-Side Routing</a>, <a href="https://info340.github.io/ajax.html" target="_blank">Ch 18: AJAX Requests</a>, <a href="https://info340.github.io/firebase.html" target="_blank">Ch 19: Firebase</a></li>
+        </ul>
+        <a href="quiz.html" class="take-quiz-btn">Take Practice Quiz</a>
+    </section>
+
+    <section class="quiz-section">
+        <div class="qa">
+            <p class="question">Q1. How are Firebase Realtime Database security rules structured?</p>
+            <p class="answer">Security rules are structured as a JSON object that mirrors the database structure. They define <code>".read"</code> and <code>".write"</code> permissions at each path in the database tree. Rules cascade downward &mdash; a rule at a parent path applies to all children. For example: <code>{ "rules": { ".read": true, ".write": false } }</code> allows anyone to read but no one to write.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q2. How are nested paths specified when using ref() in Firebase?</p>
+            <p class="answer">Nested paths are specified using <strong>forward-slash notation</strong> as the second argument to <code>ref()</code>. For example, <code>ref(db, "people/sarah/age")</code> accesses the <code>age</code> property inside the <code>sarah</code> object inside <code>people</code>. Each slash navigates one level deeper into the JSON tree.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q3. How do you access URL parameters (e.g., :id) in a React Router component?</p>
+            <p class="answer">By using the <code>useParams()</code> hook from <code>react-router-dom</code>. It returns an object where each key matches the parameter name defined in the route path. For example, if the route is <code>path="users/:id"</code>, then <code>const { id } = useParams()</code> gives you the value from the URL.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q4. How do you handle errors in a Promise when using fetch() and then()?</p>
+            <p class="answer">By chaining a <code>.catch()</code> method at the end of the Promise chain. The <code>.catch()</code> callback receives an error object if any preceding <code>.then()</code> throws an error or returns a rejected Promise. Example: <code>fetch(url).then(res =&gt; res.json()).then(data =&gt; ...).catch(err =&gt; console.error(err))</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q5. In React Router, what is the purpose of the useParams() hook when working with URL parameters?</p>
+            <p class="answer">The <code>useParams()</code> hook extracts dynamic URL parameter values from the current route. It returns an object of key/value pairs where keys correspond to the <code>:param</code> placeholders in the route's <code>path</code>. This lets components access and use the URL values to render dynamic content (e.g., fetching a specific user by ID).</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q6. In React Router, which component is typically used at the top level to enable routing?</p>
+            <p class="answer"><code>&lt;BrowserRouter&gt;</code> is used at the top level (usually wrapping <code>&lt;App /&gt;</code> in <code>main.jsx</code>). It provides the routing context that all other React Router components (<code>Routes</code>, <code>Route</code>, <code>Link</code>, etc.) depend on. It uses the browser's History API to keep the URL in sync with the rendered content.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q7. In the context of client-side routing, what is a URL parameter?</p>
+            <p class="answer">A URL parameter is a <strong>variable segment</strong> in a URL path, prefixed with a colon in the route definition (e.g., <code>:id</code> in <code>/users/:id</code>). It acts as a placeholder that matches any value in that position of the URL. The actual value from the URL can be accessed programmatically using the <code>useParams()</code> hook.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q8. What does a Promise represent in the context of an AJAX request?</p>
+            <p class="answer">A Promise represents the <strong>eventual completion (or failure)</strong> of an asynchronous operation and its resulting value. For an AJAX request, it represents the HTTP response that will arrive in the future. While the request is in progress, the Promise is in a "pending" state; it eventually resolves with the response or rejects with an error.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q9. What does AJAX stand for?</p>
+            <p class="answer"><strong>Asynchronous JavaScript And XML.</strong> Despite the name, modern AJAX typically uses JSON instead of XML for data exchange. The term refers to the technique of sending HTTP requests from JavaScript code without requiring a full page reload.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q10. What does it mean to say that AJAX is asynchronous?</p>
+            <p class="answer">It means the HTTP request is sent <strong>without blocking</strong> the rest of the code from executing. The browser continues running subsequent JavaScript statements while waiting for the server's response. When the response arrives, a callback function (via <code>.then()</code> or <code>await</code>) handles the data. This prevents the UI from freezing during network requests.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q11. What does the fetch() function return when called?</p>
+            <p class="answer">It returns a <strong>Promise</strong> that resolves to a <code>Response</code> object. The Response object contains metadata about the HTTP response (status code, headers) and methods to access the body content (e.g., <code>.json()</code>, <code>.text()</code>). The actual data must be extracted by calling one of these methods, which also returns a Promise.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q12. What does the path prop in react-router's &lt;Route&gt; component represent?</p>
+            <p class="answer">The <code>path</code> prop defines the <strong>URL pattern</strong> that the route should match. When the browser's current URL matches this pattern, the route's <code>element</code> component is rendered. Paths can include static segments (<code>/about</code>), dynamic parameters (<code>/users/:id</code>), and wildcards (<code>*</code>).</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q13. What is Firebase primarily used for in client-side applications?</p>
+            <p class="answer">Firebase is primarily used as a <strong>web backend solution</strong> that provides hosting, real-time databases, user authentication, and file storage without requiring developers to build and maintain their own server. It allows client-side apps to persist data, authenticate users, and store files using simple API calls.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q14. What is the difference between set() and update() in Firebase?</p>
+            <p class="answer"><code>set()</code> <strong>replaces the entire value</strong> at a database reference &mdash; any existing data at that path is overwritten completely. <code>update()</code> <strong>merges</strong> the provided fields into the existing data, only modifying the specified properties while leaving other existing properties unchanged. Use <code>update()</code> when you want to change specific fields without affecting the rest.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q15. What is the difference between the set() and push() methods for the Firebase Realtime Database?</p>
+            <p class="answer"><code>set()</code> writes data to a <strong>specific path</strong> you define, replacing any existing value. <code>push()</code> <strong>auto-generates a unique key</strong> and creates a new child entry under the given reference, useful for list-like structures. Use <code>set()</code> when you know the exact key, and <code>push()</code> when adding items to a collection.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q16. What is the main difference between &lt;Link&gt; and &lt;NavLink&gt;?</p>
+            <p class="answer">Both create client-side navigation links without full page reloads, but <code>&lt;NavLink&gt;</code> automatically applies an <strong>"active" CSS class</strong> when its <code>to</code> path matches the current URL. This makes it ideal for navigation menus where the current page should be visually highlighted. <code>&lt;Link&gt;</code> provides basic navigation without active styling.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q17. What is the main difference between Firebase Realtime Database and Firestore?</p>
+            <p class="answer">The Realtime Database stores data as a <strong>single large JSON tree</strong>, while Firestore organizes data into <strong>collections of documents</strong> (similar to a document database). Firestore supports more complex queries, better scalability, and offline support. Realtime Database is simpler and streams data changes in real-time. Firestore is the newer, recommended option for most projects.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q18. What is the main purpose of client-side routing in a React application?</p>
+            <p class="answer">Client-side routing allows a <strong>Single-Page Application</strong> to display different content based on the URL <strong>without reloading the page</strong> from the server. It swaps React components in and out based on the URL path, providing the appearance of multiple pages while keeping the smooth, fast user experience of a single-page app.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q19. What is the primary purpose of AJAX in web development?</p>
+            <p class="answer">AJAX allows web pages to <strong>send and receive data from a server asynchronously</strong> without requiring a full page reload. This enables dynamic content updates (e.g., loading new data, submitting forms) while the user continues interacting with the page, creating a smoother, more responsive user experience.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q20. What is the primary purpose of Firebase Realtime Database security rules?</p>
+            <p class="answer">Security rules control <strong>who can read and write data</strong> at each path in the database. They protect sensitive data from unauthorized access and validate the structure of incoming data. Without proper rules, anyone with the database URL could read or modify all data. Rules can check authentication status, user IDs, and data validity.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q21. What is the purpose of a polyfill when using the fetch() function?</p>
+            <p class="answer">A polyfill provides an implementation of <code>fetch()</code> for <strong>older browsers</strong> that don't natively support it. The <code>fetch()</code> API is relatively modern and isn't available in all browsers (especially older versions of Internet Explorer). A polyfill like <code>whatwg-fetch</code> checks if <code>fetch</code> exists and, if not, adds a compatible implementation so the code works across all browsers.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q22. What is the purpose of the react-router's &lt;Outlet&gt; component in nested routes?</p>
+            <p class="answer"><code>&lt;Outlet /&gt;</code> acts as a <strong>placeholder</strong> in a parent route's component where the matched child route's content is rendered. It allows parent routes to define shared layout elements (like navigation or headers) that persist while the nested child content changes based on the URL. Without <code>&lt;Outlet /&gt;</code>, child routes would have nowhere to render.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q23. What type of database does Firebase Realtime Database use?</p>
+            <p class="answer">Firebase Realtime Database is a <strong>NoSQL cloud database</strong> that stores data as a single large <strong>JSON object</strong>. There are no tables, rows, or columns like in SQL databases. Data is organized as a tree of key-value pairs, where values can be strings, numbers, booleans, objects, or arrays (stored as objects with auto-generated keys).</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q24. When using Firebase's Realtime Database, what does the ref() function return?</p>
+            <p class="answer">The <code>ref()</code> function returns a <strong>Reference object</strong> that points to a specific location (path) in the database. This reference does not contain the actual data &mdash; it's a pointer used with other Firebase functions (<code>set()</code>, <code>push()</code>, <code>onValue()</code>) to read from or write to that database location.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q25. Which condition will NOT cause a Firebase onValue() listener to trigger?</p>
+            <p class="answer">A change to data at a <strong>different path</strong> that the listener is not observing will NOT cause it to trigger. The <code>onValue()</code> listener only fires when data at its specific reference path (or any child of that path) changes. It also fires once immediately when first attached to provide the initial value. Client-side state changes unrelated to Firebase do not trigger it either.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q26. Which Firebase function lets you listen for real-time changes to a database value?</p>
+            <p class="answer"><code>onValue()</code> from <code>firebase/database</code>. It takes a database reference and a callback function that receives a <strong>snapshot</strong> every time the data at that reference changes. Call <code>snapshot.val()</code> to get the actual data. It returns an unregister function to stop listening.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q27. Which function should you use to add items to a Firebase list-like structure?</p>
+            <p class="answer"><code>push()</code> should be used to add items to a list-like structure. It automatically generates a <strong>unique key</strong> for each new entry, preventing conflicts when multiple users add items simultaneously. Example: <code>push(ref(db, "tasks"), { description: "New task" })</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q28. Which method is used to handle successful completion of a Promise?</p>
+            <p class="answer">The <code>.then()</code> method is used to handle successful completion. It takes a callback function that receives the resolved value as its argument. Multiple <code>.then()</code> calls can be chained together, where each one receives the return value of the previous callback. Example: <code>fetch(url).then(response =&gt; response.json()).then(data =&gt; console.log(data))</code>.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q29. Which of the following best describes a Single-Page Application (SPA)?</p>
+            <p class="answer">A SPA is a web application that loads a <strong>single HTML page</strong> and dynamically updates the content using JavaScript without requiring full page reloads from the server. Navigation between "pages" is handled entirely in the browser by swapping components in and out. The URL changes to reflect the current view, but the page itself never fully reloads.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q30. Why are Promises useful when chaining operations like fetch() and json()?</p>
+            <p class="answer">Promises allow you to chain multiple asynchronous operations in a <strong>readable, sequential order</strong> using <code>.then()</code>. Each <code>.then()</code> waits for the previous operation to complete before executing. Without Promises, you'd need deeply nested callbacks ("callback hell"). Promises also provide centralized error handling through a single <code>.catch()</code> at the end of the chain.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q31. Why does Firebase not directly support arrays in the Realtime Database?</p>
+            <p class="answer">Because arrays with numeric indices cause <strong>race conditions</strong> when multiple users modify the same list simultaneously. If two users add an item at index 5 at the same time, one write would overwrite the other. Instead, Firebase uses objects with <strong>auto-generated unique keys</strong> (via <code>push()</code>), ensuring each entry has a distinct identifier that prevents conflicts.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q32. Why does response.json() return another Promise instead of the actual data?</p>
+            <p class="answer">Because the response body is a <strong>data stream</strong> that hasn't been fully downloaded yet when the Response object is received. The <code>.json()</code> method asynchronously reads the entire body stream and parses it as JSON, which takes time. It returns a Promise that resolves to the parsed JavaScript object once the full body has been read and parsed.</p>
+        </div>
+        <div class="qa">
+            <p class="question">Q33. Why does the fetch() function return a Promise instead of the actual data?</p>
+            <p class="answer">Because network requests take time and are <strong>asynchronous</strong>. If <code>fetch()</code> waited for the response before returning, it would block all other JavaScript execution and freeze the UI. Instead, it immediately returns a Promise that resolves when the server responds, allowing the browser to continue processing other code while waiting for the data.</p>
+        </div>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

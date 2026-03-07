@@ -233,6 +233,7 @@ module.exports = {
             activities: [
                 { label: 'Mar 2', title: 'AJAX', path: 'Mar-2-2026/' },
                 { label: 'Mar 4', title: 'Firebase Databases', path: 'Mar-4-2026/' },
+                { label: 'Quiz 5', title: 'Study Guide + Practice Quiz', path: 'Quiz-5/' },
             ],
             concepts: [
                 { term: 'AJAX', desc: 'Asynchronous JavaScript And XML — sending HTTP requests from code' },
@@ -247,9 +248,9 @@ module.exports = {
             ],
             resourcesNote: 'From INFO 340: Client-Side Development',
             resources: [
-                { title: 'Ch 17: AJAX Requests', url: 'https://info340.github.io/ajax.html' },
+                { title: 'Ch 17: Client-Side Routing', url: 'https://info340.github.io/client-side-routing.html' },
+                { title: 'Ch 18: AJAX Requests', url: 'https://info340.github.io/ajax.html' },
                 { title: 'Ch 19: Firebase', url: 'https://info340.github.io/firebase.html' },
-                { title: 'Ch 15: Interactive React', url: 'https://info340.github.io/interactive-react.html' },
             ],
         },
     ],

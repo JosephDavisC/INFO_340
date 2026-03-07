@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 5 Practice - INFO 340</title>
+    <meta name="description" content="Practice quiz for INFO 340 Quiz 5 - Client-Side Routing, AJAX, and Firebase.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Quiz 5 Practice - INFO 340">
+    <meta property="og:description" content="Practice quiz for INFO 340 Quiz 5 - Client-Side Routing, AJAX, and Firebase.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-9/Quiz-5/quiz.html">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quiz 5 Practice - INFO 340">
+    <meta name="twitter:description" content="Practice quiz for INFO 340 Quiz 5 - Client-Side Routing, AJAX, and Firebase.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/quiz.css">
+    <link rel="icon" href="/img/favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <p><a href="./" class="back-link">&larr; Back to Study Guide</a></p>
+    <h1>Quiz 5 Practice</h1>
+
+    <div class="quiz-container">
+        <div id="quiz-start" class="quiz-header">
+            <p>Test your knowledge with questions from the Quiz 5 study guide.</p>
+            <p>Topics: Client-Side Routing, AJAX, Firebase</p>
+            <div class="quiz-mode-select">
+                <button class="quiz-btn" onclick="startQuiz(17)">17 Random Questions</button>
+                <button class="quiz-btn" onclick="startQuiz(33)">All 33 Questions</button>
+            </div>
+        </div>
+
+        <div id="quiz-content" class="hidden">
+            <div class="quiz-progress">
+                <div class="quiz-progress-bar" id="progress-bar" style="width: 0%"></div>
+            </div>
+            <div class="quiz-stats">
+                <span class="question-counter" id="question-counter">Question 1 of 17</span>
+                <span class="quiz-current-score" id="current-score">Score: 0/0</span>
+            </div>
+            <div class="quiz-question" id="question-container">
+                <h3 id="question-text"></h3>
+                <button class="quiz-hint-btn" id="hint-btn" onclick="showHint()">Show Hint</button>
+                <div class="quiz-hint hidden" id="hint-text"></div>
+                <ul class="quiz-options" id="options-container"></ul>
+                <div class="quiz-source hidden" id="source-text"></div>
+            </div>
+            <div class="quiz-actions">
+                <button class="quiz-btn" id="prev-btn" onclick="prevQuestion()" disabled>Previous Question</button>
+                <button class="quiz-btn" id="next-btn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <div id="quiz-results" class="quiz-results hidden">
+            <h2>Quiz Complete!</h2>
+            <div class="quiz-score" id="score-display"></div>
+            <p class="quiz-message" id="score-message"></p>
+            <div class="quiz-actions-final">
+                <button class="quiz-btn" onclick="downloadPDF()">Download PDF</button>
+                <button class="quiz-btn" onclick="retryQuiz()">Try Again</button>
+                <button class="quiz-btn" onclick="window.location.href='./'">Back to Study Guide</button>
+            </div>
+        </div>
+
+        <div id="quiz-review" class="hidden"></div>
+    </div>
+
+    <!-- Hidden PDF Content -->
+    <div id="pdf-content" style="display: none;"></div>
+
+    <script>
+        const allQuestions = [
+            {
+                question: "How are Firebase Realtime Database security rules structured?",
+                correct: "As a JSON object with .read and .write permissions at each path",
+                wrong: ["As SQL queries that define user roles and grant table-level access controls", "As JavaScript middleware functions that run on the client before each database operation", "As XML configuration files that are uploaded through the Firebase hosting dashboard"],
+                hint: "Rules are JSON with \".read\" and \".write\" at each path.",
+                source: "Ch 19: Firebase",
+                sourceUrl: "https://info340.github.io/firebase.html"
+            },
+            {
+                question: "How are nested paths specified when using ref() in Firebase?",
+                correct: "Using forward-slash notation, like ref(db, \"people/sarah\")",
+                wrong: ["Using dot notation on the database object, like db.people.sarah", "Using array bracket syntax, like ref(db, [\"people\", \"sarah\", \"age\"])", "Using chained ref() calls, like ref(db, \"people\").child(\"sarah\")"],
+                hint: "Each slash navigates one level deeper into the JSON tree.",
+                source: "Ch 19: Firebase",
+                sourceUrl: "https://info340.github.io/firebase.html"
+            },
+            {
+                question: "How do you access URL parameters (e.g., :id) in a React Router component?",
+                correct: "By calling the useParams() hook from react-router",
+                wrong: ["By reading window.location.pathname and parsing it manually with string methods", "By accessing them through the component's props.match.params object automatically", "By using document.querySelector to extract the parameter from the browser URL bar"],
+                hint: "useParams() returns an object with keys matching the :param names in the route.",
+                source: "Ch 17: Client-Side Routing",
+                sourceUrl: "https://info340.github.io/client-side-routing.html"
+            },
+            {
+                question: "How do you handle errors in a Promise when using fetch() and then()?",
+                correct: "By chaining a .catch() method at the end of the Promise chain",
+                wrong: ["By wrapping the entire fetch() call inside a traditional try/catch block without async", "By checking the return value of each .then() callback for null or undefined values", "By passing a second error-handling callback function as an argument to fetch()"],
+                hint: ".catch() receives any error thrown in the preceding .then() chain.",
+                source: "Ch 18: AJAX Requests",
+                sourceUrl: "https://info340.github.io/ajax.html"
+            },
+            {
+                question: "In React Router, what is the purpose of the useParams() hook when working with URL parameters?",
+                correct: "To extract dynamic values from the current URL path",
+                wrong: ["To define which URL parameters a route should accept in its path configuration", "To validate that the URL parameters match a required data type or format before rendering", "To set fallback default values for URL parameters when they are missing from the path"],
+                hint: "It returns an object of key/value pairs from the :param segments.",
+                source: "Ch 17: Client-Side Routing",
+                sourceUrl: "https://info340.github.io/client-side-routing.html"
+            },
+            {
+                question: "In React Router, which component is typically used at the top level to enable routing?",
+                correct: "BrowserRouter",
+                wrong: ["RouterProvider", "RouteSwitch", "NavigationContext"],
+                hint: "It wraps the entire app (usually in main.jsx) and provides routing context.",
+                source: "Ch 17: Client-Side Routing",
+                sourceUrl: "https://info340.github.io/client-side-routing.html"
+            },
+            {
+                question: "In the context of client-side routing, what is a URL parameter?",
+                correct: "A variable segment in a URL path that matches any value",
+                wrong: ["A query string key-value pair that is appended after the question mark in the URL", "A hash fragment identifier placed at the end of a URL for page anchor navigation", "A fixed path segment that the browser must match character-by-character to render"],
+                hint: "Defined with a colon prefix like :id in the route path.",
+                source: "Ch 17: Client-Side Routing",
+                sourceUrl: "https://info340.github.io/client-side-routing.html"
+            },
+            {
+                question: "What does a Promise represent in the context of an AJAX request?",
+                correct: "The eventual completion or failure of the async request",
+                wrong: ["A guarantee that the server will always respond within a predetermined time limit", "A synchronous wrapper object that pauses all code execution until data is received", "A cached copy of the most recent server response stored in the browser's local memory"],
+                hint: "A Promise is \"pending\" until it resolves (success) or rejects (failure).",
+                source: "Ch 18: AJAX Requests",
+                sourceUrl: "https://info340.github.io/ajax.html"
+            },
+            {
+                question: "What does AJAX stand for?",
+                correct: "Asynchronous JavaScript And XML",
+                wrong: ["Automated JavaScript API Exchange", "Advanced JSON And XHTML", "Asynchronous Java Application Xchange"],
+                hint: "Modern AJAX typically uses JSON instead of XML despite the name.",
+                source: "Ch 18: AJAX Requests",
+                sourceUrl: "https://info340.github.io/ajax.html"
+            },
+            {
+                question: "What does it mean to say that AJAX is asynchronous?",
+                correct: "Code continues running while the request waits for a response",
+                wrong: ["The request and response are transmitted at exactly the same time between client and server", "The browser must completely finish the request before it is allowed to run any other code", "Multiple identical copies of the request are automatically sent to guarantee data delivery"],
+                hint: "The browser continues processing other code while waiting for the server.",
+                source: "Ch 18: AJAX Requests",
+                sourceUrl: "https://info340.github.io/ajax.html"
+            },
+            {
+                question: "What does the fetch() function return when called?",
+                correct: "A Promise that resolves to a Response object",
+                wrong: ["The parsed response data as a ready-to-use JavaScript object", "An XMLHttpRequest instance that manages the full connection lifecycle", "A callback function that must be manually invoked to start the request"],
+                hint: "You need to call .json() on the Response to get the actual data.",
+                source: "Ch 18: AJAX Requests",
+                sourceUrl: "https://info340.github.io/ajax.html"
+            },
+            {
+                question: "What does the path prop in react-router's <Route> component represent?",
+                correct: "The URL pattern that must match for the route to render",
+                wrong: ["The file system path pointing to the component's source code on the server", "The navigation breadcrumb trail that is displayed to the user in the header UI", "The CSS class name that is automatically applied to the rendered component element"],
+                hint: "Paths can include static segments, dynamic :params, and wildcards.",
+                source: "Ch 17: Client-Side Routing",
+                sourceUrl: "https://info340.github.io/client-side-routing.html"
+            },
+            {
+                question: "What is Firebase primarily used for in client-side applications?",
+                correct: "As a backend providing databases, auth, and hosting",
+                wrong: ["As a responsive CSS framework for building mobile-first web page layouts and components", "As a JavaScript unit testing library for running automated integration test suites", "As a distributed version control system for managing collaborative source code repos"],
+                hint: "Firebase eliminates the need to build and maintain your own backend server.",
+                source: "Ch 19: Firebase",
+                sourceUrl: "https://info340.github.io/firebase.html"
+            },
+            {
+                question: "What is the difference between set() and update() in Firebase?",
+                correct: "set() replaces everything; update() merges specified fields only",
+                wrong: ["set() only works on primitive single values; update() can handle arrays and nested lists", "set() executes synchronously and blocks; update() is asynchronous and returns a Promise", "set() can only create new entries; update() can only modify data that already exists at a path"],
+                hint: "update() leaves unspecified properties unchanged; set() overwrites everything.",
+                source: "Ch 19: Firebase",
+                sourceUrl: "https://info340.github.io/firebase.html"
+            },
+            {
+                question: "What is the difference between the set() and push() methods for the Firebase Realtime Database?",
+                correct: "set() writes to a path you specify; push() generates a unique key",
+                wrong: ["set() is exclusively for creating new entries; push() is used for deleting existing data", "set() only accepts string values; push() can handle any JavaScript data type or object", "set() can only operate on the database root; push() is restricted to nested child paths"],
+                hint: "push() is used for list-like structures where each item needs a unique key.",
+                source: "Ch 19: Firebase",
+                sourceUrl: "https://info340.github.io/firebase.html"
+            },
+            {
+                question: "What is the main difference between <Link> and <NavLink>?",
+                correct: "NavLink adds an \"active\" CSS class when its path matches the URL",
+                wrong: ["Link handles internal page navigation while NavLink is designed for external URL redirection", "Link is restricted to header elements only while NavLink can be placed anywhere in the page", "Link supports dynamic URL parameters while NavLink only works with hardcoded static paths"],
+                hint: "NavLink is ideal for navigation menus that highlight the current page.",
+                source: "Ch 17: Client-Side Routing",
+                sourceUrl: "https://info340.github.io/client-side-routing.html"
+            },
+            {
+                question: "What is the main difference between Firebase Realtime Database and Firestore?",
+                correct: "Realtime Database is one JSON tree; Firestore uses document collections",
+                wrong: ["Realtime Database is completely free to use; Firestore requires a monthly paid subscription", "Realtime Database runs entirely on the client device; Firestore runs only on remote servers", "Realtime Database only supports JavaScript apps; Firestore supports all programming languages"],
+                hint: "Firestore is newer and supports more complex queries and better scalability.",
+                source: "Ch 19: Firebase",
+                sourceUrl: "https://info340.github.io/firebase.html"
+            },
+            {
+                question: "What is the main purpose of client-side routing in a React application?",
+                correct: "To show different content based on the URL without a page reload",
+                wrong: ["To send HTTP requests to the backend server and process the returned HTML response pages", "To manage the browser's cookies, local storage, and session tracking across multiple tabs", "To pre-compile React components into static HTML files that are served for faster page loads"],
+                hint: "It swaps components based on the URL while keeping the single-page experience.",
+                source: "Ch 17: Client-Side Routing",
+                sourceUrl: "https://info340.github.io/client-side-routing.html"
+            },
+            {
+                question: "What is the primary purpose of AJAX in web development?",
+                correct: "To exchange data with a server without reloading the page",
+                wrong: ["To apply dynamic CSS animations and transition effects to web page DOM elements", "To compile JavaScript source code into optimized machine-readable binary for faster execution", "To manage relational database tables and records directly from the browser developer console"],
+                hint: "AJAX enables dynamic content updates while the user stays on the same page.",
+                source: "Ch 18: AJAX Requests",
+                sourceUrl: "https://info340.github.io/ajax.html"
+            },
+            {
+                question: "What is the primary purpose of Firebase Realtime Database security rules?",
+                correct: "To control who can read and write data at each path",
+                wrong: ["To encrypt all stored data in the database using client-generated cryptographic keys", "To automatically create scheduled backups of the entire database at regular time intervals", "To format, validate, and enforce a strict JSON schema structure for all incoming database writes"],
+                hint: "Rules protect data from unauthorized access and can validate incoming data.",
+                source: "Ch 19: Firebase",
+                sourceUrl: "https://info340.github.io/firebase.html"
+            },
+            {
+                question: "What is the purpose of a polyfill when using the fetch() function?",
+                correct: "To provide fetch() for older browsers that lack native support",
+                wrong: ["To automatically attach extra security headers to every single outgoing fetch request", "To intercept and cache all fetch responses in the browser's local storage for offline access", "To transparently convert all fetch() calls into legacy XMLHttpRequest objects for performance"],
+                hint: "Older browsers (like IE) don't have fetch() built in.",
+                source: "Ch 18: AJAX Requests",
+                sourceUrl: "https://info340.github.io/ajax.html"
+            },
+            {
+                question: "What is the purpose of the react-router's <Outlet> component in nested routes?",
+                correct: "It renders the matched child route inside the parent layout",
+                wrong: ["It redirects users to a designated error page whenever no child route matches the URL", "It defines and registers the default export component for the entire application routing module", "It automatically opens a new browser tab for each nested child route that gets matched"],
+                hint: "The parent layout wraps around the Outlet, which swaps child content.",
+                source: "Ch 17: Client-Side Routing",
+                sourceUrl: "https://info340.github.io/client-side-routing.html"
+            },
+            {
+                question: "What type of database does Firebase Realtime Database use?",
+                correct: "A NoSQL database storing data as a single JSON object",
+                wrong: ["A relational SQL database organized with tables, rows, columns, and foreign key relationships", "A graph database that stores all data as interconnected nodes, edges, and relationship properties", "A local SQLite database that is stored entirely in the user's browser cache and session storage"],
+                hint: "It's a single giant JSON tree in the cloud — no tables or rows.",
+                source: "Ch 19: Firebase",
+                sourceUrl: "https://info340.github.io/firebase.html"
+            },
+            {
+                question: "When using Firebase's Realtime Database, what does the ref() function return?",
+                correct: "A Reference object pointing to a location (not the data itself)",
+                wrong: ["The actual current data value that is stored at the specified database path location", "A Promise that asynchronously resolves to the data after fetching it from the server", "A snapshot object that contains both the raw data and all of its associated metadata"],
+                hint: "It's a pointer — use it with set(), push(), or onValue() to interact with data.",
+                source: "Ch 19: Firebase",
+                sourceUrl: "https://info340.github.io/firebase.html"
+            },
+            {
+                question: "Which condition will NOT cause a Firebase onValue() listener to trigger?",
+                correct: "A change to data at a different path the listener is not observing",
+                wrong: ["The initial attachment of the listener callback to the targeted database reference", "A modification to any child data nested under the currently observed reference path", "A complete deletion of all data stored at the exact path that is being listened to"],
+                hint: "onValue() only fires for changes at its specific ref path (and children).",
+                source: "Ch 19: Firebase",
+                sourceUrl: "https://info340.github.io/firebase.html"
+            },
+            {
+                question: "Which Firebase function lets you listen for real-time changes to a database value?",
+                correct: "onValue()",
+                wrong: ["getValue()", "watchData()", "listenRef()"],
+                hint: "It takes a ref and a callback that receives a snapshot on every change.",
+                source: "Ch 19: Firebase",
+                sourceUrl: "https://info340.github.io/firebase.html"
+            },
+            {
+                question: "Which function should you use to add items to a Firebase list-like structure?",
+                correct: "push()",
+                wrong: ["set()", "append()", "insert()"],
+                hint: "It auto-generates a unique key to prevent conflicts with concurrent users.",
+                source: "Ch 19: Firebase",
+                sourceUrl: "https://info340.github.io/firebase.html"
+            },
+            {
+                question: "Which method is used to handle successful completion of a Promise?",
+                correct: ".then()",
+                wrong: [".done()", ".success()", ".resolve()"],
+                hint: "Chain multiple .then() calls for sequential async operations.",
+                source: "Ch 18: AJAX Requests",
+                sourceUrl: "https://info340.github.io/ajax.html"
+            },
+            {
+                question: "Which of the following best describes a Single-Page Application (SPA)?",
+                correct: "One HTML page that dynamically swaps content via JavaScript",
+                wrong: ["A website with only one visible page that has absolutely no navigation links or buttons", "A web app where the server must render and send a completely new page for every user action", "A mobile application specifically designed to work on only a single device type or screen size"],
+                hint: "The page never fully reloads — JavaScript swaps content based on the URL.",
+                source: "Ch 17: Client-Side Routing",
+                sourceUrl: "https://info340.github.io/client-side-routing.html"
+            },
+            {
+                question: "Why are Promises useful when chaining operations like fetch() and json()?",
+                correct: "They let you chain async steps sequentially with one .catch() for errors",
+                wrong: ["They force all asynchronous operations to execute synchronously in strict sequential order", "They automatically retry any failed network operations up to three times before giving up", "They cache each intermediate result in browser memory so it can be reused without re-fetching"],
+                hint: "Each .then() waits for the previous to finish, and .catch() handles all errors.",
+                source: "Ch 18: AJAX Requests",
+                sourceUrl: "https://info340.github.io/ajax.html"
+            },
+            {
+                question: "Why does Firebase not directly support arrays in the Realtime Database?",
+                correct: "Numeric indices cause race conditions with concurrent users",
+                wrong: ["The JSON data format specification does not include support for array data structures at all", "Arrays consume significantly more cloud storage space compared to equivalent object representations", "JavaScript array methods are fundamentally incompatible with Firebase's data encryption system"],
+                hint: "push() generates unique keys to prevent two users from writing to the same index.",
+                source: "Ch 19: Firebase",
+                sourceUrl: "https://info340.github.io/firebase.html"
+            },
+            {
+                question: "Why does response.json() return another Promise instead of the actual data?",
+                correct: "The body stream hasn't been fully downloaded and parsed yet",
+                wrong: ["JSON parsing must always be performed on the remote server, never inside the browser itself", "The response body might contain raw binary data that fundamentally cannot be converted to JSON", "JavaScript language rules require that all function return values be wrapped in Promise objects"],
+                hint: "Reading and parsing the full body stream is an asynchronous operation.",
+                source: "Ch 18: AJAX Requests",
+                sourceUrl: "https://info340.github.io/ajax.html"
+            },
+            {
+                question: "Why does the fetch() function return a Promise instead of the actual data?",
+                correct: "Network requests take time, so it returns immediately to avoid blocking",
+                wrong: ["Promise objects use significantly less memory than storing raw response data in variables", "The HTTP protocol specification requires that all transmitted data be wrapped in Promise objects", "Web browsers are technically unable to process response data without first creating a Promise"],
+                hint: "If fetch() blocked until the response arrived, the entire UI would freeze.",
+                source: "Ch 18: AJAX Requests",
+                sourceUrl: "https://info340.github.io/ajax.html"
+            }
+        ];
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+        let totalQuestions = 17;
+        let userAnswers = [];
+        let lastQuizCount = 17;
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function startQuiz(count) {
+            totalQuestions = count;
+            lastQuizCount = count;
+            currentQuestions = shuffleArray(allQuestions).slice(0, count);
+            currentQuestionIndex = 0;
+            score = 0;
+            answered = false;
+            userAnswers = new Array(count).fill(null);
+
+            document.getElementById('progress-bar').style.width = '0%';
+            document.getElementById('quiz-start').classList.add('hidden');
+            document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('quiz-review').classList.add('hidden');
+            document.getElementById('quiz-content').classList.remove('hidden');
+
+            showQuestion();
+        }
+
+        function retryQuiz() {
+            startQuiz(lastQuizCount);
+        }
+
+        function downloadPDF() {
+            const percentage = Math.round((score / totalQuestions) * 100);
+            const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            let html = `
+                <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 20px; max-width: 800px;">
+                    <div style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #4b2e83; padding-bottom: 20px;">
+                        <h1 style="color: #4b2e83; margin: 0 0 10px 0;">Quiz 5 Practice Results</h1>
+                        <p style="color: #666; margin: 5px 0;">INFO 340 - Client-Side Web Development</p>
+                        <p style="color: #666; margin: 5px 0;">${date}</p>
+                    </div>
+                    <div style="text-align: center; margin-bottom: 30px; padding: 20px; background: #f5f5f5; border-radius: 8px;">
+                        <div style="font-size: 48px; font-weight: bold; color: #4b2e83;">${score}/${totalQuestions}</div>
+                        <div style="font-size: 24px; color: #666;">${percentage}%</div>
+                        <p style="margin-top: 10px; color: #333;">Topics: Client-Side Routing, AJAX, Firebase</p>
+                    </div>
+                    <h2 style="color: #4b2e83; border-bottom: 2px solid #b7a57a; padding-bottom: 10px;">Question Review</h2>
+            `;
+
+            currentQuestions.forEach((q, i) => {
+                const userAnswer = userAnswers[i];
+                const isCorrect = userAnswer === q.correct;
+                const statusColor = isCorrect ? '#28a745' : '#dc3545';
+                const statusText = isCorrect ? '✓ Correct' : '✗ Incorrect';
+
+                html += `
+                    <div style="margin-bottom: 25px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; border-left: 4px solid ${statusColor};">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <strong style="color: #4b2e83;">Question ${i + 1}</strong>
+                            <span style="color: ${statusColor}; font-weight: bold;">${statusText}</span>
+                        </div>
+                        <p style="margin: 10px 0; color: #333;"><strong>Q:</strong> ${q.question}</p>
+                        <p style="margin: 5px 0; color: ${isCorrect ? '#28a745' : '#dc3545'};">
+                            <strong>Your Answer:</strong> ${userAnswer || 'Not answered'}
+                        </p>
+                        ${!isCorrect ? `<p style="margin: 5px 0; color: #28a745;"><strong>Correct Answer:</strong> ${q.correct}</p>` : ''}
+                        <p style="margin: 10px 0 0 0; padding: 10px; background: #fffbeb; border-radius: 4px; color: #666; font-size: 14px;">
+                            <strong>Hint:</strong> ${q.hint}
+                        </p>
+                    </div>
+                `;
+            });
+
+            html += `
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #b7a57a; text-align: center; color: #666; font-size: 14px;">
+                        <p>Study more at: <span style="color: #4b2e83;">info340.joechamdani.com/Week-9/Quiz-5/</span></p>
+                    </div>
+                </div>
+            `;
+
+            const element = document.getElementById('pdf-content');
+            element.innerHTML = html;
+            element.style.display = 'block';
+
+            const opt = {
+                margin: 10,
+                filename: 'Quiz5-Results.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                element.style.display = 'none';
+            });
+        }
+
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            const previousAnswer = userAnswers[currentQuestionIndex];
+            answered = previousAnswer !== null;
+
+            document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
+            document.getElementById('progress-bar').style.width = `${((currentQuestionIndex) / totalQuestions) * 100}%`;
+            document.getElementById('question-text').innerHTML = question.question;
+
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('current-score').textContent = `Score: ${score}/${answeredCount}`;
+
+            document.getElementById('hint-btn').classList.remove('hidden');
+            document.getElementById('hint-text').classList.add('hidden');
+            document.getElementById('hint-text').textContent = question.hint;
+
+            document.getElementById('source-text').innerHTML = `<strong>Source:</strong> <a href="${question.sourceUrl}" target="_blank">${question.source}</a>`;
+
+            const options = shuffleArray([question.correct, ...question.wrong]);
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            options.forEach((option) => {
+                const li = document.createElement('li');
+                li.className = 'quiz-option';
+                li.innerHTML = option;
+
+                if (previousAnswer !== null) {
+                    li.classList.add('disabled');
+                    if (option === question.correct) {
+                        li.classList.add('correct');
+                    }
+                    if (option === previousAnswer && previousAnswer !== question.correct) {
+                        li.classList.add('incorrect');
+                    }
+                } else {
+                    li.onclick = () => selectOption(li, option === question.correct, option);
+                }
+                optionsContainer.appendChild(li);
+            });
+
+            if (previousAnswer !== null) {
+                document.getElementById('source-text').classList.remove('hidden');
+                document.getElementById('hint-btn').classList.add('hidden');
+            } else {
+                document.getElementById('source-text').classList.add('hidden');
+            }
+
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            document.getElementById('next-btn').disabled = previousAnswer === null;
+            document.getElementById('next-btn').textContent = currentQuestionIndex === totalQuestions - 1 ? 'See Results' : 'Next Question';
+        }
+
+        function showHint() {
+            document.getElementById('hint-text').classList.remove('hidden');
+            document.getElementById('hint-btn').classList.add('hidden');
+        }
+
+        function selectOption(element, isCorrect, selectedOption) {
+            if (answered) return;
+            answered = true;
+
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                if (opt.innerHTML === currentQuestions[currentQuestionIndex].correct) {
+                    opt.classList.add('correct');
+                }
+            });
+
+            if (isCorrect) {
+                score++;
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+            }
+
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('current-score').textContent = `Score: ${score}/${answeredCount}`;
+
+            document.getElementById('source-text').classList.remove('hidden');
+            document.getElementById('hint-btn').classList.add('hidden');
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex >= totalQuestions) {
+                showResults();
+            } else {
+                showQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-content').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('score-display').textContent = `${score}/${totalQuestions}`;
+
+            let message = '';
+            if (percentage >= 90) message = 'Excellent! You\'re ready for the quiz!';
+            else if (percentage >= 80) message = 'Great job! Just a bit more review.';
+            else if (percentage >= 70) message = 'Good effort! Review the study guide.';
+            else if (percentage >= 60) message = 'Keep studying! You\'re getting there.';
+            else message = 'Review the study guide and try again!';
+
+            document.getElementById('score-message').textContent = `${percentage}% - ${message}`;
+
+            renderReview();
+        }
+
+        function renderReview() {
+            const reviewContainer = document.getElementById('quiz-review');
+            reviewContainer.classList.remove('hidden');
+
+            let html = '<h2>Review Your Answers</h2>';
+
+            currentQuestions.forEach((q, i) => {
+                const userAnswer = userAnswers[i];
+                const isCorrect = userAnswer === q.correct;
+                const statusClass = isCorrect ? 'review-correct' : 'review-incorrect';
+                const statusText = isCorrect ? 'Correct' : 'Incorrect';
+
+                html += `
+                    <div class="review-item ${statusClass}">
+                        <div class="review-header">
+                            <span class="review-number">Question ${i + 1}</span>
+                            <span class="review-status">${statusText}</span>
+                        </div>
+                        <p class="review-question">${q.question}</p>
+                        <p class="review-answer"><strong>Your Answer:</strong> ${userAnswer || 'Not answered'}</p>
+                        ${!isCorrect ? `<p class="review-answer review-correct-answer"><strong>Correct Answer:</strong> ${q.correct}</p>` : ''}
+                        <p class="review-hint"><strong>Hint:</strong> ${q.hint}</p>
+                        <p class="review-source"><strong>Source:</strong> <a href="${q.sourceUrl}" target="_blank">${q.source}</a></p>
+                    </div>
+                `;
+            });
+
+            reviewContainer.innerHTML = html;
+        }
+    </script>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>

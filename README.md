@@ -100,6 +100,7 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 |------|-------|------|------|
 | Mar 2, 2026 | AJAX | In-Class | [View](https://info340.joechamdani.com/Week-9/Mar-2-2026/) |
 | Mar 4, 2026 | Firebase Databases | In-Class | [View](https://info340.joechamdani.com/Week-9/Mar-4-2026/) |
+| Mar 6, 2026 | Quiz 5 | Study Guide + Practice Quiz | [View](https://info340.joechamdani.com/Week-9/Quiz-5/) |
 
 ---
 
