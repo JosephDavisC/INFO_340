@@ -253,5 +253,26 @@ module.exports = {
                 { title: 'Ch 19: Firebase', url: 'https://info340.github.io/firebase.html' },
             ],
         },
+        {
+            number: 10,
+            dateRange: 'Mar 9 - Mar 15',
+            subtitle: 'Firebase Auth & Final Project',
+            description: 'Firebase Authentication, security rules, image storage, and final project work.',
+            landingDesc: 'Firebase Auth & Final Project',
+            activities: [
+                { label: 'Mar 9', title: 'Firebase Authentication', path: 'Mar-9-2026/' },
+            ],
+            concepts: [
+                { term: 'Firebase Auth', desc: 'User authentication with multiple sign-in providers' },
+                { term: 'onAuthStateChanged()', desc: 'Listener for login/logout events, returns unregister function' },
+                { term: 'FirebaseUI', desc: 'Pre-built sign-in UI component (<code>StyledFirebaseAuth</code>)' },
+                { term: 'Security Rules', desc: '<code>auth !== null</code> requires login, <code>auth.uid</code> restricts to own data' },
+                { term: 'Firebase Storage', desc: 'Store files with <code>uploadBytes()</code> and <code>getDownloadURL()</code>' },
+            ],
+            resourcesNote: 'From INFO 340: Client-Side Development',
+            resources: [
+                { title: 'Ch 19: Firebase', url: 'https://info340.github.io/firebase.html' },
+            ],
+        },
     ],
 };

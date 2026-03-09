@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Authentication - INFO 340</title>
+    <meta name="description" content="INFO 340 Lecture - Firebase Authentication: User sign-in, auth state management, security rules, and image uploading.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Firebase Authentication - INFO 340">
+    <meta property="og:description" content="Firebase Authentication: User sign-in, auth state management, security rules, and image uploading.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-10/Mar-9-2026/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Firebase Authentication - INFO 340">
+    <meta name="twitter:description" content="Firebase Authentication: User sign-in, auth state management, security rules, and image uploading.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 10</a></p>
+    <h1>Firebase Authentication</h1>
+    <p class="week-subtitle">March 9, 2026 &bull; Week 10</p>
+
+    <section class="summary">
+        <h2>Topics Covered</h2>
+
+        <h3>Firebase Authentication Overview</h3>
+        <ul>
+            <li><strong>Firebase Auth</strong> provides user authentication without building a custom backend</li>
+            <li>Supports multiple <strong>sign-in providers</strong>: Google, email/password, GitHub, Facebook, etc.</li>
+            <li>User authentication is <strong>separate</strong> from user data storage &mdash; use Realtime Database for user profiles</li>
+            <li><strong>Email Enum Protection</strong> (since Sept 2023) &mdash; security feature that prevents revealing whether an email is registered</li>
+        </ul>
+
+        <h3>FirebaseUI</h3>
+        <ul>
+            <li><strong>FirebaseUI</strong> is a library that provides pre-built sign-in forms and UI components</li>
+            <li>Use <code>StyledFirebaseAuth</code> component from <code>react-firebaseui</code></li>
+            <li>React 19 compatibility issue &mdash; use the instructor's fork: <code>npm install https://github.com/joelwross/firebaseui-web-react</code></li>
+            <li>Configure sign-in options, flow type, <code>credentialHelper</code>, and callbacks</li>
+        </ul>
+<pre><code>import { getAuth, GoogleAuthProvider, EmailAuthProvider } from 'firebase/auth';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+
+const firebaseUIConfig = {
+    signInOptions: [
+        GoogleAuthProvider.PROVIDER_ID,
+        { provider: EmailAuthProvider.PROVIDER_ID, requireDisplayName: true }
+    ],
+    signInFlow: 'popup',
+    credentialHelper: 'none',
+    callbacks: {
+        signInSuccessWithAuthResult: () =&gt; false
+    }
+};
+
+// Render the sign-in UI
+&lt;StyledFirebaseAuth uiConfig={firebaseUIConfig} firebaseAuth={getAuth()} /&gt;</code></pre>
+
+        <h3>Managing Auth State</h3>
+        <ul>
+            <li><code>onAuthStateChanged()</code> listens for login/logout events</li>
+            <li>Callback receives a <strong>Firebase User object</strong> (or <code>null</code> if signed out)</li>
+            <li>User object includes: <code>uid</code>, <code>displayName</code>, <code>email</code>, <code>photoURL</code></li>
+            <li>Use inside <code>useEffect</code> with a cleanup function to unregister the listener</li>
+        </ul>
+<pre><code>import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
+useEffect(() =&gt; {
+    const auth = getAuth();
+    const unregister = onAuthStateChanged(auth, (firebaseUser) =&gt; {
+        if (firebaseUser) {
+            // user is signed in
+            console.log(firebaseUser.uid);
+            console.log(firebaseUser.displayName);
+        } else {
+            // user is signed out
+        }
+    });
+
+    return () =&gt; unregister(); // cleanup on unmount
+}, []);</code></pre>
+
+        <h3>Signing Out</h3>
+        <ul>
+            <li>Call <code>signOut(auth)</code> to log the user out</li>
+            <li>Returns a Promise &mdash; use <code>.catch()</code> for error handling</li>
+            <li>The <code>onAuthStateChanged</code> listener will fire with <code>null</code> when the user signs out</li>
+            <li>Firebase persists auth state even after browser closure</li>
+        </ul>
+<pre><code>import { getAuth, signOut } from 'firebase/auth';
+
+const auth = getAuth();
+signOut(auth)
+    .catch(err =&gt; console.log(err));</code></pre>
+
+        <h3>Security Rules with Auth</h3>
+        <ul>
+            <li>Use <code>auth !== null</code> in rules to require authentication for read/write</li>
+            <li>Use <code>auth.uid</code> to restrict access to the user's own data</li>
+            <li>Rules cascade downward &mdash; a parent rule applies to all children</li>
+        </ul>
+<pre><code>{
+    "rules": {
+        "users": {
+            "$uid": {
+                ".read": "auth !== null && auth.uid === $uid",
+                ".write": "auth !== null && auth.uid === $uid"
+            }
+        },
+        "public": {
+            ".read": true,
+            ".write": "auth !== null"
+        }
+    }
+}</code></pre>
+
+        <h3>Firebase Storage</h3>
+        <ul>
+            <li>Firebase Storage is used for storing <strong>large files</strong> like images, videos, and documents</li>
+            <li>Get a storage reference with <code>storageRef(storage, "path/to/file")</code></li>
+            <li>Upload files with <code>uploadBytes()</code>, then get the URL with <code>getDownloadURL()</code></li>
+            <li>Both operations are asynchronous &mdash; use <code>async/await</code></li>
+        </ul>
+<pre><code>import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
+
+const storage = getStorage();
+const fileRef = storageRef(storage, "images/profile.png");
+
+async function uploadFile(file) {
+    await uploadBytes(fileRef, file);
+    const url = await getDownloadURL(fileRef);
+    // save url to Realtime Database
+}</code></pre>
+
+        <h3>Storing Additional User Data</h3>
+        <ul>
+            <li>Firebase Auth only stores minimal info (display name, photo URL, email)</li>
+            <li>Store extra user data in Realtime Database keyed by <code>uid</code></li>
+        </ul>
+<pre><code>// Database structure for extra user data
+{
+    "userData": {
+        "userId1": { "pronouns": "they/them", "bio": "Hello!" },
+        "userId2": { "pronouns": "he/him", "bio": "World!" }
+    }
+}
+
+// Access with:
+const userRef = ref(db, "userData/" + currentUser.uid);</code></pre>
+
+        <h3>File Input Handling</h3>
+        <ul>
+            <li>Use an <code>&lt;input type="file"&gt;</code> element to let users select files</li>
+            <li>Access the selected file through <code>event.target.files[0]</code></li>
+        </ul>
+<pre><code>const handleChange = (event) =&gt; {
+    if (event.target.files.length &gt; 0) {
+        const chosenFile = event.target.files[0];
+        // upload chosenFile to Firebase Storage
+    }
+};</code></pre>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>Firebase Auth:</strong> User authentication service with multiple sign-in providers</li>
+            <li><strong>FirebaseUI:</strong> Pre-built sign-in UI component (<code>StyledFirebaseAuth</code>)</li>
+            <li><strong>onAuthStateChanged():</strong> Listener for login/logout events, returns unregister function</li>
+            <li><strong>User Object:</strong> Contains <code>uid</code>, <code>displayName</code>, <code>email</code>, <code>photoURL</code></li>
+            <li><strong>signOut():</strong> Logs the user out, returns a Promise</li>
+            <li><strong>Security Rules:</strong> <code>auth !== null</code> requires login, <code>auth.uid</code> restricts to own data</li>
+            <li><strong>Firebase Storage:</strong> Store large files with <code>uploadBytes()</code> and <code>getDownloadURL()</code></li>
+        </ul>
+    </section>
+
+    <section class="resources">
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://slides.com/joelross/info340wi26-firebase-auth" target="_blank">Lecture Slides: Firebase Authentication</a></li>
+            <li><a href="https://info340.github.io/firebase.html" target="_blank">Ch 19: Firebase</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>
