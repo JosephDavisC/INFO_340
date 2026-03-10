@@ -107,6 +107,7 @@ This repo contains all my problem sets and in-class practice as I learn client-s
 | Date | Topic | Type | Link |
 |------|-------|------|------|
 | Mar 9, 2026 | Firebase Authentication | In-Class | [View](https://info340.joechamdani.com/Week-10/Mar-9-2026/) |
+| Mar 11, 2026 | Quiz Retake | Study Guide + Practice Quiz | [View](https://info340.joechamdani.com/Week-10/Quiz-Retake/) |
 
 ---
 

@@ -261,6 +261,7 @@ module.exports = {
             landingDesc: 'Firebase Auth & Final Project',
             activities: [
                 { label: 'Mar 9', title: 'Firebase Authentication', path: 'Mar-9-2026/' },
+                { label: 'Quiz Retake', title: 'Study Guide + Practice Quiz (76 Q&A)', path: 'Quiz-Retake/' },
             ],
             concepts: [
                 { term: 'Firebase Auth', desc: 'User authentication with multiple sign-in providers' },

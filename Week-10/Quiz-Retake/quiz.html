@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Retake Practice - INFO 340</title>
+    <meta name="description" content="Practice quiz for INFO 340 Quiz Retake - Most frequently missed questions from Quizzes 1-4.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Quiz Retake Practice - INFO 340">
+    <meta property="og:description" content="Practice quiz for INFO 340 Quiz Retake - Most frequently missed questions from Quizzes 1-4.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-10/Quiz-Retake/quiz.html">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quiz Retake Practice - INFO 340">
+    <meta name="twitter:description" content="Practice quiz for INFO 340 Quiz Retake - Most frequently missed questions from Quizzes 1-4.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/quiz.css">
+    <link rel="icon" href="/img/favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <p><a href="./" class="back-link">&larr; Back to Study Guide</a></p>
+    <h1>Quiz Retake Practice</h1>
+
+    <div class="quiz-container">
+        <div id="quiz-start" class="quiz-header">
+            <p>Test your knowledge with questions from the Quiz Retake study guide.</p>
+            <p>Topics: HTML, CSS, Git, JavaScript, DOM, ES6+, React</p>
+            <div class="quiz-mode-select">
+                <button class="quiz-btn" onclick="startQuiz(38)">38 Random Questions</button>
+                <button class="quiz-btn" onclick="startQuiz(76)">All 76 Questions</button>
+            </div>
+        </div>
+
+        <div id="quiz-content" class="hidden">
+            <div class="quiz-progress">
+                <div class="quiz-progress-bar" id="progress-bar" style="width: 0%"></div>
+            </div>
+            <div class="quiz-stats">
+                <span class="question-counter" id="question-counter">Question 1 of 38</span>
+                <span class="quiz-current-score" id="current-score">Score: 0/0</span>
+            </div>
+            <div class="quiz-question" id="question-container">
+                <h3 id="question-text"></h3>
+                <button class="quiz-hint-btn" id="hint-btn" onclick="showHint()">Show Hint</button>
+                <div class="quiz-hint hidden" id="hint-text"></div>
+                <ul class="quiz-options" id="options-container"></ul>
+                <div class="quiz-source hidden" id="source-text"></div>
+            </div>
+            <div class="quiz-actions">
+                <button class="quiz-btn" id="prev-btn" onclick="prevQuestion()" disabled>Previous Question</button>
+                <button class="quiz-btn" id="next-btn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <div id="quiz-results" class="quiz-results hidden">
+            <h2>Quiz Complete!</h2>
+            <div class="quiz-score" id="score-display"></div>
+            <p class="quiz-message" id="score-message"></p>
+            <div class="quiz-actions-final">
+                <button class="quiz-btn" onclick="downloadPDF()">Download PDF</button>
+                <button class="quiz-btn" onclick="retryQuiz()">Try Again</button>
+                <button class="quiz-btn" onclick="window.location.href='./'">Back to Study Guide</button>
+            </div>
+        </div>
+
+        <div id="quiz-review" class="hidden"></div>
+    </div>
+
+    <!-- Hidden PDF Content -->
+    <div id="pdf-content" style="display: none;"></div>
+
+    <script>
+        const allQuestions = [
+            {
+                question: "What does the \"domain\" part of a URL represent?",
+                correct: "The server where a website is hosted",
+                wrong: ["The specific page or resource being requested on the website", "The file extension and format of the page being loaded", "The protocol used for secure communication between client and server"],
+                hint: "It's like an address that tells the browser where to find the website.",
+                source: "Ch 2: Client-Side Development",
+                sourceUrl: "https://info340.github.io/client-side-development.html"
+            },
+            {
+                question: "Why are web standards important in client-side development?",
+                correct: "They ensure websites work consistently across browsers and platforms",
+                wrong: ["They automatically optimize website loading speed and reduce bandwidth usage", "They replace the need for testing by guaranteeing identical rendering everywhere", "They provide built-in security encryption for all transmitted web page data"],
+                hint: "Standards are agreements between browser makers about how code should be interpreted.",
+                source: "Ch 2: Client-Side Development",
+                sourceUrl: "https://info340.github.io/client-side-development.html"
+            },
+            {
+                question: "What is the concept of Universal Design in web development?",
+                correct: "Designing so products can be used by as many people as possible without special adaptations",
+                wrong: ["Designing websites that work exclusively on desktop computers with large monitors", "A specific CSS framework for creating responsive mobile-first page layouts", "A programming paradigm for writing cross-platform JavaScript applications"],
+                hint: "It's about making things accessible to everyone, including people with disabilities.",
+                source: "Ch 5: Semantic HTML",
+                sourceUrl: "https://info340.github.io/semantic-html.html"
+            },
+            {
+                question: "Which principle is NOT part of the Web Content Accessibility Guidelines (WCAG)?",
+                correct: "Aesthetic (visually appealing design)",
+                wrong: ["Perceivable &mdash; users must be able to perceive the information being presented", "Operable &mdash; users must be able to operate the interface and navigation components", "Understandable &mdash; users must be able to understand the information and interface"],
+                hint: "WCAG principles are POUR: Perceivable, Operable, Understandable, Robust.",
+                source: "Ch 5: Semantic HTML",
+                sourceUrl: "https://info340.github.io/semantic-html.html"
+            },
+            {
+                question: "What is the main benefit of using semantic HTML elements?",
+                correct: "Describes meaning and structure for browsers, screen readers, and search engines",
+                wrong: ["Makes the web page load significantly faster by reducing total file size", "Adds visual styling and layout properties to HTML elements automatically", "Reduces the overall number of lines of code needed in the HTML file"],
+                hint: "Semantic HTML tells WHAT content is, not just how it looks.",
+                source: "Ch 5: Semantic HTML",
+                sourceUrl: "https://info340.github.io/semantic-html.html"
+            },
+            {
+                question: "Why is semantic HTML important for accessibility?",
+                correct: "It provides meaningful structure that screen readers use for navigation",
+                wrong: ["It automatically generates alt text for all images on the page", "It changes the visual color contrast of elements to meet accessibility standards", "It converts all page content to audio format for visually impaired users"],
+                hint: "Elements like nav, main, header help assistive technologies understand page organization.",
+                source: "Ch 5: Semantic HTML",
+                sourceUrl: "https://info340.github.io/semantic-html.html"
+            },
+            {
+                question: "Which statement about block and inline HTML elements is correct?",
+                correct: "Block elements start on a new line and take full width; inline elements do not",
+                wrong: ["Inline elements always appear at the top of the page before any block elements", "Block elements can only contain text content while inline elements can contain other elements", "Both block and inline elements behave identically in terms of layout and spacing"],
+                hint: "Think div vs span &mdash; one takes the full row, the other flows within text.",
+                source: "Ch 3: HTML Fundamentals",
+                sourceUrl: "https://info340.github.io/html-fundamentals.html"
+            },
+            {
+                question: "What is the role of the &lt;head&gt; section in an HTML document?",
+                correct: "Contains metadata like page title, character set, and stylesheet links",
+                wrong: ["Contains the main visible content that users see and interact with on the page", "Defines the page header with the website logo and primary navigation menu", "Stores all JavaScript code that the page needs to run interactivity"],
+                hint: "The head contains info ABOUT the page, not the page content itself.",
+                source: "Ch 3: HTML Fundamentals",
+                sourceUrl: "https://info340.github.io/html-fundamentals.html"
+            },
+            {
+                question: "What is the purpose of the &lt;label&gt; element in an HTML form?",
+                correct: "Associates text with an input field for usability and accessibility",
+                wrong: ["Creates a submit button that sends the form data to the server", "Defines the server endpoint URL where the form data should be sent", "Adds placeholder text inside the input field that disappears when typing"],
+                hint: "Clicking the label should focus the associated input.",
+                source: "Ch 5: Semantic HTML",
+                sourceUrl: "https://info340.github.io/semantic-html.html"
+            },
+            {
+                question: "What is the purpose of the aria-label attribute in HTML?",
+                correct: "Provides an accessible name for elements for screen readers",
+                wrong: ["Adds a visible tooltip that appears when hovering over the element", "Sets the element's unique identifier for CSS selector targeting", "Defines the CSS class name that should be applied to the element"],
+                hint: "ARIA stands for Accessible Rich Internet Applications.",
+                source: "Ch 5: Semantic HTML",
+                sourceUrl: "https://info340.github.io/semantic-html.html"
+            },
+            {
+                question: "On the command line, what does the command cd .. do?",
+                correct: "Moves you up one directory to the parent folder",
+                wrong: ["Navigates directly to the root directory of the file system", "Creates a new empty directory in the current working location", "Lists all the files and subdirectories in the current directory"],
+                hint: "The two dots (..) represent the parent directory.",
+                source: "Ch 2: Client-Side Development",
+                sourceUrl: "https://info340.github.io/client-side-development.html"
+            },
+            {
+                question: "What is the difference between an absolute path and a relative path?",
+                correct: "Absolute starts from root (/), relative starts from current directory",
+                wrong: ["Absolute paths are always shorter while relative paths are always longer", "Absolute uses forward slashes while relative paths use backslashes exclusively", "There is no functional difference between them &mdash; they are completely interchangeable"],
+                hint: "Absolute paths give the full location, relative paths are based on where you are.",
+                source: "Ch 2: Client-Side Development",
+                sourceUrl: "https://info340.github.io/client-side-development.html"
+            },
+            {
+                question: "What is a git repository (repo)?",
+                correct: "A folder that stores a project's files along with their version history",
+                wrong: ["A website specifically designed for sharing and browsing source code online", "A type of programming language used for collaborative software development", "A tool for editing and formatting code with syntax highlighting features"],
+                hint: "It contains all your project files plus the history of changes.",
+                source: "INFO 201 Ch 4: Git and GitHub",
+                sourceUrl: "https://info201.github.io/git-basics.html"
+            },
+            {
+                question: "What does a git commit represent?",
+                correct: "A saved snapshot of the project at a specific point in time",
+                wrong: ["A way to upload all project files directly to a remote GitHub server", "A command that downloads the latest version of code from the repository", "A branch created in the repository for developing a new feature"],
+                hint: "Think of it as a checkpoint or save point in your project's history.",
+                source: "INFO 201 Ch 4: Git and GitHub",
+                sourceUrl: "https://info201.github.io/git-basics.html"
+            },
+            {
+                question: "Why is it important to write clear commit messages when using git?",
+                correct: "They help collaborators understand what changed and why",
+                wrong: ["Clear messages automatically prevent all merge conflicts from occurring", "Git requires a minimum message length of 50 characters to accept the commit", "Messages are displayed to website visitors in the browser's developer tools"],
+                hint: "Good messages describe the purpose of the change, not just which files were modified.",
+                source: "INFO 201 Ch 4: Git and GitHub",
+                sourceUrl: "https://info201.github.io/git-basics.html"
+            },
+            {
+                question: "What is the correct sequence of git commands to merge an experiment branch into the main branch?",
+                correct: "git checkout main, then git merge branch-name",
+                wrong: ["git merge main branch-name from any branch in the repository", "git branch merge main to combine all existing branches automatically", "git push --merge branch-name to merge and push at the same time"],
+                hint: "You need to be on the branch you want to merge INTO first.",
+                source: "INFO 201 Ch 14: Git Branches",
+                sourceUrl: "https://info201.github.io/git-branches.html"
+            },
+            {
+                question: "What is a merge conflict in git?",
+                correct: "When Git cannot automatically combine changes because the same part was edited differently",
+                wrong: ["When you try to push code to a branch that does not exist on the remote", "When your internet connection fails during a push operation to GitHub", "When you forget to add files to the staging area before committing"],
+                hint: "It happens when two people edit the same lines of code.",
+                source: "INFO 201 Ch 15: Git Collaboration",
+                sourceUrl: "https://info201.github.io/git-collaboration.html"
+            },
+            {
+                question: "Which of the following is the correct process for resolving a merge conflict in git?",
+                correct: "Manually edit the file to choose changes, remove conflict markers, then add and commit",
+                wrong: ["Delete the entire repository and clone a fresh copy from the remote server", "Run the command git conflict --resolve to automatically fix all conflicts", "Push the conflicted files with the --force flag to overwrite the remote version"],
+                hint: "You need to manually decide which changes to keep.",
+                source: "INFO 201 Ch 15: Git Collaboration",
+                sourceUrl: "https://info201.github.io/git-collaboration.html"
+            },
+            {
+                question: "What should you do if someone else has pushed to a remote repository, but you want to push your changes?",
+                correct: "Pull the remote changes first, resolve conflicts if needed, then push",
+                wrong: ["Force push to overwrite their changes with your local version of the code", "Delete your local repository and start the project over from the beginning", "Create a new branch and abandon all your previous work on the old branch"],
+                hint: "You need to integrate their changes with yours before pushing.",
+                source: "INFO 201 Ch 15: Git Collaboration",
+                sourceUrl: "https://info201.github.io/git-collaboration.html"
+            },
+            {
+                question: "What is the primary reason for writing CSS rules in a different file than the HTML?",
+                correct: "Separation of concerns, easier maintenance, reuse, and caching",
+                wrong: ["CSS cannot be written inside HTML files under any circumstances", "External CSS files always make every page load significantly faster", "Web browsers require external CSS files and reject inline or embedded styles"],
+                hint: "Separating CSS from HTML makes code cleaner and more maintainable.",
+                source: "Ch 4: CSS Fundamentals",
+                sourceUrl: "https://info340.github.io/css-fundamentals.html"
+            },
+            {
+                question: "What happens if you forget the semicolon at the end of a CSS property declaration?",
+                correct: "The browser stops parsing correctly and may break multiple properties",
+                wrong: ["Only that single property is silently ignored while everything else works fine", "The browser automatically inserts the missing semicolon during page rendering", "The entire stylesheet fails to load and no styles are applied to the page"],
+                hint: "Missing semicolons can cause cascading parsing errors.",
+                source: "Ch 4: CSS Fundamentals",
+                sourceUrl: "https://info340.github.io/css-fundamentals.html"
+            },
+            {
+                question: "What does the term \"cascade\" in CSS refer to?",
+                correct: "How the browser determines which rule wins based on specificity and source order",
+                wrong: ["How CSS styles automatically flow and inherit from parent elements to child elements", "The waterfall-like visual animation effect that can be created with CSS transitions", "How external CSS files are loaded sequentially in the order they appear in the HTML"],
+                hint: "When multiple rules target the same element, the cascade determines the winner.",
+                source: "Ch 4: CSS Fundamentals",
+                sourceUrl: "https://info340.github.io/css-fundamentals.html"
+            },
+            {
+                question: "Which symbol is used to denote a grouping selector in CSS?",
+                correct: "Comma (,)",
+                wrong: ["Greater than sign (>) which indicates a direct parent-child relationship", "Plus sign (+) which targets the immediately adjacent sibling element", "Tilde (~) which selects all subsequent sibling elements after the target"],
+                hint: "Commas let you apply the same styles to multiple selectors.",
+                source: "Ch 6: CSS Selectors",
+                sourceUrl: "https://info340.github.io/css-selectors.html"
+            },
+            {
+                question: "Which selector targets all &lt;p&gt; elements inside a &lt;header&gt;?",
+                correct: "header p (descendant selector)",
+                wrong: ["header &gt; p (which only selects direct children, not deeper descendants)", "header + p (which targets the adjacent sibling p immediately after header)", "header, p (which selects all headers and all paragraphs separately)"],
+                hint: "Space between selectors means 'anywhere inside' (descendant).",
+                source: "Ch 6: CSS Selectors",
+                sourceUrl: "https://info340.github.io/css-selectors.html"
+            },
+            {
+                question: "Which selector correctly targets every even\u2011numbered &lt;li&gt; element in an ordered list (with counting starting at 1)?",
+                correct: "li:nth-child(even)",
+                wrong: ["li:nth-child(odd) which would select the first, third, fifth items instead", "li:even which is not valid CSS pseudo-class selector syntax", "li[even] which is attribute selector syntax and does not target position"],
+                hint: "nth-child can use 'even', 'odd', or formulas like 2n.",
+                source: "Ch 6: CSS Selectors",
+                sourceUrl: "https://info340.github.io/css-selectors.html"
+            },
+            {
+                question: "What happens if two CSS rules have the same specificity?",
+                correct: "The one that appears later in the stylesheet wins",
+                wrong: ["The one that appears first in the stylesheet takes priority and is applied", "Both conflicting rules are applied to the element at the same time", "Neither rule is applied and the element uses the browser's default styles"],
+                hint: "When specificity is tied, position in the stylesheet breaks the tie.",
+                source: "Ch 6: CSS Selectors",
+                sourceUrl: "https://info340.github.io/css-selectors.html"
+            },
+            {
+                question: "In which scenario would it be most appropriate to use an absolute unit like px in CSS?",
+                correct: "For fixed sizes like thin borders, shadows, or precise alignment",
+                wrong: ["For all font sizes across the entire website to ensure consistent text appearance", "For responsive layouts that need to automatically scale across different screen sizes", "For spacing that should grow proportionally when the user increases their text size"],
+                hint: "Absolute units don't scale&mdash;use them when you need exact, fixed measurements.",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "In CSS, what is the difference between padding and margin?",
+                correct: "Padding is space inside the element, margin is space outside",
+                wrong: ["Padding is space outside the element while margin is space inside it", "Padding only affects text content while margin only affects element borders", "There is no difference between them &mdash; they are completely interchangeable properties"],
+                hint: "Think of the box model: content &rarr; padding &rarr; border &rarr; margin",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "Which of the following scenarios is the most appropriate scenario to use a Flexbox?",
+                correct: "Laying out items in a row or column with flexible alignment",
+                wrong: ["Creating a complete two-dimensional grid layout for an entire web page", "Adding keyframe animations and visual transition effects to page elements", "Styling text content with font properties, colors, and text decoration"],
+                hint: "Flexbox excels at one-dimensional layouts (row OR column).",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "Which CSS property removes an element from both the visible page flow and screen reader's perceived content?",
+                correct: "display: none",
+                wrong: ["visibility: hidden (which hides visually but keeps the element in the layout flow)", "opacity: 0 (which makes transparent but element still occupies space and is accessible)", "position: absolute (which repositions the element but keeps it visible and accessible)"],
+                hint: "display: none removes completely; visibility: hidden just makes invisible.",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "What happens if you use a shorthand property AFTER setting its individual component property earlier in the same rule?",
+                correct: "The shorthand overrides the earlier component properties",
+                wrong: ["The individual component properties always take priority over any shorthand declarations", "Both the shorthand and component declarations are combined together additively", "A CSS syntax error occurs that prevents the entire ruleset from being applied"],
+                hint: "Later declarations override earlier ones&mdash;shorthand sets ALL components.",
+                source: "Ch 7: CSS Properties",
+                sourceUrl: "https://info340.github.io/css-properties.html"
+            },
+            {
+                question: "What is the main objective in making a web page responsive?",
+                correct: "Make content usable across different screen sizes without horizontal scrolling",
+                wrong: ["Make the web page load faster specifically on mobile cellular connections", "Reduce the total amount of CSS code required for the complete stylesheet", "Support older legacy browsers that do not implement modern CSS features"],
+                hint: "Responsive design adapts layout to work on any screen size.",
+                source: "Ch 8: Responsive CSS",
+                sourceUrl: "https://info340.github.io/responsive-css.html"
+            },
+            {
+                question: "What does the following media query do? @media (min-width: 768px)",
+                correct: "Applies styles only when viewport is 768px or wider",
+                wrong: ["Applies the enclosed styles only when the viewport is less than 768 pixels wide", "Applies the enclosed styles at exactly 768 pixels width and no other size", "Sets the maximum allowed width of the entire page content to 768 pixels"],
+                hint: "min-width means 'at least this wide'&mdash;it's a minimum threshold.",
+                source: "Ch 8: Responsive CSS",
+                sourceUrl: "https://info340.github.io/responsive-css.html"
+            },
+            {
+                question: "Which of the following is most appropriate as a mobile-first design strategy?",
+                correct: "Default styles for smallest screens, then min-width queries for larger",
+                wrong: ["Default styles for the largest desktop screens, then max-width queries for smaller sizes", "Use only percentage-based widths for every element without any media queries at all", "Create completely separate CSS files for each individual device type and screen size"],
+                hint: "Mobile-first starts small and adds complexity for bigger screens.",
+                source: "Ch 8: Responsive CSS",
+                sourceUrl: "https://info340.github.io/responsive-css.html"
+            },
+            {
+                question: "What is the recommended way to organize media queries in a CSS stylesheet?",
+                correct: "Mobile-first: base styles first, then min-width queries in increasing order",
+                wrong: ["Desktop-first: large screen styles first, then max-width queries in decreasing order", "Organize all media queries alphabetically by their breakpoint name labels", "Place all media queries at the very top of the stylesheet before any base styles"],
+                hint: "Start with the smallest screen, then enhance for larger ones.",
+                source: "Ch 8: Responsive CSS",
+                sourceUrl: "https://info340.github.io/responsive-css.html"
+            },
+            {
+                question: "What is a CSS framework?",
+                correct: "A pre-built set of CSS classes and patterns for consistent design",
+                wrong: ["A programming language specifically designed for styling web page elements", "A browser extension that provides visual editing tools for CSS properties", "A tool for compressing and minifying CSS files to reduce their download size"],
+                hint: "Frameworks like Bootstrap provide ready-to-use CSS classes.",
+                source: "Ch 9: CSS Frameworks",
+                sourceUrl: "https://info340.github.io/css-frameworks.html"
+            },
+            {
+                question: "Why should you use a minified version of a CSS framework file (e.g., bootstrap.min.css) when including it in a webpage?",
+                correct: "Smaller file size, faster download",
+                wrong: ["It has additional features and CSS classes that the unminified version lacks", "It is significantly easier to read, debug, and modify during development", "It is required for production deployment &mdash; unminified files will cause errors"],
+                hint: "Minification removes whitespace and comments to reduce file size.",
+                source: "Ch 9: CSS Frameworks",
+                sourceUrl: "https://info340.github.io/css-frameworks.html"
+            },
+            {
+                question: "When using Bootstrap, what is the effect does giving an element the class col-md-6?",
+                correct: "Takes 6 of 12 columns (half width) on medium screens and larger",
+                wrong: ["Takes exactly 6 pixels of fixed width on all screen sizes regardless of viewport", "Creates 6 equally-sized columns inside the element for its child content", "Sets the element's margin to 6 Bootstrap spacing units on medium breakpoints"],
+                hint: "Bootstrap uses a 12-column grid. 6/12 = half width.",
+                source: "Ch 9: CSS Frameworks",
+                sourceUrl: "https://info340.github.io/css-frameworks.html"
+            },
+            {
+                question: "Which of the following best describes JavaScript as a programming language?",
+                correct: "A dynamically-typed, interpreted language",
+                wrong: ["A statically-typed, compiled language that requires explicit type declarations", "A markup language for structuring and organizing web page content", "A query language for retrieving and manipulating database records"],
+                hint: "Variables adopt the type of their current value at runtime.",
+                source: "Ch 10: JavaScript",
+                sourceUrl: "https://info340.github.io/javascript.html"
+            },
+            {
+                question: "What is the purpose of declaring 'use strict'; at the beginning of a JavaScript file?",
+                correct: "To enable strict mode, which catches common coding errors",
+                wrong: ["To make the JavaScript code execute significantly faster in the browser engine", "To enable new ES6 features that are not available in standard mode", "To disable all console logging output during production deployment"],
+                hint: "It makes JavaScript throw errors for things that would otherwise fail silently.",
+                source: "Ch 10: JavaScript",
+                sourceUrl: "https://info340.github.io/javascript.html"
+            },
+            {
+                question: "Which of the following statements about the const keyword is true?",
+                correct: "The reference cannot be reassigned, but object properties can still be modified",
+                wrong: ["The value assigned to a const variable is completely and deeply immutable", "const variables are unable to hold objects or arrays as their values", "const behaves exactly the same as let with no practical differences"],
+                hint: "const prevents reassignment, not mutation of the value itself.",
+                source: "Ch 10: JavaScript",
+                sourceUrl: "https://info340.github.io/javascript.html"
+            },
+            {
+                question: "Which of the following statements is NOT true about Object properties in JavaScript?",
+                correct: "Object properties must be declared in advance",
+                wrong: ["Properties can be accessed with either dot notation or bracket notation", "New properties can be added to an object at any time after creation", "Keys in objects can be strings or symbols used as identifiers"],
+                hint: "Objects in JavaScript are very flexible and dynamic.",
+                source: "Ch 10: JavaScript",
+                sourceUrl: "https://info340.github.io/javascript.html"
+            },
+            {
+                question: "What is a callback function?",
+                correct: "A function passed as an argument to another function, to be executed later",
+                wrong: ["A function that recursively calls itself until a base condition is met", "A function that returns another function as its return value", "A function that is declared inside a for or while loop body"],
+                hint: "The receiving function 'calls back' to execute it when needed.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "What is a closure in JavaScript?",
+                correct: "When a function remembers and accesses variables from its surrounding scope",
+                wrong: ["When a function is terminated or closed by the garbage collector", "When a for or while loop finishes executing all of its iterations", "When an object is sealed to prevent any new properties from being added"],
+                hint: "The inner function 'closes over' variables from outer scope.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "Why must a callback function passed to the map() method return a value?",
+                correct: "Because map() collects return values to create the new array",
+                wrong: ["It is just a widely followed coding convention with no technical requirement", "The function will throw a runtime error and crash if it does not return", "map() completely ignores the return value and only uses side effects"],
+                hint: "If you don't return, undefined fills the new array.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "Which array method is best used when you want to create a new array that contains only a subset of elements?",
+                correct: "filter()",
+                wrong: ["map() which transforms each element but always keeps the same array length", "forEach() which executes a callback but does not return any new array", "reduce() which combines all elements into a single accumulated value"],
+                hint: "It keeps elements where the callback returns true.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "Which of the following is NOT a benefit of using pure functions in JavaScript?",
+                correct: "They can modify external state directly",
+                wrong: ["They are easier to test because output depends only on input arguments", "They are predictable and always produce the same result for the same input", "They are easier to debug because they have no hidden side effects"],
+                hint: "Pure functions specifically avoid side effects and external state.",
+                source: "Ch 11: Functional Programming",
+                sourceUrl: "https://info340.github.io/functional-programming.html"
+            },
+            {
+                question: "What does the Document Object Model (DOM) represent?",
+                correct: "A tree-like structure of element nodes representing the HTML document",
+                wrong: ["The CSS stylesheet rules and declarations applied to the page elements", "The JavaScript source code files that provide the page's interactivity", "The server-side database tables that store the website's persistent data"],
+                hint: "It's the browser's programmatic representation of the webpage structure.",
+                source: "Ch 12: DOM",
+                sourceUrl: "https://info340.github.io/dom.html"
+            },
+            {
+                question: "What does the document.querySelector() method return when used in JavaScript?",
+                correct: "The first element matching the CSS selector, or null if none found",
+                wrong: ["An array containing all elements that match the provided CSS selector", "A string representation of the matching element's complete HTML markup", "Only the element's ID attribute value as a plain text string"],
+                hint: "It uses CSS selector syntax and returns a single element.",
+                source: "Ch 12: DOM",
+                sourceUrl: "https://info340.github.io/dom.html"
+            },
+            {
+                question: "How can you change the CSS class of an element using JavaScript?",
+                correct: "Use classList.add(), classList.remove(), or classList.toggle()",
+                wrong: ["Use element.className = 'class' as the only available approach in JavaScript", "Use element.style.class = 'class' to directly set the class through inline styles", "CSS classes cannot be changed or manipulated with JavaScript at all"],
+                hint: "The classList property provides methods to manipulate classes.",
+                source: "Ch 12: DOM",
+                sourceUrl: "https://info340.github.io/dom.html"
+            },
+            {
+                question: "What does calling event.preventDefault() do in an event handler?",
+                correct: "Stops the browser's default behavior for that event",
+                wrong: ["Stops the event from bubbling up through the parent element hierarchy", "Prevents all future events of any type from firing on the page", "Permanently removes the event listener from the target element"],
+                hint: "Think about what normally happens when you submit a form or click a link.",
+                source: "Ch 12: DOM",
+                sourceUrl: "https://info340.github.io/dom.html"
+            },
+            {
+                question: "What is an ARIA live region used for?",
+                correct: "Notifying screen readers when content changes dynamically",
+                wrong: ["Making page elements draggable with mouse or touch input interactions", "Adding CSS animation and visual transition effects to page elements", "Hiding content from all users including those using assistive technologies"],
+                hint: "It's an accessibility feature for dynamic content updates.",
+                source: "Ch 12: DOM",
+                sourceUrl: "https://info340.github.io/dom.html"
+            },
+            {
+                question: "Which of the following statements about when to use arrow functions vs. function declarations is accurate?",
+                correct: "Arrow functions are preferred for callbacks because they retain lexical 'this'",
+                wrong: ["Function declarations should always be used in every situation without exception", "Arrow functions execute significantly faster than traditional function declarations", "They are completely interchangeable with absolutely no behavioral differences"],
+                hint: "Arrow functions solve the common 'this' context problem in callbacks.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "What does destructuring do in JavaScript?",
+                correct: "Unpacks values from arrays or properties from objects into separate variables",
+                wrong: ["Permanently deletes specified properties from an existing JavaScript object", "Converts an object's key-value pairs into an array of individual elements", "Removes elements from the beginning or end of an existing array"],
+                hint: "It's a shorthand for extracting multiple values at once.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "What is the spread operator (...) used for in JavaScript?",
+                correct: "To expand array or object contents into a new context",
+                wrong: ["To create a sequential range of numbers between a start and end value", "To divide two numeric values and return the floating-point result", "To concatenate two string values together with a specified separator"],
+                hint: "It 'spreads out' the elements, useful for copying or merging.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "Which keyword is used to make a variable in a module publicly accessible in ES6?",
+                correct: "export",
+                wrong: ["public", "global", "share"],
+                hint: "You use this keyword before const, function, or class declarations.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "What is the difference between named and default exports in ES6 modules?",
+                correct: "Named exports use braces when importing; default exports don't",
+                wrong: ["Default exports are always faster to load than named exports in the browser", "Named exports can only be used to export functions, not variables or classes", "There is no practical difference between them &mdash; they are entirely interchangeable"],
+                hint: "import {foo} vs import foo &mdash; notice the braces.",
+                source: "Ch 13: ES6+",
+                sourceUrl: "https://info340.github.io/es6.html"
+            },
+            {
+                question: "What is the main advantage of using React compared to DOM functions?",
+                correct: "React automatically re-renders only the parts of the UI that changed",
+                wrong: ["React eliminates the need to write any JavaScript code at all for interactivity", "React makes static web pages load significantly faster than vanilla JavaScript", "React removes the requirement for a web browser to run web applications"],
+                hint: "You describe what the UI should look like; React handles the updates.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What content is usually found in a React application's index.html file?",
+                correct: "A single div element with id root and a script tag loading the entry point",
+                wrong: ["All of the application's HTML content and every component's markup structure", "Multiple complete page layouts with full navigation links between each page", "CSS stylesheet links and inline style declarations for all React components"],
+                hint: "React injects all its content into one root div element.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What is JSX?",
+                correct: "A syntax extension that lets you write HTML-like code in JavaScript",
+                wrong: ["A standalone programming language specifically designed for building web applications", "A CSS preprocessor that compiles enhanced syntax into standard browser stylesheets", "A server-side template engine for generating HTML responses from database data"],
+                hint: "It looks like HTML but is actually JavaScript under the hood.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Which of the following best describes what values can be included inside a JSX inline expression?",
+                correct: "Any JavaScript expression that produces a value (variables, ternaries, function calls)",
+                wrong: ["Only string literals and template strings that can be wrapped in curly braces", "Any JavaScript code including if/else statements, for loops, and variable declarations", "Only numbers and booleans that can be directly rendered as visible text content"],
+                hint: "Expressions produce values; statements (if/else, for) do not.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Which of the following is NOT true about React components?",
+                correct: "Components can be called as regular functions like MyComponent()",
+                wrong: ["Components must have names that start with a capital letter to work properly", "Components return JSX that describes the user interface elements to render", "Components can accept props as an input parameter for customization"],
+                hint: "You render components as JSX elements, not function calls.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "How does one define props that should be passed into a React component?",
+                correct: "As XML-style attributes when rendering the component in JSX",
+                wrong: ["By declaring them as local variables inside the component function body", "By adding them to the component's internal state using the useState hook", "By registering them in a separate external props configuration file"],
+                hint: "Props look like HTML attributes: &lt;Component name=\"Ada\" /&gt;",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "How is the map() function commonly used in React components?",
+                correct: "To transform an array of data into an array of React components",
+                wrong: ["To navigate between different pages and routes within a React application", "To update a component's internal state with new transformed array values", "To register event listeners on multiple DOM elements at the same time"],
+                hint: "It converts data arrays into renderable component arrays.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Why is the key prop important when rendering lists?",
+                correct: "It gives each item a unique identity so React can efficiently track changes",
+                wrong: ["It determines the visual display order of items in the rendered list output", "It assigns a CSS class name to each list item for targeted visual styling", "It controls which items are visible and which ones are hidden by default"],
+                hint: "Without keys, React must re-render the entire list on every change.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Which is the recommended way to define an event handler for a React component?",
+                correct: "Define a named handler function and pass it by reference: onClick={handleClick}",
+                wrong: ["Use inline HTML event attributes like onclick=\"handleClick()\" in the JSX markup", "Call the function with parentheses directly in the prop: onClick={handleClick()}", "Use addEventListener inside the component function body after initial rendering"],
+                hint: "Don't use parentheses &mdash; that calls it immediately during render.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What does a React component's state represent?",
+                correct: "Internal changeable data that triggers re-renders when updated",
+                wrong: ["The CSS styles and visual classes currently applied to the component's DOM elements", "The component's current position, dimensions, and size within the DOM tree", "Static configuration data that is loaded once when the application first starts"],
+                hint: "State is for data that changes over time, usually from user interaction.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What does the useState() function return?",
+                correct: "An array with the current state value and a setter function",
+                wrong: ["A single state value that automatically updates itself whenever it changes", "An object with get and set methods for reading and writing state data", "A promise that asynchronously resolves to the state value after rendering"],
+                hint: "Use array destructuring: const [value, setValue] = useState(0)",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What happens when you call a state setter function?",
+                correct: "React schedules an asynchronous re-render of the component with the new value",
+                wrong: ["The state variable updates immediately and the current function continues running", "Every single component in the entire application tree gets re-rendered from scratch", "The component is removed from the DOM and replaced with a completely fresh instance"],
+                hint: "The update doesn't happen instantly &mdash; it's batched and asynchronous.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Why should you never update state directly using an assignment operator?",
+                correct: "Direct mutation doesn't trigger a re-render &mdash; only the setter function does",
+                wrong: ["It causes a JavaScript syntax error that immediately crashes the entire application", "It permanently deletes the state variable from the component's internal memory", "It forces the component to unmount and lose all of its current data and props"],
+                hint: "React only knows to update the UI when the setter is called.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What is the main difference between props and state?",
+                correct: "Props are passed from parent and immutable; state is internal and changeable",
+                wrong: ["Props hold CSS styling data while state holds text content for the component", "Props update synchronously while state updates always require a full page refresh", "Props are only for string values while state can hold any JavaScript data type"],
+                hint: "Props flow down from parent; state is owned by the component.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Which of the following should NOT be stored in a component's state?",
+                correct: "Values that can be derived from existing state or props",
+                wrong: ["User input text collected from a controlled form input field", "A boolean tracking whether a modal dialog is currently open or closed", "A list of items that was fetched from an external REST API endpoint"],
+                hint: "If you can calculate it from other data, don't store it separately.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What does \"lifting state up\" mean in React?",
+                correct: "Moving shared state to the closest common ancestor of the components that need it",
+                wrong: ["Copying state values from child components into a global store for the application", "Deleting state from child components and replacing it with hardcoded prop values", "Converting local component state into URL parameters for the browser history"],
+                hint: "The parent owns the state and passes it down as props.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "How should a child component update its parent's state?",
+                correct: "By invoking a callback function received as a prop",
+                wrong: ["By directly calling the parent component's setState method from within the child", "By modifying the props object that was passed to the child component", "By using document.querySelector to find the parent element and change its attributes"],
+                hint: "The parent defines a handler and passes it down as a prop.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "Why should you use controlled inputs in a React form?",
+                correct: "To keep React state as the single source of truth for input values",
+                wrong: ["To make all form inputs permanently read-only and prevent any user editing", "To prevent the form from ever being submitted to a backend server", "To improve the initial page load speed of the entire application"],
+                hint: "Controlled inputs ensure React always knows the current form values.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            },
+            {
+                question: "What is the primary purpose of the useEffect() hook in React?",
+                correct: "To handle side effects like data fetching and subscriptions",
+                wrong: ["To define the specific props that a component should receive from its parent", "To create and dynamically register new child components at runtime", "To apply inline CSS styles directly to the component's DOM elements"],
+                hint: "Side effects are operations that reach outside the component.",
+                source: "Ch 15: Interactive React",
+                sourceUrl: "https://info340.github.io/interactive-react.html"
+            }
+        ];
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+        let totalQuestions = 38;
+        let userAnswers = [];
+        let lastQuizCount = 38;
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function startQuiz(count) {
+            totalQuestions = count;
+            lastQuizCount = count;
+            currentQuestions = shuffleArray(allQuestions).slice(0, count);
+            currentQuestionIndex = 0;
+            score = 0;
+            answered = false;
+            userAnswers = new Array(count).fill(null);
+
+            document.getElementById('progress-bar').style.width = '0%';
+            document.getElementById('quiz-start').classList.add('hidden');
+            document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('quiz-review').classList.add('hidden');
+            document.getElementById('quiz-content').classList.remove('hidden');
+
+            showQuestion();
+        }
+
+        function retryQuiz() {
+            startQuiz(lastQuizCount);
+        }
+
+        function downloadPDF() {
+            const percentage = Math.round((score / totalQuestions) * 100);
+            const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            let html = `
+                <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 20px; max-width: 800px;">
+                    <div style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #4b2e83; padding-bottom: 20px;">
+                        <h1 style="color: #4b2e83; margin: 0 0 10px 0;">Quiz Retake Practice Results</h1>
+                        <p style="color: #666; margin: 5px 0;">INFO 340 - Client-Side Web Development</p>
+                        <p style="color: #666; margin: 5px 0;">${date}</p>
+                    </div>
+                    <div style="text-align: center; margin-bottom: 30px; padding: 20px; background: #f5f5f5; border-radius: 8px;">
+                        <div style="font-size: 48px; font-weight: bold; color: #4b2e83;">${score}/${totalQuestions}</div>
+                        <div style="font-size: 24px; color: #666;">${percentage}%</div>
+                        <p style="margin-top: 10px; color: #333;">Topics: HTML, CSS, Git, JavaScript, DOM, ES6+, React</p>
+                    </div>
+                    <h2 style="color: #4b2e83; border-bottom: 2px solid #b7a57a; padding-bottom: 10px;">Question Review</h2>
+            `;
+
+            currentQuestions.forEach((q, i) => {
+                const userAnswer = userAnswers[i];
+                const isCorrect = userAnswer === q.correct;
+                const statusColor = isCorrect ? '#28a745' : '#dc3545';
+                const statusText = isCorrect ? '✓ Correct' : '✗ Incorrect';
+
+                html += `
+                    <div style="margin-bottom: 25px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; border-left: 4px solid ${statusColor};">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <strong style="color: #4b2e83;">Question ${i + 1}</strong>
+                            <span style="color: ${statusColor}; font-weight: bold;">${statusText}</span>
+                        </div>
+                        <p style="margin: 10px 0; color: #333;"><strong>Q:</strong> ${q.question}</p>
+                        <p style="margin: 5px 0; color: ${isCorrect ? '#28a745' : '#dc3545'};">
+                            <strong>Your Answer:</strong> ${userAnswer || 'Not answered'}
+                        </p>
+                        ${!isCorrect ? `<p style="margin: 5px 0; color: #28a745;"><strong>Correct Answer:</strong> ${q.correct}</p>` : ''}
+                        <p style="margin: 10px 0 0 0; padding: 10px; background: #fffbeb; border-radius: 4px; color: #666; font-size: 14px;">
+                            <strong>Hint:</strong> ${q.hint}
+                        </p>
+                    </div>
+                `;
+            });
+
+            html += `
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #b7a57a; text-align: center; color: #666; font-size: 14px;">
+                        <p>Study more at: <span style="color: #4b2e83;">info340.joechamdani.com/Week-10/Quiz-Retake/</span></p>
+                    </div>
+                </div>
+            `;
+
+            const element = document.getElementById('pdf-content');
+            element.innerHTML = html;
+            element.style.display = 'block';
+
+            const opt = {
+                margin: 10,
+                filename: 'QuizRetake-Results.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                element.style.display = 'none';
+            });
+        }
+
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            const previousAnswer = userAnswers[currentQuestionIndex];
+            answered = previousAnswer !== null;
+
+            document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
+            document.getElementById('progress-bar').style.width = `${((currentQuestionIndex) / totalQuestions) * 100}%`;
+            document.getElementById('question-text').innerHTML = question.question;
+
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('current-score').textContent = `Score: ${score}/${answeredCount}`;
+
+            document.getElementById('hint-btn').classList.remove('hidden');
+            document.getElementById('hint-text').classList.add('hidden');
+            document.getElementById('hint-text').textContent = question.hint;
+
+            document.getElementById('source-text').innerHTML = `<strong>Source:</strong> <a href="${question.sourceUrl}" target="_blank">${question.source}</a>`;
+
+            const options = shuffleArray([question.correct, ...question.wrong]);
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            options.forEach((option) => {
+                const li = document.createElement('li');
+                li.className = 'quiz-option';
+                li.innerHTML = option;
+
+                if (previousAnswer !== null) {
+                    li.classList.add('disabled');
+                    if (option === question.correct) {
+                        li.classList.add('correct');
+                    }
+                    if (option === previousAnswer && previousAnswer !== question.correct) {
+                        li.classList.add('incorrect');
+                    }
+                } else {
+                    li.onclick = () => selectOption(li, option === question.correct, option);
+                }
+                optionsContainer.appendChild(li);
+            });
+
+            if (previousAnswer !== null) {
+                document.getElementById('source-text').classList.remove('hidden');
+                document.getElementById('hint-btn').classList.add('hidden');
+            } else {
+                document.getElementById('source-text').classList.add('hidden');
+            }
+
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            document.getElementById('next-btn').disabled = previousAnswer === null;
+            document.getElementById('next-btn').textContent = currentQuestionIndex === totalQuestions - 1 ? 'See Results' : 'Next Question';
+        }
+
+        function showHint() {
+            document.getElementById('hint-text').classList.remove('hidden');
+            document.getElementById('hint-btn').classList.add('hidden');
+        }
+
+        function selectOption(element, isCorrect, selectedOption) {
+            if (answered) return;
+            answered = true;
+
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                if (opt.innerHTML === currentQuestions[currentQuestionIndex].correct) {
+                    opt.classList.add('correct');
+                }
+            });
+
+            if (isCorrect) {
+                score++;
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+            }
+
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('current-score').textContent = `Score: ${score}/${answeredCount}`;
+
+            document.getElementById('source-text').classList.remove('hidden');
+            document.getElementById('hint-btn').classList.add('hidden');
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex >= totalQuestions) {
+                showResults();
+            } else {
+                showQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-content').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('score-display').textContent = `${score}/${totalQuestions}`;
+
+            let message = '';
+            if (percentage >= 90) message = 'Excellent! You\'re ready for the quiz!';
+            else if (percentage >= 80) message = 'Great job! Just a bit more review.';
+            else if (percentage >= 70) message = 'Good effort! Review the study guide.';
+            else if (percentage >= 60) message = 'Keep studying! You\'re getting there.';
+            else message = 'Review the study guide and try again!';
+
+            document.getElementById('score-message').textContent = `${percentage}% - ${message}`;
+
+            renderReview();
+        }
+
+        function renderReview() {
+            const reviewContainer = document.getElementById('quiz-review');
+            reviewContainer.classList.remove('hidden');
+
+            let html = '<h2>Review Your Answers</h2>';
+
+            currentQuestions.forEach((q, i) => {
+                const userAnswer = userAnswers[i];
+                const isCorrect = userAnswer === q.correct;
+                const statusClass = isCorrect ? 'review-correct' : 'review-incorrect';
+                const statusText = isCorrect ? 'Correct' : 'Incorrect';
+
+                html += `
+                    <div class="review-item ${statusClass}">
+                        <div class="review-header">
+                            <span class="review-number">Question ${i + 1}</span>
+                            <span class="review-status">${statusText}</span>
+                        </div>
+                        <p class="review-question">${q.question}</p>
+                        <p class="review-answer"><strong>Your Answer:</strong> ${userAnswer || 'Not answered'}</p>
+                        ${!isCorrect ? `<p class="review-answer review-correct-answer"><strong>Correct Answer:</strong> ${q.correct}</p>` : ''}
+                        <p class="review-hint"><strong>Hint:</strong> ${q.hint}</p>
+                        <p class="review-source"><strong>Source:</strong> <a href="${q.sourceUrl}" target="_blank">${q.source}</a></p>
+                    </div>
+                `;
+            });
+
+            reviewContainer.innerHTML = html;
+        }
+    </script>
+
+    <footer>
+        <a href="mailto:jchamd@uw.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joseph-chamdani" target="_blank">LinkedIn</a>
+        <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a>
+        <a href="https://uw.joechamdani.com" target="_blank">Portfolio</a>
+    </footer>
+</body>
+</html>
