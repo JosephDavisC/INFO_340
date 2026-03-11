@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conclusions - INFO 340</title>
+    <meta name="description" content="INFO 340 Lecture - Conclusions: Tool dependency, the future of frameworks, and end-of-quarter logistics.">
+    <meta name="author" content="Joseph Davis Chamdani">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Conclusions - INFO 340">
+    <meta property="og:description" content="Conclusions: Tool dependency, the future of frameworks, and end-of-quarter logistics.">
+    <meta property="og:image" content="https://info340.joechamdani.com/img/Logo.png">
+    <meta property="og:url" content="https://info340.joechamdani.com/Week-10/Mar-11-2026/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Conclusions - INFO 340">
+    <meta name="twitter:description" content="Conclusions: Tool dependency, the future of frameworks, and end-of-quarter logistics.">
+    <meta name="twitter:image" content="https://info340.joechamdani.com/img/Logo.png">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="/img/favicon.ico">
+</head>
+<body>
+    <p><a href="../" class="back-link">&larr; Back to Week 10</a></p>
+    <h1>Conclusions</h1>
+    <p class="week-subtitle">March 11, 2026 &bull; Week 10</p>
+
+    <section class="summary">
+        <h2>Topics Covered</h2>
+
+        <h3>Quiz Retake</h3>
+        <ul>
+            <li>Closed book, closed note &mdash; 20 minutes, 1 point per question</li>
+            <li>Covered the most frequently missed questions from Quizzes 1&ndash;4</li>
+        </ul>
+
+        <h3>Final Project Requirements</h3>
+        <ul>
+            <li><strong>Well-structured HTML</strong> in React (semantic elements, accessibility)</li>
+            <li><strong>React Components</strong> with appropriate props and state</li>
+            <li><strong>Two and a half interactive features</strong> &mdash; significant functionality</li>
+            <li><strong>Routing and navigation</strong> &mdash; multiple pages with URL parameters</li>
+            <li><strong>External React Library</strong> &mdash; renders a component (e.g., react-bootstrap used meaningfully)</li>
+            <li><strong>Firebase data persistence</strong> &mdash; async work, effect hooks, real-time updates</li>
+            <li><strong>Visual style, accessibility, responsiveness</strong></li>
+            <li><strong>Correct code style</strong> &mdash; follow the course textbook conventions</li>
+        </ul>
+
+        <h3>Tool Dependency</h3>
+        <ul>
+            <li>Much of the web is built on shared, reusable libraries &mdash; each dependency is a potential point of failure</li>
+            <li><strong>XKCD #2347</strong> ("Nebraska"): a single unmaintained project hidden in a dependency chain can underpin critical infrastructure</li>
+            <li><strong>Protestware:</strong> malicious code added to an npm package (node-ipc) wiped files in Russia and Belarus &mdash; illustrates how supply-chain attacks work</li>
+            <li>A critical server vulnerability (Dec 2025) spread through a transitive dependency &mdash; admins had little warning</li>
+        </ul>
+
+        <h3>Are They the Right Tools?</h3>
+        <ul>
+            <li>The State of JS survey reflects the views of a vocal subset of developers &mdash; not necessarily the majority of web users</li>
+            <li>Heavy client-side frameworks like React can harm performance for users in low-bandwidth or low-power environments</li>
+            <li>A criticism: developer experience tooling is often optimized for the people building it, not the people using it</li>
+            <li>The web platform (HTML, CSS, browser APIs) keeps improving &mdash; frameworks solve problems that the platform may eventually absorb</li>
+        </ul>
+
+        <h3>Future of Frameworks?</h3>
+        <ul>
+            <li>LLM-assisted development shifts how code is written &mdash; agents can generate large amounts of working code without following framework conventions</li>
+            <li>AI-generated code tends to be "vanilla" &mdash; flat, repetitive, without abstraction &mdash; because agents optimize for correctness over maintainability</li>
+            <li>Open question: do architectural patterns (components, shared state, routing) remain important when an agent re-implements everything from scratch each time?</li>
+            <li>Amazon now requires senior engineers to sign off on AI-assisted infrastructure changes after outages &mdash; human oversight remains critical</li>
+        </ul>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts</h2>
+        <ul>
+            <li><strong>Dependency Risk:</strong> Every npm package you install has its own dependencies &mdash; the total attack surface is larger than what you write yourself</li>
+            <li><strong>Supply Chain Attack:</strong> Malicious code injected into a widely-used package to affect downstream consumers</li>
+            <li><strong>Protestware:</strong> Software intentionally sabotaged by its author as a form of protest</li>
+            <li><strong>Framework Trade-offs:</strong> Frameworks add capability and structure but also weight, complexity, and risk &mdash; the right tool depends on the use case</li>
+            <li><strong>State of JS Survey:</strong> Annual survey of JavaScript developer preferences &mdash; <a href="https://2025.stateofjs.com/en-US/libraries/" target="_blank">2025 results</a></li>
+        </ul>
+    </section>
+
+    <section class="resources">
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://slides.com/joelross/info340wi26-conclusions" target="_blank">Lecture Slides &mdash; Conclusions</a></li>
+            <li><a href="https://xkcd.com/2347/" target="_blank">XKCD #2347 &mdash; Dependency</a></li>
+            <li><a href="https://2025.stateofjs.com/en-US/libraries/" target="_blank">State of JS 2025 &mdash; Libraries</a></li>
+            <li><a href="https://info340.github.io/client-side-development.html" target="_blank">INFO 340 Ch 2: Client-Side Development</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>
+            <a href="mailto:jdchamdani@gmail.com">Email</a> &bull;
+            <a href="https://www.linkedin.com/in/joseph-davis-chamdani/" target="_blank">LinkedIn</a> &bull;
+            <a href="https://github.com/JosephDavisC" target="_blank">GitHub</a> &bull;
+            <a href="https://joechamdani.com" target="_blank">Portfolio</a>
+        </p>
+    </footer>
+</body>
+</html>
